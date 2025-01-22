@@ -1,3 +1,27 @@
 {
-    "onBoard": "Welcome"
+    "onBoard": {
+        "skip": "Skip",
+        "next": "Next",
+        "finish": "Finish",
+        "title1": "Your Health, Our Priority",
+        "title2": "Stay on top of your Health",
+        "title3": "Smart Assistance at Your Fingertips",
+        "description1": "Take the first step toward a healthier, happier you",
+        "description2": "Easily book appointments, access labs, and request nurse care—all in one place",
+        "description3": "Get health advice and guidance instantly with our AI-powered chatbot",
+        "part11" : "Your ",
+        "part21" : "Health,",
+        "part31" : " Our ",
+        "part41" : "Priority",
+        "part12" : "Stay on top of your",
+        "part22" : " Health",
+        "part32" : "",
+        "part42" : "",
+        "part13" : "Smart",
+        "part23" : " Assistance ",
+        "part33" : "at Your Fingertips",
+        "part43" : ""
+      
+
+    }
 }

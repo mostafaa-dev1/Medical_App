@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
-ThemeData lightTheme(TextStyle Function() fontStyle) => ThemeData(
+lightTheme(TextStyle Function() fontStyle) => ThemeData(
       textTheme: TextTheme(
-        headlineLarge: fontStyle(),
-        headlineMedium: fontStyle(),
-        headlineSmall: fontStyle(),
-        bodyLarge: fontStyle(),
-        bodyMedium: fontStyle(),
-        bodySmall: fontStyle(),
-        labelLarge: fontStyle(),
-        labelMedium: fontStyle(),
-        labelSmall: fontStyle(),
+        headlineLarge: fontStyle().copyWith(
+          fontSize: 32.sp,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineMedium: fontStyle().copyWith(
+          fontSize: 28.sp,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineSmall: fontStyle().copyWith(
+          fontSize: 24.sp,
+        ),
+        bodyLarge: fontStyle().copyWith(
+          fontSize: 20.sp,
+        ),
+        bodyMedium: fontStyle().copyWith(
+          fontSize: 16.sp,
+        ),
+        bodySmall: fontStyle().copyWith(
+          fontSize: 14.sp,
+        ),
+        labelLarge: fontStyle().copyWith(
+          fontSize: 16.sp,
+        ),
+        labelMedium: fontStyle().copyWith(
+          fontSize: 14.sp,
+        ),
+        labelSmall: fontStyle().copyWith(
+          fontSize: 12.sp,
+        ),
       ),
       iconTheme: const IconThemeData(color: Colors.black),
       iconButtonTheme: IconButtonThemeData(

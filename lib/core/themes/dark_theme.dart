@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
 ThemeData darkTheme(TextStyle Function() fontStyle) => ThemeData(
@@ -9,15 +10,44 @@ ThemeData darkTheme(TextStyle Function() fontStyle) => ThemeData(
         applyThemeToAll: true,
       ),
       textTheme: TextTheme(
-        headlineLarge: fontStyle().copyWith(color: Colors.white),
-        headlineMedium: fontStyle().copyWith(color: Colors.white),
-        headlineSmall: fontStyle().copyWith(color: Colors.white),
-        bodyLarge: fontStyle().copyWith(color: Colors.white),
-        bodyMedium: fontStyle().copyWith(color: Colors.white),
-        bodySmall: fontStyle().copyWith(color: Colors.white),
-        labelLarge: fontStyle().copyWith(color: Colors.white),
-        labelMedium: fontStyle().copyWith(color: Colors.white),
-        labelSmall: fontStyle().copyWith(color: Colors.white),
+        headlineLarge: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 32.sp,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineMedium: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 28.sp,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineSmall: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 24.sp,
+        ),
+        bodyLarge: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 20.sp,
+        ),
+        bodyMedium: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 16.sp,
+        ),
+        bodySmall: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 14.sp,
+        ),
+        labelLarge: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 16.sp,
+        ),
+        labelMedium: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 14.sp,
+        ),
+        labelSmall: fontStyle().copyWith(
+          color: Colors.white,
+          fontSize: 12.sp,
+        ),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
       iconButtonTheme: IconButtonThemeData(
