@@ -1,4 +1,9 @@
 {
+    "language" : {
+        "welcomeTo" : "Welcome to",
+        "selectLanguage" : "Select your Preferred Language",
+        "next" : "Next"
+    },
     "onBoard": {
         "skip": "Skip",
         "next": "Next",
@@ -23,5 +28,46 @@
         "part43" : ""
       
 
+    },
+    "Auth" : {
+        "createAccount" : "Fill your profile",
+        "loginToAccount" : "Login to your account",
+        "login" : "Login",
+        "register" : "Register",
+        "forgotPassword" : "Forgot Password?",
+        "email" : "Email",
+        "password" : "Password",
+        "confirmPassword" : "Confirm Password",
+        "or" : "or login with",
+        "orRegister" : "or continue with",
+        "name" : "Name",
+        "phone" : "Phone",
+        "firstName" : "First Name",
+        "lastName" : "Last Name",
+        "gender" : "Gender",
+        "male" : "Male",
+        "female" : "Female",
+        "other" : "Other",
+        "dateOfBirth" : "Date of Birth",
+        "alreadyHaveAccount" : "Already have an account?",
+        "dontHaveAccount" : "Don't have an account?",
+        "next" : "Next",
+        "back" : "Back",
+        "pleaseWait" : "Please wait...",
+        "day" : "Day",
+        "month" : "Month",
+        "year" : "Year",
+        "verify" : "Verification",
+        "code" : "Enter the code to continue",
+        "codeSent" : "Code has been sent to ",
+        "don'tReceiveCode" : "Don't receive the code?",
+        "backToLogin" : "Back to Login",
+        "resend" : "Resend",
+        "continue" : "Continue"
+        
+        
+        
+        
+        
     }
 }

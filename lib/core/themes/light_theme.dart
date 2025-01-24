@@ -6,34 +6,48 @@ import 'package:medical_system/core/themes/colors.dart';
 lightTheme(TextStyle Function() fontStyle) => ThemeData(
       textTheme: TextTheme(
         headlineLarge: fontStyle().copyWith(
-          fontSize: 32.sp,
-          fontWeight: FontWeight.bold,
-        ),
+            fontSize: 32.sp,
+            fontWeight: FontWeight.bold,
+            color: AppColors.darkBlue),
         headlineMedium: fontStyle().copyWith(
-          fontSize: 28.sp,
+            fontSize: 28.sp,
+            fontWeight: FontWeight.bold,
+            color: AppColors.darkBlue),
+        headlineSmall: fontStyle().copyWith(
+            fontSize: 24.sp,
+            color: AppColors.darkBlue,
+            fontWeight: FontWeight.bold),
+        titleLarge: fontStyle().copyWith(
+          fontSize: 22.sp,
+          color: AppColors.darkBlue,
           fontWeight: FontWeight.bold,
         ),
-        headlineSmall: fontStyle().copyWith(
-          fontSize: 24.sp,
+        titleMedium: fontStyle().copyWith(
+          fontSize: 16.sp,
+          color: AppColors.darkBlue,
+        ),
+        titleSmall: fontStyle().copyWith(
+          fontSize: 14.sp,
+          color: AppColors.darkBlue,
         ),
         bodyLarge: fontStyle().copyWith(
-          fontSize: 20.sp,
-        ),
+            fontSize: 16.sp,
+            color: AppColors.darkBlue,
+            fontWeight: FontWeight.bold),
         bodyMedium: fontStyle().copyWith(
-          fontSize: 16.sp,
-        ),
+            fontSize: 14.sp,
+            color: AppColors.darkBlue,
+            fontWeight: FontWeight.bold),
         bodySmall: fontStyle().copyWith(
-          fontSize: 14.sp,
-        ),
-        labelLarge: fontStyle().copyWith(
-          fontSize: 16.sp,
-        ),
-        labelMedium: fontStyle().copyWith(
-          fontSize: 14.sp,
-        ),
-        labelSmall: fontStyle().copyWith(
-          fontSize: 12.sp,
-        ),
+            fontSize: 12.sp,
+            color: AppColors.darkBlue,
+            fontWeight: FontWeight.bold),
+        labelLarge:
+            fontStyle().copyWith(fontSize: 14.sp, color: AppColors.darkBlue),
+        labelMedium:
+            fontStyle().copyWith(fontSize: 12.sp, color: AppColors.darkBlue),
+        labelSmall:
+            fontStyle().copyWith(fontSize: 11.sp, color: AppColors.darkBlue),
       ),
       iconTheme: const IconThemeData(color: Colors.black),
       iconButtonTheme: IconButtonThemeData(

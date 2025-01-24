@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,6 +20,8 @@ class AppCubit extends Cubit<AppState> {
   Locale get locale => _locale;
   TextStyle Function() get fontStyle => _fontStyle;
 
+  int languageIndex = 0;
+
   void changeThemeMode() {
     _themeMode =
         _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
@@ -28,9 +31,11 @@ class AppCubit extends Cubit<AppState> {
 
   void toggleLanguage(BuildContext context) {
     if (_locale.languageCode == 'en') {
+      languageIndex = 1;
       _locale = const Locale('ar');
-      _fontStyle = () => GoogleFonts.cairo();
+      _fontStyle = () => GoogleFonts.almarai();
     } else {
+      languageIndex = 0;
       _locale = const Locale('en');
       _fontStyle = () => GoogleFonts.poppins();
     }
@@ -50,19 +55,20 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> loadPreferences() async {
-    // Load language preference or default to English
-    final languageCode = CashHelper.getString(key: 'language') ?? 'en';
+    log(PlatformDispatcher.instance.locale.languageCode);
+    final languageCode = CashHelper.getString(key: 'language') ??
+        PlatformDispatcher.instance.locale.languageCode;
     _locale = Locale(languageCode);
     log('Language: $languageCode');
 
-    // Load theme preference or default to light theme
     final themeString = CashHelper.getString(key: 'theme') ?? 'light';
     _themeMode = themeString == 'light' ? ThemeMode.light : ThemeMode.dark;
     log('Theme: $_themeMode');
 
-    // Update font style based on language
+    languageIndex = languageCode == 'ar' ? 1 : 0;
+
     _fontStyle = languageCode == 'ar'
-        ? () => GoogleFonts.cairo()
+        ? () => GoogleFonts.almarai()
         : () => GoogleFonts.poppins();
     log('Font Style: $_fontStyle');
 

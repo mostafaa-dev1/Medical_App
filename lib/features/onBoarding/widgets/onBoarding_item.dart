@@ -34,23 +34,23 @@ class OnBoardItem extends StatelessWidget {
             textAlign: TextAlign.center,
             TextSpan(
               text: part1.tr(),
-              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color: AppColors.darkBlue, fontWeight: FontWeight.bold),
               children: [
                 TextSpan(
                   text: part2.tr(),
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
                   text: part3.tr(),
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: AppColors.darkBlue, fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
                   text: part4.tr(),
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.bold),
                 ),

@@ -75,22 +75,22 @@ class _OnBoardingState extends State<OnBoarding> {
                     effect: ExpandingDotsEffect(
                       dotColor: Colors.grey[200]!,
                       activeDotColor: AppColors.secondaryColor,
-                      dotHeight: 10,
+                      dotHeight: 6,
                       dotWidth: 10,
                       expansionFactor: 4,
                     ),
                   ),
                   Spacer(),
                   SizedBox(
-                    width: 70,
-                    height: 60,
+                    width: 60,
+                    height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.secondaryColor,
                           shape: CircleBorder()),
                       onPressed: () {
                         if (_pageController.page == 2) {
-                          context.pushNamed(AppRoutes.preferences);
+                          context.pushNamed(AppRoutes.login);
                         } else {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 500),
@@ -101,7 +101,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       child: Center(
                         child: Icon(
                           IconBroken.Arrow___Right,
-                          size: 30,
+                          size: 25,
                         ),
                       ),
                     ),

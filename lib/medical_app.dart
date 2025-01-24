@@ -36,7 +36,7 @@ class MedicalApp extends StatelessWidget {
                 },
                 darkTheme: darkTheme(context.read<AppCubit>().fontStyle),
                 themeMode: context.read<AppCubit>().themeMode,
-                initialRoute: AppRoutes.onboarding,
+                initialRoute: AppRoutes.language,
               );
             },
           ),

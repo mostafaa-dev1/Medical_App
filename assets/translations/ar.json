@@ -1,4 +1,9 @@
 {
+    "language" :{
+        "welcomeTo" : " مرحبًا بك في",
+        "selectLanguage" : "اختر لغتك المفضلة",
+        "next" : "التالى"
+    },
     "onBoard":{
     "skip": "تخطى",
     "next": "التالى",
@@ -21,12 +26,45 @@
     "part13" : "المساعدة",
     "part23" : " الذكية ",
     "part33" : "عند متناول يدك",
-    "part43" : "",
+    "part43" : ""
 
-    "your" : "",
-    "our" : "",
-    "priority" : "أولويتنا",
-    "stay" : "ابق على اطلاع على صحتك",
-    "Top" : "قمه"
+
+    },
+    "Auth" : {
+        "createAccount" : "إنشاء حساب",
+        "loginToAccount" : "تسجيل الدخول إلى حسابك",
+        "login" : "تسجيل الدخول",
+        "register" : "انشاء ",
+        "forgotPassword" : "نسيت كلمة المرور؟",
+        "email" : "البريد الإلكتروني",
+        "password" : "كلمة المرور",
+        "confirmPassword" : "تأكيد كلمة المرور",
+        "or" : "أو تسجيل الدخول بواسطة",
+        "orRegister" : "أو تابع مع",
+        "name" : "الاسم",
+        "phone" : "الهاتف",
+        "firstName" : "الاسم الأول",
+        "lastName" : "الاسم الأخير",
+        "gender" : "النوع",
+        "male" : "ذكر",
+        "female" : "انثى",
+        "dateOfBirth" : "تاريخ الميلاد",
+        "alreadyHaveAccount" : "هل لديك حساب بالفعل؟",
+        "dontHaveAccount" : "ليس لديك حساب؟",
+        "next" : "التالى",
+        "back" : "السابق",
+        "pleaseWait" : "يرجى الانتظار...",
+        "welcomeTo" : "مرحبًا بك في",
+        "day" : "يوم",
+        "month" : "شهر",
+        "year" : "سنة",
+        "verify" : "تحقق",
+        "code" : "ادخل الكود للاستمرار", 
+        "codeSent" : "تم ارسال الكود الى ",
+        "resend" : "اعادة الارسال",
+        "don'tReceiveCode" : "لم يتم الارسال؟",
+        "backToLogin" : " تسجيل الدخول",
+        "Continue" : "متابعة"
     }
+        
 }
