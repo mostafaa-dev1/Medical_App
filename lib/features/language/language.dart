@@ -82,6 +82,14 @@ class Language extends StatelessWidget {
                           },
                           width: MediaQuery.of(context).size.width / 1.5,
                           paddingVirtical: 10,
+                          paddingHorizental: 20),
+                      CustomButton(
+                          buttonName: 'Change Theme'.tr(),
+                          onPressed: () {
+                            context.read<AppCubit>().changeThemeMode();
+                          },
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          paddingVirtical: 10,
                           paddingHorizental: 20)
                     ]),
               ),

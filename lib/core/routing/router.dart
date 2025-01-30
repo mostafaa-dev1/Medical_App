@@ -1,31 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
+import 'package:medical_system/features/appointments/appointments.dart';
+import 'package:medical_system/features/forget_password/forget_password.dart';
 import 'package:medical_system/features/home/home.dart';
 import 'package:medical_system/features/language/language.dart';
+import 'package:medical_system/features/login/logic/login_cubit.dart';
 import 'package:medical_system/features/login/login.dart';
+import 'package:medical_system/features/main/main_screen.dart';
 import 'package:medical_system/features/onBoarding/onBoarding.dart';
 import 'package:medical_system/features/otp/otp.dart';
+import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
+import 'package:medical_system/features/personal_info/personal_info.dart';
+import 'package:medical_system/features/register/logic/register_cubit.dart';
 import 'package:medical_system/features/register/register.dart';
-import 'package:medical_system/features/register/widgets/personal_info.dart';
 
 class AppRouter {
   Route<dynamic> generateRoute(RouteSettings settings) {
-    //var args = settings.arguments;
+    var args = settings.arguments;
     switch (settings.name) {
       case AppRoutes.language:
         return MaterialPageRoute(builder: (_) => const Language());
       case AppRoutes.onboarding:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
       case AppRoutes.login:
-        return MaterialPageRoute(builder: (_) => const Login());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => LoginCubit(),
+                  child: const Login(),
+                ));
       case AppRoutes.register:
-        return MaterialPageRoute(builder: (_) => const Register());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => RegisterCubit(),
+                  child: const Register(),
+                ));
       case AppRoutes.personalInfo:
-        return MaterialPageRoute(builder: (_) => const PersonalInfo());
+        User user = args as User;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => PersonalInfoCubit(),
+            child: PersonalInfo(
+              user: user,
+            ),
+          ),
+        );
       case AppRoutes.otp:
         return MaterialPageRoute(builder: (_) => const Otp());
+      case AppRoutes.forgetPassword:
+        return MaterialPageRoute(builder: (_) => const ForgetPassword());
+      case AppRoutes.mainScreen:
+        return MaterialPageRoute(builder: (_) => const MainScreen());
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const Home());
+        return MaterialPageRoute(builder: (_) => Home());
+      case AppRoutes.appointments:
+        return MaterialPageRoute(builder: (_) => const Appointments());
+
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

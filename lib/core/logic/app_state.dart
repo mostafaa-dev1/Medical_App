@@ -26,3 +26,5 @@ class AppPreferencesLoaded extends AppState {
 
   AppPreferencesLoaded(this.themeMode, this.locale);
 }
+
+final class AppPageIndexChanged extends AppState {}

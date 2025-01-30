@@ -5,7 +5,12 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medical_system/core/networking/services/auth/auth_service.dart';
 import 'package:medical_system/core/networking/shared_preferances.dart';
+import 'package:medical_system/features/ai_chat/ai_chat.dart';
+import 'package:medical_system/features/appointments/appointments.dart';
+import 'package:medical_system/features/home/home.dart';
+import 'package:medical_system/features/notifications/notifications.dart';
 
 part 'app_state.dart';
 
@@ -73,5 +78,18 @@ class AppCubit extends Cubit<AppState> {
     log('Font Style: $_fontStyle');
 
     emit(AppPreferencesLoaded(_themeMode, _locale));
+  }
+
+  List<Widget> pages = [Home(), Appointments(), AiChat(), Notifications()];
+
+  int pageIndex = 0;
+
+  void changePageIndex(int index) {
+    pageIndex = index;
+    emit(AppPageIndexChanged());
+  }
+
+  bool isUserRegistered() {
+    return AuthService().currentUser != null;
   }
 }

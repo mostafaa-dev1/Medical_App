@@ -23,31 +23,26 @@ ThemeData darkTheme(TextStyle Function() fontStyle) => ThemeData(
         headlineSmall: fontStyle().copyWith(
           color: Colors.white,
           fontSize: 24.sp,
+          fontWeight: FontWeight.bold,
         ),
+        titleLarge: fontStyle().copyWith(
+          fontSize: 22.sp,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        titleMedium: fontStyle().copyWith(
+            fontSize: 20.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        titleSmall: fontStyle().copyWith(
+            fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.bold),
         bodyLarge: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 20.sp,
-        ),
+            fontSize: 16.sp, color: Colors.white, fontWeight: FontWeight.bold),
         bodyMedium: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 16.sp,
-        ),
+            fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.bold),
         bodySmall: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 14.sp,
-        ),
-        labelLarge: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 16.sp,
-        ),
-        labelMedium: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 14.sp,
-        ),
-        labelSmall: fontStyle().copyWith(
-          color: Colors.white,
-          fontSize: 12.sp,
-        ),
+            fontSize: 12.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        labelLarge: fontStyle().copyWith(fontSize: 14.sp, color: Colors.white),
+        labelMedium: fontStyle().copyWith(fontSize: 12.sp, color: Colors.white),
+        labelSmall: fontStyle().copyWith(fontSize: 11.sp, color: Colors.white),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
       iconButtonTheme: IconButtonThemeData(

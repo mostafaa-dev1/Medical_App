@@ -7,4 +7,7 @@ class AppRoutes {
   static const String preferences = '/preferences';
   static const String personalInfo = '/personalInfo';
   static const String otp = '/otp';
+  static const String forgetPassword = '/forgetPassword';
+  static const String appointments = '/appointments';
+  static const String mainScreen = '/mainScreen';
 }

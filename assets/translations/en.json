@@ -30,7 +30,8 @@
 
     },
     "Auth" : {
-        "createAccount" : "Fill your profile",
+        "createAccount" : "Create an account",
+        "fillProfile" : "Fill your profile",
         "loginToAccount" : "Login to your account",
         "login" : "Login",
         "register" : "Register",
@@ -57,17 +58,64 @@
         "day" : "Day",
         "month" : "Month",
         "year" : "Year",
+        "bof" :"dd/mm/yyyy",
         "verify" : "Verification",
         "code" : "Enter the code to continue",
         "codeSent" : "Code has been sent to ",
         "don'tReceiveCode" : "Don't receive the code?",
         "backToLogin" : "Back to Login",
         "resend" : "Resend",
-        "continue" : "Continue"
+        "continue" : "Continue",
+        "passwordRequired" : "Password is required",
+        "emailRequired" : "Email is required",
+        "nameRequired" : "Name is required",
+        "phoneRequired" : "Phone is required",
+        "dateOfBirthRequired" : "Date of Birth is required",
+        "invalidEmail" : "Invalid email format",
+        "invalidPassword" : "Password should be at least 8 characters long",
+        "invalidPhone" : "Invalid phone number",
+        "forgetPassword" : "Forget Password",
+        "noWorry" : "No worry, we got you",
+        "sendCode" : "Send Code",
+        "search" : "Search",
+        "finish" : "Finish"
         
-        
-        
-        
-        
+    },
+    "dialog": {
+        "cancel": "Cancel",
+        "ok": "Ok",
+        "oops": "Oops, Field"
+    },
+    "home" : {
+        "search" : "Search",
+        "doctors" : "Doctors",
+        "laboratories" : "Laboratories",
+        "nurses" : "Nurses",
+        "pharmacies" : "Pharmacies",
+        "hospitals" : "Hospitals",
+        "clinics" : "Clinics",
+        "upcomingVisits" : "Upcoming Visits",
+        "doctorSpeciality" : "Doctor Speciality",
+        "offers" : "Offers",
+        "seeAll" : "See All",
+        "topRatedDoctors" : "Top Rated Doctors",
+        "bookNow" : "Book Now"
+
+    },
+    "appointments" : {
+        "upcoming" : "Upcoming",
+        "completed" : "Completed",
+        "canceled" : "Canceled",
+        "myAppointments" : "My Appointments",
+        "cancel" : "Cancel",
+        "reschedule" : "Reschedule",
+        "leaveReview" : "Leave Review",
+        "bookAgain" : "Book Again"
+    },
+    "main" : {
+        "home" : "Home",
+        "appointments" : "Appointments",
+        "notifications" : "Notifications",
+        "chatbot" : "Chatbot"
     }
 }

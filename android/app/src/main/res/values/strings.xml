@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Medical_system</string>
+    <string name="facebook_app_id">2086294675138091</string>
+    <string name="facebook_client_token">0ea9272f8cd1e365100ac03f31b9ee48</string>
+    <string name="fb_login_protocol_scheme">1d4a5bb7d7d1505375def05432ca7da3</string>
+</resources>

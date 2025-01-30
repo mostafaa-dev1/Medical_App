@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
@@ -62,25 +62,17 @@ class CustomButton extends StatelessWidget {
           backgroundColor: WidgetStateProperty.all(withBorderSide ?? false
               ? Colors.transparent
               : backgroundColor ?? AppColors.mainColor)),
-      onPressed: onPressed,
+      onPressed: isLoading ?? false ? null : onPressed,
       child: isLoading ?? false
-          ? SizedBox(
-              width: width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Please wait',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: buttonColor ?? Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: fontSize ?? 16,
-                          )),
-                  horizontalSpace(15),
-                  const CupertinoActivityIndicator(
-                    color: Colors.white,
-                  )
-                ],
-              ),
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LoadingAnimationWidget.threeArchedCircle(
+                  color: buttonColor ?? Colors.white,
+                  size: 23,
+                ),
+              ],
             )
           : Row(
               mainAxisSize: MainAxisSize.min,
@@ -99,6 +91,7 @@ class CustomButton extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: buttonColor ?? Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: fontSize ?? 16.sp,
                         )),
                 icon != null && reightIcon == true
                     ? horizontalSpace(5)

@@ -23,12 +23,14 @@ lightTheme(TextStyle Function() fontStyle) => ThemeData(
           fontWeight: FontWeight.bold,
         ),
         titleMedium: fontStyle().copyWith(
-          fontSize: 16.sp,
+          fontSize: 20.sp,
           color: AppColors.darkBlue,
+          fontWeight: FontWeight.bold,
         ),
         titleSmall: fontStyle().copyWith(
-          fontSize: 14.sp,
+          fontSize: 18.sp,
           color: AppColors.darkBlue,
+          fontWeight: FontWeight.bold,
         ),
         bodyLarge: fontStyle().copyWith(
             fontSize: 16.sp,
@@ -63,7 +65,7 @@ lightTheme(TextStyle Function() fontStyle) => ThemeData(
       cardColor: const Color.fromARGB(255, 245, 245, 245),
       highlightColor: const Color.fromARGB(255, 243, 243, 243),
       dividerColor: Colors.grey[300],
-      canvasColor: Colors.black,
+      canvasColor: AppColors.darkBlue,
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
         seedColor: AppColors.mainColor,

@@ -32,6 +32,7 @@
     },
     "Auth" : {
         "createAccount" : "إنشاء حساب",
+        "fillProfile" : "املأ الملف الشخصي",
         "loginToAccount" : "تسجيل الدخول إلى حسابك",
         "login" : "تسجيل الدخول",
         "register" : "انشاء ",
@@ -58,13 +59,65 @@
         "day" : "يوم",
         "month" : "شهر",
         "year" : "سنة",
+        "bof" : "يوم/شهر/سنة",
         "verify" : "تحقق",
         "code" : "ادخل الكود للاستمرار", 
         "codeSent" : "تم ارسال الكود الى ",
         "resend" : "اعادة الارسال",
         "don'tReceiveCode" : "لم يتم الارسال؟",
         "backToLogin" : " تسجيل الدخول",
-        "Continue" : "متابعة"
+        "Continue" : "متابعة",
+        "passwordRequired" : "كلمة المرور مطلوبة",
+        "emailRequired" : "البريد الالكتروني مطلوب",
+        "nameRequired" : "الاسم مطلوب",
+        "phoneRequired" : "الهاتف مطلوب",
+        "dateOfBirthRequired" : "تاريخ الميلاد مطلوب",
+        "invalidEmail" : "البريد الالكتروني غير صحيح",
+        "invalidPassword" : " كلمه المرور يجب ان تكون 8 حروف او اكثر",
+        "invalidPhone" : "الهاتف غير صحيح",
+        "forgetPassword" : "نسيت كلمة المرور",
+        "noWorry" : "",
+        "sendCode" : "ارسل الكود",
+        "search" : "بحث",
+        "finish" : "انهاء"
+    },
+    "dialog" : {
+        "cancel" : "إلغاء",
+        "ok" : "موافق",
+        "oops" : "خطأ"
+    },
+    "home" : {
+        "search" : "بحث",
+        "doctors" : "اطباء",
+        "hospitals" : "مستشفيات",
+        "pharmacies" : "صيدليات",
+        "clinics" : "عيادات",
+        "nurses" : "ممرضات",
+        "laboratories" : "معامل",
+        "upcomingVisits" : "الزيارات المقبلة",
+        "doctorSpeciality" : "التخصص",
+        "offers": "العروض",
+        "seeAll" : "عرض الكل",
+        "topRatedDoctors" : "الاطباء المميزين",
+        "bookNow" : "حجز الان"
+    },
+    "appointments" : {
+        "upcoming" : "المقبلة",
+        "completed" : "المكتملة",
+        "canceled" : "الملغية",
+        "myAppointments" :"حجوزاتي",
+        "cancel" : "الغاء",
+        "reschedule" : "اعادة الزيارة",
+        "bookAgain" : "حجز مرة اخرى",
+        "leaveReview" : "تقييم"
+    },
+    "main" : {
+        "home" : "الرئيسية",
+        "appointments" : "الحجوزات",
+        "chatbot" : "الدردشة",
+        "notifications" : "الاشعارات"
+        
     }
+    
         
 }

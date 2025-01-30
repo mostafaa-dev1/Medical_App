@@ -16,6 +16,8 @@ class CustomTextFrom extends StatelessWidget {
   final int? maxLength;
   final String? counterText;
   final bool? enabled;
+  final VoidCallback? onTap;
+  final bool? readOnly;
 
   const CustomTextFrom({
     super.key,
@@ -31,6 +33,8 @@ class CustomTextFrom extends StatelessWidget {
     this.maxLength,
     this.counterText,
     this.enabled,
+    this.onTap,
+    this.readOnly,
   });
 
   @override
@@ -43,7 +47,10 @@ class CustomTextFrom extends StatelessWidget {
           ),
       obscureText: obscureText ?? false,
       validator: validator,
+      enabled: enabled ?? true,
+      readOnly: readOnly ?? false,
       keyboardType: keyboardType,
+      onTap: onTap,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         hintText: hintText,

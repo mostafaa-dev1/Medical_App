@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/custom_button.dart';
 
-class CustonDialog extends StatelessWidget {
-  const CustonDialog({super.key});
+class CustomDialog extends StatelessWidget {
+  const CustomDialog({super.key, required this.isError, required this.message});
+  final bool isError;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +27,30 @@ class CustonDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SvgPicture.asset(
-                'assets/images/dialog/user_dialog.svg',
-              ),
-              Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  'Auth.login'.tr(),
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              ),
-              Text(
-                'Auth.pleaseWait'.tr(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                'assets/images/dialog/error.svg',
+                height: 200,
               ),
               verticalSpace(20),
-              const CircularProgressIndicator(
-                color: AppColors.secondaryColor,
-              )
+              Text(
+                'dialog.oops'.tr(),
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              verticalSpace(10),
+              Text(
+                message,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              verticalSpace(20),
+              CustomButton(
+                  backgroundColor:
+                      isError ? AppColors.lightRed : AppColors.secondaryColor,
+                  buttonName: 'dialog.ok'.tr(),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  width: 100,
+                  paddingVirtical: 10,
+                  paddingHorizental: 20)
             ],
           ),
         ),
