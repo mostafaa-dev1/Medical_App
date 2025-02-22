@@ -21,7 +21,7 @@ class DoctorSpciality extends StatelessWidget {
             children: [
               Text(
                 'home.doctorSpeciality'.tr(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               const Spacer(),
               GestureDetector(
@@ -50,10 +50,11 @@ class DoctorSpciality extends StatelessWidget {
                         right: LanguageChecker.isArabic(context) ? 10 : 0),
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.mainColor),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
                           'assets/images/categories/${categories[index]}.svg',

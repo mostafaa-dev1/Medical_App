@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/register/widgets/personal_info/logic/personal_info_cubit.dart';
+import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
 
 class PhoneTextFiled extends StatelessWidget {
   const PhoneTextFiled({super.key});

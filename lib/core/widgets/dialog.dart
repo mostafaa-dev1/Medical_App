@@ -8,9 +8,20 @@ import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
 
 class CustomDialog extends StatelessWidget {
-  const CustomDialog({super.key, required this.isError, required this.message});
+  const CustomDialog(
+      {super.key,
+      required this.isError,
+      required this.message,
+      this.onPressed,
+      this.withTowButtons,
+      this.color,
+      this.buttonName});
   final bool isError;
   final String message;
+  final VoidCallback? onPressed;
+  final bool? withTowButtons;
+  final Color? color;
+  final String? buttonName;
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +52,35 @@ class CustomDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               verticalSpace(20),
-              CustomButton(
-                  backgroundColor:
-                      isError ? AppColors.lightRed : AppColors.secondaryColor,
-                  buttonName: 'dialog.ok'.tr(),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  width: 100,
-                  paddingVirtical: 10,
-                  paddingHorizental: 20)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                      backgroundColor: isError
+                          ? AppColors.lightRed
+                          : withTowButtons ?? false
+                              ? Colors.grey[200]
+                              : color ?? AppColors.mainColor,
+                      buttonName: 'dialog.ok'.tr(),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      width: 100,
+                      paddingVirtical: 10,
+                      paddingHorizental: 20),
+                  withTowButtons ?? false
+                      ? CustomButton(
+                          backgroundColor: isError
+                              ? AppColors.lightRed
+                              : color ?? AppColors.secondaryColor,
+                          buttonName: buttonName ?? 'dialog.ok'.tr(),
+                          onPressed: onPressed ?? () {},
+                          width: 100,
+                          paddingVirtical: 10,
+                          paddingHorizental: 20)
+                      : SizedBox()
+                ],
+              )
             ],
           ),
         ),

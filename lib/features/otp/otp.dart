@@ -33,16 +33,12 @@ class Otp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Auth.verify'.tr(),
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: AppColors.secondaryColor,
                         )),
                 verticalSpace(5),
-                Text(
-                  'Auth.code'.tr(),
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColors.darkBlue,
-                      ),
-                ),
+                Text('Auth.code'.tr(),
+                    style: Theme.of(context).textTheme.bodySmall),
                 verticalSpace(20),
                 Center(
                   child: Column(
@@ -84,6 +80,8 @@ class Otp extends StatelessWidget {
                         validator: (value) {
                           return 'Pin is incorrect';
                         },
+                        errorText: 'auth.pinIsIncorrect'.tr(),
+                        errorTextStyle: Theme.of(context).textTheme.labelLarge,
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
                           debugPrint('onCompleted: $pin');
@@ -123,17 +121,15 @@ class Otp extends StatelessWidget {
                       verticalSpace(20),
                       Text.rich(TextSpan(
                         text: 'Auth.don\'tReceiveCode'.tr(),
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodySmall,
                         children: [
                           TextSpan(
                             recognizer: TapGestureRecognizer()..onTap = () {},
                             text: 'Auth.resend'.tr(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: AppColors.secondaryColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: AppColors.secondaryColor,
+                                    ),
                           ),
                         ],
                       )),
@@ -145,10 +141,10 @@ class Otp extends StatelessWidget {
                             IconBroken.Arrow___Left,
                             size: 20,
                           ),
-                          horizontalSpace(20),
+                          horizontalSpace(5),
                           Text(
                             'Auth.backToLogin'.tr(),
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],
                       ),

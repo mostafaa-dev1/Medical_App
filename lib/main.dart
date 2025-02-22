@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/constants/keys.dart';
 import 'package:medical_system/core/networking/bloc_observer.dart';
-import 'package:medical_system/core/networking/shared_preferances.dart';
+import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
 import 'package:medical_system/core/routing/router.dart';
 import 'package:medical_system/firebase_options.dart';
 import 'package:medical_system/medical_app.dart';
@@ -15,7 +15,7 @@ Future<void> main() async {
   CashHelper.init();
   await EasyLocalization.ensureInitialized();
   await Supabase.initialize(
-      url: 'https://rtyoiajuweefbckoyxod.supabase.co',
+      url: 'https://msdevthblsqhdajshazd.supabase.co',
       anonKey: AppKeys.supabase);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

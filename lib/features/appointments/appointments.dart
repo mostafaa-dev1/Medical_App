@@ -15,7 +15,7 @@ class Appointments extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('appointments.myAppointments'.tr(),
-            style: Theme.of(context).textTheme.titleLarge),
+            style: Theme.of(context).textTheme.titleSmall),
       ),
       body: Container(
         padding: const EdgeInsets.all(8.0),
@@ -27,13 +27,13 @@ class Appointments extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
           ),
           tabBarProperties: TabBarProperties(
-            unselectedLabelColor: Colors.grey[400],
-            unselectedLabelStyle: Theme.of(context).textTheme.bodyLarge,
+            unselectedLabelColor: Colors.grey[300],
+            unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium,
             labelColor: AppColors.mainColor,
             indicatorColor: AppColors.mainColor,
             indicatorWeight: 3,
             indicatorSize: TabBarIndicatorSize.tab,
-            labelStyle: Theme.of(context).textTheme.bodyLarge,
+            labelStyle: Theme.of(context).textTheme.bodyMedium,
           ),
           tabs: [
             Text(

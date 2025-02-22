@@ -28,3 +28,21 @@ final class UploadingImageError extends PersonalInfoState {
 final class UploadingImageSuccess extends PersonalInfoState {}
 
 final class DateSelected extends PersonalInfoState {}
+
+final class PickImage extends PersonalInfoState {}
+
+final class UploadPersonalInfoLoading extends PersonalInfoState {}
+
+final class UploadPersonalInfoError extends PersonalInfoState {
+  final String message;
+  UploadPersonalInfoError(this.message);
+}
+
+final class UploadPersonalInfoSuccess extends PersonalInfoState {}
+
+final class PersonalInfoSuccess extends PersonalInfoState {}
+
+final class PersonalInfoError extends PersonalInfoState {
+  final String message;
+  PersonalInfoError(this.message);
+}

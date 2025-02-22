@@ -10,4 +10,9 @@ class AppRoutes {
   static const String forgetPassword = '/forgetPassword';
   static const String appointments = '/appointments';
   static const String mainScreen = '/mainScreen';
+  static const String profile = '/profile';
+  static const String selectLanguage = '/selectLanguage';
+  static const String doctorProfile = '/doctorProfile';
+  static const String search = '/search';
+  static const String pickAppointmentDate = '/pickAppointmentDate';
 }

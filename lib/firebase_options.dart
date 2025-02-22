@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,19 +41,51 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyABE2CZKHcYq_bxRMlpm5oWEEDVK10F2w0',
-    appId: '1:5161913159:android:15065f5effa86925b55a62',
-    messagingSenderId: '5161913159',
-    projectId: 'medical-system-20881',
-    storageBucket: 'medical-system-20881.firebasestorage.app',
+    apiKey: 'AIzaSyB_jH7YJrxdQjsou39-t5sfaLV2BU94-t4',
+    appId: '1:922759140726:android:96db213fc5a8d3f5469657',
+    messagingSenderId: '922759140726',
+    projectId: 'social-app-11fa2',
+    storageBucket: 'social-app-11fa2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAp3aizrn-mCHtXBQVTDvwV7VVfD0BwCEc',
-    appId: '1:5161913159:ios:718af92b6febf718b55a62',
-    messagingSenderId: '5161913159',
-    projectId: 'medical-system-20881',
-    storageBucket: 'medical-system-20881.firebasestorage.app',
+    apiKey: 'AIzaSyAmHqH3kdzOJGpqr8vsd4oJvTJYVFK9ejQ',
+    appId: '1:922759140726:ios:346700a2940677ed469657',
+    messagingSenderId: '922759140726',
+    projectId: 'social-app-11fa2',
+    storageBucket: 'social-app-11fa2.appspot.com',
+    androidClientId: '922759140726-7lr5kpkdp5e3egvr5ai07g45ivpisb0v.apps.googleusercontent.com',
     iosBundleId: 'com.example.medicalSystem',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBwNMBrLvzio7F9Y6jya9W3EV6UqeYcTZk',
+    appId: '1:922759140726:web:6657c8a446776430469657',
+    messagingSenderId: '922759140726',
+    projectId: 'social-app-11fa2',
+    authDomain: 'social-app-11fa2.firebaseapp.com',
+    storageBucket: 'social-app-11fa2.appspot.com',
+    measurementId: 'G-2164RYT3P4',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAmHqH3kdzOJGpqr8vsd4oJvTJYVFK9ejQ',
+    appId: '1:922759140726:ios:346700a2940677ed469657',
+    messagingSenderId: '922759140726',
+    projectId: 'social-app-11fa2',
+    storageBucket: 'social-app-11fa2.appspot.com',
+    androidClientId: '922759140726-7lr5kpkdp5e3egvr5ai07g45ivpisb0v.apps.googleusercontent.com',
+    iosBundleId: 'com.example.medicalSystem',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBwNMBrLvzio7F9Y6jya9W3EV6UqeYcTZk',
+    appId: '1:922759140726:web:25b060cacdb6e6c7469657',
+    messagingSenderId: '922759140726',
+    projectId: 'social-app-11fa2',
+    authDomain: 'social-app-11fa2.firebaseapp.com',
+    storageBucket: 'social-app-11fa2.appspot.com',
+    measurementId: 'G-3K6KJPFV8X',
+  );
+
 }

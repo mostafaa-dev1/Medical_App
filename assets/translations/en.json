@@ -78,7 +78,21 @@
         "noWorry" : "No worry, we got you",
         "sendCode" : "Send Code",
         "search" : "Search",
-        "finish" : "Finish"
+        "finish" : "Finish",
+        "pinIsIncorrect" : "Pin is incorrect",
+        "emailUsed" : "Email is already used",
+        "passwordWeak" : "Password is weak",
+        "networkError" : "Network error",
+        "unexpectedError" : "Unexpected error, please try again later",
+        "emailNotExists" : "Email does not exist",
+        "worngPassword" : "Wrong password",
+        "invalidCeredentials" : "Email or password is incorrect",
+        "userExists" : "User already exists",
+        "dataTooLong" :"Your input data is too long",
+        "formatError" : "Invalid input format",
+        "oops" :"Oops, Field"
+
+
         
     },
     "dialog": {
@@ -99,7 +113,8 @@
         "offers" : "Offers",
         "seeAll" : "See All",
         "topRatedDoctors" : "Top Rated Doctors",
-        "bookNow" : "Book Now"
+        "bookNow" : "Book Now",
+        "goodMorning" : "Good Morning"
 
     },
     "appointments" : {
@@ -117,5 +132,18 @@
         "appointments" : "Appointments",
         "notifications" : "Notifications",
         "chatbot" : "Chatbot"
+    },
+   "profile" :{
+        "profile" : "Profile",
+        "editProfile" : "Edit Profile",
+        "notifications" : "Notifications",
+        "themeMode" : "Theme Mode",
+        "logout" : "Logout",
+        "language" : "Language",
+        "helpCenter" : "Help Center",
+        "contactUs" : "Contact Us",
+        "inviteFriends" : "Invite Friends",
+        "payment" : "Payment",
+        "selectLanguage" : "Select Your Language"
     }
 }

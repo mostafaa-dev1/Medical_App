@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
-import 'package:medical_system/features/register/widgets/personal_info/logic/personal_info_cubit.dart';
+import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
 
 class MaleFemale extends StatelessWidget {
   const MaleFemale({super.key});

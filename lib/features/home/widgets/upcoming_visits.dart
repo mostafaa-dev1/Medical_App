@@ -20,7 +20,7 @@ class UpcomingVisits extends StatelessWidget {
           child: Row(
             children: [
               Text('home.upcomingVisits'.tr(),
-                  style: Theme.of(context).textTheme.titleMedium),
+                  style: Theme.of(context).textTheme.titleSmall),
               const Spacer(),
               GestureDetector(
                 onTap: () {},
@@ -57,7 +57,7 @@ class UpcomingVisits extends StatelessWidget {
                             offset: const Offset(0, 3),
                           )
                         ],
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(25),
                         color: index % 2 != 0
                             ? Theme.of(context).colorScheme.primary
                             : AppColors.mainColor,

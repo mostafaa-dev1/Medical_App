@@ -19,7 +19,7 @@ class Offers extends StatelessWidget {
             children: [
               Text(
                 'home.offers'.tr(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               const Spacer(),
               GestureDetector(
@@ -35,7 +35,7 @@ class Offers extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 120,
+          height: 130,
           child: ListView.builder(
               itemCount: 5,
               scrollDirection: Axis.horizontal,
@@ -70,9 +70,21 @@ class Offers extends StatelessWidget {
                                   'Brain and Nerves',
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
-                                Text(
-                                  'Dr. Mohamed Ali',
-                                  style: Theme.of(context).textTheme.bodySmall,
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 12,
+                                      backgroundImage: AssetImage(
+                                        'assets/images/doctor.png',
+                                      ),
+                                    ),
+                                    horizontalSpace(5),
+                                    Text(
+                                      'Dr. Mohamed Ali',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -83,7 +95,7 @@ class Offers extends StatelessWidget {
                                   '20%',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyLarge!
+                                      .bodyMedium!
                                       .copyWith(color: Colors.red),
                                 ),
                                 Text.rich(TextSpan(
@@ -101,7 +113,7 @@ class Offers extends StatelessWidget {
                                         text: ' - 400',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!)
+                                            .bodySmall!)
                                   ],
                                 ))
                               ],
@@ -129,7 +141,7 @@ class Offers extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                'Appoint',
+                                'home.bookNow'.tr(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!

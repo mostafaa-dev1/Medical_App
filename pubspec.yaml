@@ -28,26 +28,34 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animated_toggle_switch: ^0.8.4
+  animations: ^2.0.11
   bottom_picker: ^2.10.1
   build_runner: ^2.4.14
+  cloud_firestore: ^5.6.2
   contained_tab_bar_view: ^0.8.0
+  crypto: ^3.0.6
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
+  easy_date_timeline: ^2.0.6
   easy_localization: ^3.0.7
   firebase_auth: ^5.4.1
   firebase_core: ^3.10.1
+  firebase_storage: ^12.4.1
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
   flutter_facebook_auth: ^7.1.1
   flutter_native_splash: ^2.4.4
   flutter_screenutil: ^5.9.3
+  flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.0.17
   geocoding: ^3.0.0
   geolocator: ^13.0.2
   google_fonts: ^6.2.1
   google_nav_bar: ^5.0.7
   google_sign_in: ^6.2.2
+  heart_bpm: ^2.0.0+0
   icon_broken: ^1.1.0
   image_picker: ^1.1.2
   intl_phone_field: ^3.2.0
@@ -57,6 +65,7 @@ dependencies:
   shared_preferences: ^2.3.5
   smooth_page_indicator: ^1.2.0+3
   supabase_flutter: ^2.8.3
+  syncfusion_flutter_datepicker: ^28.2.6
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3

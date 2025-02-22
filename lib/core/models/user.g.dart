@@ -10,9 +10,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
       name: json['name'] as String,
       email: json['email'] as String,
-      image: json['imageUrl'] as String,
+      image: json['image'] as String,
       phone: json['phone'] as String,
-      dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
+      dateOfBirth: DateTime.parse(json['date_of_birth'] as String),
       gender: json['gender'] as String,
       uid: json['uid'] as String,
     );

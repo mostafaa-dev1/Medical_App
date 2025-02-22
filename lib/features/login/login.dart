@@ -26,12 +26,17 @@ class Login extends StatelessWidget {
               context: context,
               builder: (context) => CustomDialog(
                     isError: true,
-                    message: state.message,
+                    message: state.message.tr(),
                   ));
+        }
+        if (state is LoginSuccess) {
+          context.pushNamedAndRemoveUntil(AppRoutes.mainScreen,
+              arguments: state.user);
         }
       },
       builder: (context, state) {
         var cubit = context.read<LoginCubit>();
+
         return Scaffold(
             body: SafeArea(
           child: Padding(
@@ -48,7 +53,7 @@ class Login extends StatelessWidget {
                       'assets/images/logo.svg',
                       height: MediaQuery.of(context).size.width / 2.5,
                     ),
-                    verticalSpace(100),
+                    verticalSpace(MediaQuery.of(context).size.height / 10),
                     Text('Auth.loginToAccount'.tr(),
                         style: Theme.of(context).textTheme.headlineSmall!),
                     verticalSpace(50),
@@ -72,7 +77,7 @@ class Login extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'Auth.passwordRequired'.tr();
                           }
-                          if (!AppRegex.isEmailValid(value)) {
+                          if (value.length < 8) {
                             return 'Auth.invalidPassword'.tr();
                           }
                           return null;
@@ -110,18 +115,12 @@ class Login extends StatelessWidget {
                     ),
                     verticalSpace(20),
                     CustomButton(
+                        isLoading: state is LoginLoading,
                         buttonName: 'Auth.login'.tr(),
                         onPressed: () {
                           if (cubit.formKey.currentState!.validate()) {
                             cubit.login();
                           }
-                          // showDialog(
-                          //     barrierDismissible: false,
-                          //     useRootNavigator: false,
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return CustonDialog();
-                          //     });
                         },
                         width: MediaQuery.of(context).size.width / 1.5,
                         paddingVirtical: 10,
@@ -137,33 +136,43 @@ class Login extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.grey[300]!,
+                        GestureDetector(
+                          onTap: () {
+                            cubit.loginWithFacebook();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.grey[300]!,
+                              ),
                             ),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/images/facebook.svg',
-                            height: 30,
-                            width: 30,
+                            child: SvgPicture.asset(
+                              'assets/images/facebook.svg',
+                              height: 30,
+                              width: 30,
+                            ),
                           ),
                         ),
                         horizontalSpace(50),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.grey[300]!,
+                        GestureDetector(
+                          onTap: () {
+                            cubit.loginWithGoogle();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.grey[300]!,
+                              ),
                             ),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/images/google.svg',
-                            height: 30,
-                            width: 30,
+                            child: SvgPicture.asset(
+                              'assets/images/google.svg',
+                              height: 30,
+                              width: 30,
+                            ),
                           ),
                         ),
                       ],

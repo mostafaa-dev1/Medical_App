@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_system/core/models/user.dart';
@@ -21,20 +23,21 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> register() async {
     emit(RegisterLoading());
-    final result = await auth.signUpWithEmailAndPassword(
-        emailController.text, passwordController.text);
+    final result = await auth.createUserWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
     result.fold((l) {
       emit(RegisterError(l));
     }, (response) {
       user = User(
-        uid: response.user!.uid,
-        name: response.user!.displayName ?? "",
+        uid: response!.uid,
+        name: response.displayName ?? "",
         gender: "",
         dateOfBirth: DateTime.now(),
-        email: response.user!.email!,
-        image: response.user!.photoURL ?? "",
-        phone: response.user!.phoneNumber ?? "",
+        email: response.email!,
+        image: response.photoURL ?? "",
+        phone: response.phoneNumber ?? "",
       );
+      log(user!.toJson().toString());
       emit(RegisterSuccess());
     });
   }
@@ -53,6 +56,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         image: response.user!.photoURL ?? "",
         phone: response.user!.phoneNumber ?? "",
       );
+      log(user!.toJson().toString());
 
       emit(RegisterSuccess());
     });
@@ -63,6 +67,18 @@ class RegisterCubit extends Cubit<RegisterState> {
     result.fold((l) {
       emit(RegisterError(l));
     }, (r) {
+      user = User(
+        uid: r.user!.uid,
+        name: r.user!.displayName ?? "",
+        gender: "",
+        dateOfBirth: DateTime.now(),
+        email: r.user!.email!,
+        image: r.user!.photoURL ?? "",
+        phone: r.user!.phoneNumber ?? "",
+      );
+      log(
+        user!.toJson().toString(),
+      );
       emit(RegisterSuccess());
     });
   }

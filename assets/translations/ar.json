@@ -79,7 +79,19 @@
         "noWorry" : "",
         "sendCode" : "ارسل الكود",
         "search" : "بحث",
-        "finish" : "انهاء"
+        "finish" : "انهاء",
+        "pinIsIncorrect" : "الكود غير صحيح",
+        "emailUsed": "البريد الالكتروني مستخدم بالفعل",
+        "passwordWeak" : "كلمة المرور ضعيفة جدًا",
+        "emailNotExists" : "البريد الإلكتروني غير مسجل مسبقًا",
+        "networkError" : "خطأ في الشبكة، تحقق من اتصالك بالإنترنت",
+        "unexpectedError" : "حدث خطأ غير متوقع، يرجى المحاولة لاحقًا",
+        "worngPassword" : "كلمة المرور غير صحيحة",
+        "invalidCeredentials" : "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        "userExists" : "المستخدم موجود بالفعل",
+        "dataTooLong" :"تم تجاوز الحد الأقصى لطول البيانات",
+        "formatError" : "البيانات المدخلة غير صحيحة، تحقق من القيم المرتبطة",
+        "oops" : "حدث خطاء ما"
     },
     "dialog" : {
         "cancel" : "إلغاء",
@@ -99,7 +111,8 @@
         "offers": "العروض",
         "seeAll" : "عرض الكل",
         "topRatedDoctors" : "الاطباء المميزين",
-        "bookNow" : "حجز الان"
+        "bookNow" : "حجز الان",
+        "goodMorning" : "صباح الخير"
     },
     "appointments" : {
         "upcoming" : "المقبلة",
@@ -117,6 +130,21 @@
         "chatbot" : "الدردشة",
         "notifications" : "الاشعارات"
         
+    },
+
+    "profile" : {
+        "profile" : "الملف الشخصي",
+        "editProfile" : "تعديل الملف الشخصي",
+        "logout" : "تسجيل الخروج",
+        "language" : "اللغة",
+        "themeMode" : "وضع النظام",
+        "helpCenter" : "مركز المساعدة",
+        "inviteFriends" : "دعوة الاصدقاء",
+        "payment" : "طرق الدفع",
+        "notifications" : "الاشعارات",
+        "selectLanguage" : "اختر اللغة",
+        "contactUs" : "اتصل بنا"
+
     }
     
         

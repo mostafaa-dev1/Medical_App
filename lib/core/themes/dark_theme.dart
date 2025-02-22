@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
-ThemeData darkTheme(TextStyle Function() fontStyle) => ThemeData(
+ThemeData darkTheme(TextStyle Function() fontStyle, BuildContext context) =>
+    ThemeData(
       cupertinoOverrideTheme: const CupertinoThemeData(
         primaryColor: AppColors.mainColor,
         applyThemeToAll: true,
@@ -58,23 +59,26 @@ ThemeData darkTheme(TextStyle Function() fontStyle) => ThemeData(
       brightness: Brightness.dark,
       cardColor: Colors.grey[850],
       highlightColor: Colors.grey[850],
-      dividerColor: Colors.grey[800],
+      dividerColor: Colors.grey[850],
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
         seedColor: AppColors.mainColor,
         primary: Colors.grey[850],
-        background: Colors.grey[900],
         secondary: Colors.grey[800],
         shadow: Colors.grey[900],
       ),
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.grey[900],
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.black,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
           surfaceTintColor: Colors.transparent,
+          titleTextStyle: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Colors.white),
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.grey[900],
             statusBarIconBrightness: Brightness.light,

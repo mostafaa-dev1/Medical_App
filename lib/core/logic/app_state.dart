@@ -28,3 +28,5 @@ class AppPreferencesLoaded extends AppState {
 }
 
 final class AppPageIndexChanged extends AppState {}
+
+final class AppLogout extends AppState {}

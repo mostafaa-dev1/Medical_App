@@ -12,8 +12,8 @@ class DoctorCardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 3.8,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      width: MediaQuery.of(context).size.width / 3,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: color ?? AppColors.mainColor,

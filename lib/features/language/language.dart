@@ -59,7 +59,9 @@ class Language extends StatelessWidget {
                       verticalSpace(50),
                       LanguageButton(
                         onPressed: () {
-                          context.read<AppCubit>().toggleLanguage(context);
+                          context
+                              .read<AppCubit>()
+                              .toggleLanguage(context, 'en');
                         },
                         languageIndex: languageIndex,
                         title: 'English',
@@ -68,7 +70,9 @@ class Language extends StatelessWidget {
                       verticalSpace(20),
                       LanguageButton(
                         onPressed: () {
-                          context.read<AppCubit>().toggleLanguage(context);
+                          context
+                              .read<AppCubit>()
+                              .toggleLanguage(context, 'ar');
                         },
                         languageIndex: languageIndex,
                         title: 'عربي',
@@ -83,14 +87,14 @@ class Language extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 1.5,
                           paddingVirtical: 10,
                           paddingHorizental: 20),
-                      CustomButton(
-                          buttonName: 'Change Theme'.tr(),
-                          onPressed: () {
-                            context.read<AppCubit>().changeThemeMode();
-                          },
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          paddingVirtical: 10,
-                          paddingHorizental: 20)
+                      // CustomButton(
+                      //     buttonName: 'Change Theme'.tr(),
+                      //     onPressed: () {
+                      //       context.read<AppCubit>().changeThemeMode();
+                      //     },
+                      //     width: MediaQuery.of(context).size.width / 1.5,
+                      //     paddingVirtical: 10,
+                      //     paddingHorizental: 20)
                     ]),
               ),
             ),

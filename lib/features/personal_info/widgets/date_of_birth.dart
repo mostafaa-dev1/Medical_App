@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/register/widgets/personal_info/logic/personal_info_cubit.dart';
+import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
 
 void pickBirthDate(BuildContext context) {
   BottomPicker.date(

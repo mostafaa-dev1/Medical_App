@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medical_system/core/networking/services/auth/auth_service.dart';
-import 'package:medical_system/core/networking/shared_preferances.dart';
+import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
 import 'package:medical_system/features/ai_chat/ai_chat.dart';
 import 'package:medical_system/features/appointments/appointments.dart';
 import 'package:medical_system/features/home/home.dart';
@@ -26,24 +26,29 @@ class AppCubit extends Cubit<AppState> {
   TextStyle Function() get fontStyle => _fontStyle;
 
   int languageIndex = 0;
-
-  void changeThemeMode() {
+  int themeIndex = 0;
+  void changeThemeMode(int index) {
     _themeMode =
         _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    themeIndex = _themeMode == ThemeMode.light ? 0 : 1;
     emit(AppThemeChanged(_themeMode));
     _saveThemePreferances(_locale);
   }
 
-  void toggleLanguage(BuildContext context) {
-    if (_locale.languageCode == 'en') {
+  void toggleLanguage(BuildContext context, String language) {
+    if (language == _locale.languageCode) {
+      return;
+    }
+    if (language == 'ar') {
       languageIndex = 1;
       _locale = const Locale('ar');
-      _fontStyle = () => GoogleFonts.almarai();
+      _fontStyle = () => GoogleFonts.cairo();
     } else {
       languageIndex = 0;
       _locale = const Locale('en');
       _fontStyle = () => GoogleFonts.poppins();
     }
+
     context.setLocale(_locale);
     emit(AppLanguageChanged(_locale));
     emit(AppFontChanged(_fontStyle));
@@ -71,6 +76,7 @@ class AppCubit extends Cubit<AppState> {
     log('Theme: $_themeMode');
 
     languageIndex = languageCode == 'ar' ? 1 : 0;
+    themeIndex = _themeMode == ThemeMode.light ? 0 : 1;
 
     _fontStyle = languageCode == 'ar'
         ? () => GoogleFonts.almarai()
@@ -91,5 +97,11 @@ class AppCubit extends Cubit<AppState> {
 
   bool isUserRegistered() {
     return AuthService().currentUser != null;
+  }
+
+  void logout() async {
+    await AuthService().signOut().then((_) {
+      emit(AppLogout());
+    });
   }
 }

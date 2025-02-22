@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:icon_broken/icon_broken.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
-import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/doctor_card_button.dart';
 import 'package:medical_system/core/widgets/doctor_card_oulined_button.dart';
 
@@ -29,110 +28,96 @@ class DoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(left: 60),
-          padding: const EdgeInsets.only(left: 60, right: 10),
-          height: withButtons ? 120 : 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(35),
-            color: Theme.of(context).colorScheme.primary,
-            border: Border.all(
-              width: 0.5,
-              color: AppColors.mainColor,
-            ),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      height: withButtons ? 140 : 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(35),
+        color: Theme.of(context).colorScheme.primary,
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow,
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
           ),
-          child: Column(
-            textDirection: ui.TextDirection.ltr,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+        ],
+      ),
+      child: Column(
+        textDirection: ui.TextDirection.ltr,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+              textDirection: ui.TextDirection.ltr,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/doctor.png',
+                    ),
+                    fit: BoxFit.fill,
+                    width: 35,
+                    height: 40,
+                  ),
+                ),
+                horizontalSpace(10),
+                Column(
+                  textDirection: ui.TextDirection.ltr,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Dr. Mohamed Ali',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    Text('Cardiologist',
+                        style: Theme.of(context).textTheme.labelMedium),
+                  ],
+                ),
+                Spacer(),
+                Icon(
+                  IconBroken.Location,
+                  size: 25,
+                )
+              ]),
+          verticalSpace(10),
+          Row(
             children: [
-              Text(
-                'Dr. John Doe',
-                style: Theme.of(context).textTheme.bodyLarge,
+              Icon(
+                IconBroken.Time_Circle,
+                size: 15,
               ),
-              Text(
-                'Brain and Nerves doctor',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              verticalSpace(5),
-              Row(
-                textDirection: ui.TextDirection.ltr,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                        children: [
-                          WidgetSpan(
-                              child: Icon(
-                            IconBroken.Time_Circle,
-                            size: 15,
-                          )),
-                          TextSpan(
-                            text: ' 5 Feb 2023 | 3:00 PM',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      )),
-                  withTrailingIcon ?? true ? Spacer() : SizedBox(),
-                  withTrailingIcon ?? true
-                      ? Icon(
-                          IconBroken.Chat,
-                          color: AppColors.mainColor,
-                        )
-                      : SizedBox()
-                ],
-              ),
-              verticalSpace(10),
-              withButtons
-                  ? Row(
-                      textDirection: ui.TextDirection.ltr,
-                      children: [
-                        GestureDetector(
-                          onDoubleTap: onTap1,
-                          child: DoctorCardOulinedButton(
-                            withIcon: false,
-                            buttonName: butttonName1 ?? '',
-                            borderColor: color,
-                          ),
-                        ),
-                        horizontalSpace(10),
-                        GestureDetector(
-                            onDoubleTap: onTap2,
-                            child: DoctorCardButton(
-                                buttonName: butttonName2 ?? '', color: color2)),
-                      ],
-                    )
-                  : SizedBox()
+              horizontalSpace(5),
+              Text('05 Feb 2025, 10:00 PM',
+                  style: Theme.of(context).textTheme.labelMedium),
             ],
           ),
-        ),
-        Positioned(
-          left: -50,
-          child: Container(
-            margin: const EdgeInsets.only(left: 60),
-            height: withButtons ? 110 : 100,
-            width: 100,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Theme.of(context).colorScheme.primary,
-                border: Border.all(
-                  width: 0.5,
-                  color: AppColors.mainColor,
-                )),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image(
-                  image: AssetImage('assets/images/doctor.png'),
-                  fit: BoxFit.fill,
-                )),
-          ),
-        ),
-      ],
+          verticalSpace(20),
+          withButtons
+              ? Row(
+                  textDirection: ui.TextDirection.ltr,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onDoubleTap: onTap1,
+                      child: DoctorCardOulinedButton(
+                        withIcon: false,
+                        buttonName: butttonName1 ?? '',
+                        borderColor: color,
+                      ),
+                    ),
+                    horizontalSpace(10),
+                    GestureDetector(
+                        onDoubleTap: onTap2,
+                        child: DoctorCardButton(
+                            buttonName: butttonName2 ?? '', color: color2)),
+                  ],
+                )
+              : SizedBox()
+        ],
+      ),
     );
   }
 }

@@ -25,16 +25,12 @@ class ForgetPassword extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Auth.forgetPassword'.tr(),
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: AppColors.secondaryColor,
                         )),
                 verticalSpace(5),
-                Text(
-                  'Auth.noWorry'.tr(),
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColors.darkBlue,
-                      ),
-                ),
+                Text('Auth.noWorry'.tr(),
+                    style: Theme.of(context).textTheme.bodySmall),
                 verticalSpace(20),
                 Center(
                   child: Column(

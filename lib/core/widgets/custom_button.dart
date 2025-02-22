@@ -91,7 +91,7 @@ class CustomButton extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: buttonColor ?? Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: fontSize ?? 16.sp,
+                          fontSize: fontSize ?? 14.sp,
                         )),
                 icon != null && reightIcon == true
                     ? horizontalSpace(5)

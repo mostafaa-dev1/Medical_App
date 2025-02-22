@@ -18,6 +18,7 @@ class CustomTextFrom extends StatelessWidget {
   final bool? enabled;
   final VoidCallback? onTap;
   final bool? readOnly;
+  final FocusNode? focusNode;
 
   const CustomTextFrom({
     super.key,
@@ -35,11 +36,13 @@ class CustomTextFrom extends StatelessWidget {
     this.enabled,
     this.onTap,
     this.readOnly,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       controller: controller,
       cursorColor: AppColors.mainColor,
       style: Theme.of(context).textTheme.bodyMedium!.copyWith(

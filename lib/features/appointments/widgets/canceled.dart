@@ -22,11 +22,13 @@ class Canceled extends StatelessWidget {
               ),
               verticalSpace(50),
               Text(
+                textAlign: TextAlign.center,
                 'You don’t have an appointment yet',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               verticalSpace(10),
               Text(
+                textAlign: TextAlign.center,
                 'You don’t have a doctor’s appointment scheduled of the moment',
                 style: Theme.of(context).textTheme.labelLarge,
               ),

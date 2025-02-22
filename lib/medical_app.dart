@@ -30,14 +30,15 @@ class MedicalApp extends StatelessWidget {
                 locale: context.read<AppCubit>().locale,
                 debugShowCheckedModeBanner: false,
                 title: 'Medical App',
-                theme: lightTheme(context.read<AppCubit>().fontStyle),
+                theme: lightTheme(context.read<AppCubit>().fontStyle, context),
                 onGenerateRoute: (settings) {
                   return appRouter.generateRoute(settings);
                 },
-                darkTheme: darkTheme(context.read<AppCubit>().fontStyle),
+                darkTheme:
+                    darkTheme(context.read<AppCubit>().fontStyle, context),
                 themeMode: context.read<AppCubit>().themeMode,
                 initialRoute: context.read<AppCubit>().isUserRegistered()
-                    ? AppRoutes.home
+                    ? AppRoutes.mainScreen
                     : AppRoutes.language,
               );
             },

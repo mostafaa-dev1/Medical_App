@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
-lightTheme(TextStyle Function() fontStyle) => ThemeData(
+lightTheme(TextStyle Function() fontStyle, BuildContext context) => ThemeData(
       textTheme: TextTheme(
         headlineLarge: fontStyle().copyWith(
             fontSize: 32.sp,
@@ -51,36 +51,36 @@ lightTheme(TextStyle Function() fontStyle) => ThemeData(
         labelSmall:
             fontStyle().copyWith(fontSize: 11.sp, color: AppColors.darkBlue),
       ),
-      iconTheme: const IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: AppColors.darkBlue),
       iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
-        iconColor: WidgetStateProperty.all(Colors.black),
+        iconColor: WidgetStateProperty.all(AppColors.darkBlue),
       )),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          iconColor: WidgetStateProperty.all(Colors.black),
+          iconColor: WidgetStateProperty.all(AppColors.darkBlue),
         ),
       ),
       brightness: Brightness.light,
-      cardColor: const Color.fromARGB(255, 245, 245, 245),
+      cardColor: Colors.grey[300],
       highlightColor: const Color.fromARGB(255, 243, 243, 243),
-      dividerColor: Colors.grey[300],
+      dividerColor: Colors.grey[100],
       canvasColor: AppColors.darkBlue,
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
         seedColor: AppColors.mainColor,
         primary: Colors.white,
-        background: Colors.grey[300],
         secondary: Colors.grey[100],
-        shadow: Colors.grey[100],
+        shadow: AppColors.mainColor.withAlpha(10),
       ),
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
+          titleTextStyle: Theme.of(context).textTheme.titleLarge,
           surfaceTintColor: Colors.transparent,
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.white,

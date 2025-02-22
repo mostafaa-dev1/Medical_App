@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_system/core/constants/language_checker.dart';
+import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/test2.dart';
 
 class Categories extends StatelessWidget {
   Categories({super.key});
@@ -22,27 +24,30 @@ class Categories extends StatelessWidget {
         itemCount: keys.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context2, index) {
-          return Container(
-            margin: EdgeInsets.only(
-              left: LanguageChecker.isArabic(context) ? 0 : 10,
-              right: LanguageChecker.isArabic(context) ? 10 : 0,
-            ),
-            width: 110,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Theme.of(context).canvasColor,
-                width: 0.5,
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                left: LanguageChecker.isArabic(context) ? 0 : 10,
+                right: LanguageChecker.isArabic(context) ? 10 : 0,
               ),
-            ),
-            child: Center(
-              child: Text(
-                '# ${keys[index].tr()}',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+              width: 115,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                color: AppColors.mainColor.withAlpha(20),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  '# ${keys[index].tr()}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           );

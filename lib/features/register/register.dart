@@ -25,10 +25,11 @@ class Register extends StatelessWidget {
               context: context,
               builder: (context) => CustomDialog(
                     isError: true,
-                    message: state.message,
+                    message: state.message.tr(),
                   ));
         } else if (state is RegisterSuccess) {
-          context.pushReplacementNamed(AppRoutes.personalInfo);
+          context.pushReplacementNamed(AppRoutes.personalInfo,
+              arguments: context.read<RegisterCubit>().user);
         }
       },
       builder: (context, state) {
@@ -49,7 +50,7 @@ class Register extends StatelessWidget {
                       'assets/images/logo.svg',
                       height: MediaQuery.of(context).size.width / 2.5,
                     ),
-                    verticalSpace(100),
+                    verticalSpace(MediaQuery.of(context).size.height / 10),
                     Text(
                       'Auth.createAccount'.tr(),
                       style: Theme.of(context).textTheme.headlineSmall,
@@ -95,11 +96,10 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    verticalSpace(80),
+                    verticalSpace(50),
                     CustomButton(
                       buttonName: 'Auth.register'.tr(),
                       onPressed: () {
-                        context.pushNamed(AppRoutes.personalInfo);
                         if (cubit.formKey.currentState!.validate()) {
                           cubit.register();
                         }
