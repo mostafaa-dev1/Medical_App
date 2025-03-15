@@ -101,7 +101,7 @@ class DoctorCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onDoubleTap: onTap1,
+                      onTap: onTap1,
                       child: DoctorCardOulinedButton(
                         withIcon: false,
                         buttonName: butttonName1 ?? '',
@@ -110,7 +110,7 @@ class DoctorCard extends StatelessWidget {
                     ),
                     horizontalSpace(10),
                     GestureDetector(
-                        onDoubleTap: onTap2,
+                        onTap: onTap2,
                         child: DoctorCardButton(
                             buttonName: butttonName2 ?? '', color: color2)),
                   ],

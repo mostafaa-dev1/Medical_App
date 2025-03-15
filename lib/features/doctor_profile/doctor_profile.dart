@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_broken/icon_broken.dart';
@@ -7,6 +8,7 @@ import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
+import 'package:medical_system/features/doctor_profile/widgets/experince_item.dart';
 
 class DoctorProfile extends StatelessWidget {
   const DoctorProfile({super.key});
@@ -15,7 +17,7 @@ class DoctorProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Doctor Profile',
+          title: Text('doctorProfile.doctorProfile'.tr(),
               style: Theme.of(context).textTheme.titleSmall),
           actions: [
             IconButton(
@@ -38,7 +40,7 @@ class DoctorProfile extends StatelessWidget {
               onPressed: () {
                 context.pushNamed(AppRoutes.pickAppointmentDate);
               },
-              buttonName: 'Book Appointment',
+              buttonName: 'doctorProfile.bookAppointment'.tr(),
               width: 120,
               paddingVirtical: 5,
               height: 50,
@@ -103,126 +105,22 @@ class DoctorProfile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor:
-                              AppColors.secondaryColor.withAlpha(30),
-                          child: Icon(
-                            IconBroken.User1,
-                            size: 30,
-                            color: AppColors.mainColor,
-                          ),
-                        ),
-                        verticalSpace(10),
-                        Text(
-                          '5,000+',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: AppColors.mainColor),
-                        ),
-                        verticalSpace(5),
-                        Text(
-                          'patients',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: AppColors.lightBlue),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor:
-                              AppColors.secondaryColor.withAlpha(30),
-                          child: Icon(
-                            Icons.medical_information_outlined,
-                            size: 30,
-                            color: AppColors.mainColor,
-                          ),
-                        ),
-                        verticalSpace(10),
-                        Text(
-                          '10+',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: AppColors.mainColor),
-                        ),
-                        verticalSpace(5),
-                        Text(
-                          'Experience',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: AppColors.lightBlue),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor:
-                              AppColors.secondaryColor.withAlpha(30),
-                          child: Icon(
-                            IconBroken.Star,
-                            size: 30,
-                            color: AppColors.mainColor,
-                          ),
-                        ),
-                        verticalSpace(10),
-                        Text(
-                          '4.5',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: AppColors.mainColor),
-                        ),
-                        verticalSpace(5),
-                        Text(
-                          'Rating',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: AppColors.lightBlue),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor:
-                              AppColors.secondaryColor.withAlpha(30),
-                          child: Icon(
-                            IconBroken.Chat,
-                            size: 30,
-                            color: AppColors.mainColor,
-                          ),
-                        ),
-                        verticalSpace(10),
-                        Text(
-                          '5,000',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: AppColors.mainColor),
-                        ),
-                        verticalSpace(5),
-                        Text(
-                          'Reviews',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: AppColors.lightBlue),
-                        ),
-                      ],
-                    ),
+                    ExperinceItem(
+                        title: 'doctorProfile.patients'.tr(),
+                        amount: '5,000+',
+                        icon: IconBroken.User1),
+                    ExperinceItem(
+                        title: 'doctorProfile.experince'.tr(),
+                        amount: '10+',
+                        icon: Icons.medical_information_outlined),
+                    ExperinceItem(
+                        title: 'doctorProfile.rating'.tr(),
+                        amount: '4.5',
+                        icon: IconBroken.Star),
+                    ExperinceItem(
+                        title: 'doctorProfile.reviews'.tr(),
+                        amount: '5,000',
+                        icon: IconBroken.Chat),
                   ],
                 ),
                 verticalSpace(20),
@@ -233,7 +131,7 @@ class DoctorProfile extends StatelessWidget {
                 ),
                 verticalSpace(20),
                 Text(
-                  'About',
+                  'doctorProfile.about'.tr(),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 verticalSpace(10),
@@ -246,7 +144,7 @@ class DoctorProfile extends StatelessWidget {
                 ),
                 verticalSpace(20),
                 Text(
-                  'Working Time',
+                  'doctorProfile.workingTime'.tr(),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 verticalSpace(10),
@@ -258,9 +156,26 @@ class DoctorProfile extends StatelessWidget {
                       ),
                 ),
                 verticalSpace(20),
-                Text(
-                  'Reviews',
-                  style: Theme.of(context).textTheme.titleLarge,
+                Row(
+                  children: [
+                    Text(
+                      'doctorProfile.reviews'.tr(),
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        context.pushNamed(AppRoutes.reviews);
+                      },
+                      child: Text(
+                        'doctorProfile.seeAll'.tr(),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              height: 1.5,
+                              color: AppColors.secondaryColor,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
                 verticalSpace(10),
                 Container(
@@ -294,12 +209,23 @@ class DoctorProfile extends StatelessWidget {
                               border:
                                   Border.all(color: AppColors.secondaryColor),
                             ),
-                            child: Text(
-                              '5 stars',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(color: AppColors.secondaryColor),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: AppColors.secondaryColor,
+                                  size: 15,
+                                ),
+                                horizontalSpace(5),
+                                Text(
+                                  '5',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: AppColors.secondaryColor),
+                                ),
+                              ],
                             ),
                           )
                         ],

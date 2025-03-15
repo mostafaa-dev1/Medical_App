@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,7 +18,8 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final _supabase = SupabaseServices();
   final _firebase = FirebaseServices();
 
-  TextEditingController nameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
@@ -89,15 +90,18 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
 
   Future<void> uploadPersonalInfo(User user) async {
     emit(UploadPersonalInfoLoading());
-    user.name = nameController.text;
+    user.id = generateCustomId();
+    user.firstName = firstNameController.text;
+    user.lastName = lastNameController.text;
     user.phone = phoneController.text;
     user.dateOfBirth = selectedDate!;
     user.gender = gender;
     user.image = imageUrl;
     final response = await _supabase.setData('Users', user.toJson());
     response.fold((error) {
+      print(user.toJson());
+      print(error);
       emit(UploadPersonalInfoError(error));
-      log(error);
     }, (response) {
       addCashedData(user);
       emit(UploadPersonalInfoSuccess());
@@ -110,12 +114,26 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   }
 
   void addCashedData(User user) async {
+    Storage.saveValue(key: 'id', value: user.id);
     Storage.saveValue(key: 'uid', value: user.uid);
-    Storage.saveValue(key: 'name', value: user.name);
+    Storage.saveValue(key: 'firstName', value: user.firstName);
+    Storage.saveValue(key: 'lastName', value: user.lastName);
     Storage.saveValue(key: 'email', value: user.email);
     Storage.saveValue(key: 'image', value: user.image);
     Storage.saveValue(key: 'phone', value: user.phone);
     Storage.saveValue(key: 'dateOfBirth', value: user.dateOfBirth.toString());
     Storage.saveValue(key: 'gender', value: user.gender);
+    Storage.saveValue(key: 'address', value: user.adresses.toString());
+  }
+
+  String generateCustomId() {
+    String prefix = "PAT-";
+
+    DateTime now = DateTime.now();
+    String datePart = "${now.year % 100}${now.month}${now.day}";
+
+    String randomPart = Random().nextInt(9000).toString().padLeft(4, '0');
+
+    return "$prefix$datePart$randomPart";
   }
 }

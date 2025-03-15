@@ -5,12 +5,13 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/networking/services/auth/auth_service.dart';
 import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
-import 'package:medical_system/features/ai_chat/ai_chat.dart';
 import 'package:medical_system/features/appointments/appointments.dart';
+import 'package:medical_system/features/fav_doctors/favourite_doctors.dart';
 import 'package:medical_system/features/home/home.dart';
-import 'package:medical_system/features/notifications/notifications.dart';
+import 'package:medical_system/features/profile/profile.dart';
 
 part 'app_state.dart';
 
@@ -86,7 +87,16 @@ class AppCubit extends Cubit<AppState> {
     emit(AppPreferencesLoaded(_themeMode, _locale));
   }
 
-  List<Widget> pages = [Home(), Appointments(), AiChat(), Notifications()];
+  List<Widget> pages(User user) {
+    return [
+      Home(),
+      Appointments(),
+      FavouriteDoctors(),
+      Profile(
+        user: user,
+      )
+    ];
+  }
 
   int pageIndex = 0;
 

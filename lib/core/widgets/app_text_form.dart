@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
+import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
 class CustomTextFrom extends StatelessWidget {
@@ -41,42 +42,78 @@ class CustomTextFrom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      focusNode: focusNode,
-      controller: controller,
-      cursorColor: AppColors.mainColor,
-      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-      obscureText: obscureText ?? false,
-      validator: validator,
-      enabled: enabled ?? true,
-      readOnly: readOnly ?? false,
-      keyboardType: keyboardType,
-      onTap: onTap,
-      decoration: InputDecoration(
-        suffixIcon: suffixIcon,
-        hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: AppColors.lightBlue,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (withhint == true)
+          Text(hintText!, style: Theme.of(context).textTheme.labelLarge!),
+        if (withhint != null) verticalSpace(10),
+        TextFormField(
+          focusNode: focusNode,
+          controller: controller,
+          cursorColor: AppColors.mainColor,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+          obscureText: obscureText ?? false,
+          validator: validator,
+          enabled: enabled ?? true,
+          readOnly: readOnly ?? false,
+          maxLines: maxLines ?? 1,
+          maxLength: maxLength,
+          keyboardType: keyboardType,
+          onTap: onTap,
+          decoration: InputDecoration(
+            prefixIcon: prefixText != null
+                ? Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15, bottom: 15, left: 10),
+                    child: Text(prefixText!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: AppColors.lightBlue)),
+                  )
+                : null,
+            filled: true,
+            fillColor: AppColors.secondaryColor.withAlpha(10),
+            suffixIcon: suffixIcon,
+            hintText: hintText,
+            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: AppColors.lightBlue,
+                ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(
+                color: Colors.grey[100]!,
+              ),
             ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Colors.grey[300]!,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: AppColors.lightRed,
+              ),
+            ),
+            errorStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: AppColors.lightRed),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: AppColors.mainColor.withAlpha(20),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: AppColors.mainColor,
+              ),
+            ),
+            contentPadding: EdgeInsets.all(10),
           ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.mainColor,
-          ),
-        ),
-        contentPadding: EdgeInsets.all(10),
-      ),
+      ],
     );
   }
 }

@@ -5,16 +5,52 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseServices {
-  static var db = FirebaseFirestore.instance;
+  // Step 1: Create a private static instance
+  static final FirebaseServices _instance = FirebaseServices._internal();
 
-  static Future<void> addData(
-      Map<String, dynamic> data, String collection, String id) async {
-    await db.collection(collection).doc(id).set(data);
+  // Step 2: Provide a factory constructor to return the same instance
+  factory FirebaseServices() {
+    return _instance;
   }
 
-  static Future<void> addDataByCollection(Map<String, dynamic> data,
+  // Step 3: Private named constructor (prevents multiple instances)
+  FirebaseServices._internal();
+
+  // Firestore instance
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  // Firebase Storage instance
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  // Firestore CRUD operations
+  Future<void> addData(
+      Map<String, dynamic> data, String collection, String id) async {
+    await _db.collection(collection).doc(id).set(data);
+  }
+
+  Future<void> updateData(
+      Map<String, dynamic> data, String collection, String id) async {
+    await _db.collection(collection).doc(id).update(data);
+  }
+
+  Future<void> deleteData(String collection, String id) async {
+    await _db.collection(collection).doc(id).delete();
+  }
+
+  Future<List<Map<String, dynamic>>> readData(String collection) async {
+    var response = await _db.collection(collection).get();
+    return response.docs.map((e) => e.data()).toList();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> readDataById(
+      String collection, String id) async {
+    return await _db.collection(collection).doc(id).get();
+  }
+
+  // Sub-collection operations
+  Future<void> addDataByCollection(Map<String, dynamic> data,
       String collection1, String id, String collection2, String id2) async {
-    await db
+    await _db
         .collection(collection1)
         .doc(id)
         .collection(collection2)
@@ -22,84 +58,32 @@ class FirebaseServices {
         .set(data);
   }
 
-  static Future<void> updateData(
-      Map<String, dynamic> data, String collection, String id) async {
-    await db.collection(collection).doc(id).update(data);
-  }
-
-  static Future<void> updateDatabyCollectionandSubCollection(
-    String collection,
-    String id,
-    String subCollection,
-    String id2,
-    Map<String, dynamic> data,
-  ) async {
-    var response = await db
+  Future<List<Map<String, dynamic>>> readDataByCollection(
+      String collection, String id, String subCollection) async {
+    var response = await _db
         .collection(collection)
         .doc(id)
         .collection(subCollection)
-        .doc(id2)
-        .update(data);
-
-    return response;
-  }
-
-  static Future<void> deleteData(String collection, String id) async {
-    await db.collection(collection).doc(id).delete();
-  }
-
-  static Future<List<Map<String, dynamic>>> readData(String collection) async {
-    var response = await db.collection(collection).get();
+        .get();
     return response.docs.map((e) => e.data()).toList();
   }
 
-  static Future<List<Map<String, dynamic>>> readDataByCollection(
-      String collection, String id, String subCollection) async {
-    var response =
-        await db.collection(collection).doc(id).collection(subCollection).get();
-    return response.docs.map((e) => e.data()).toList();
-  }
-
-  static Future<DocumentSnapshot<Map<String, dynamic>>?>
+  Future<DocumentSnapshot<Map<String, dynamic>>?>
       readDataByCollectionandSubCollection(String collection, String id,
           String subCollection, String id2) async {
-    var response = await db
+    return await _db
         .collection(collection)
         .doc(id)
         .collection(subCollection)
         .doc(id2)
         .get();
-    return response;
   }
 
-  static Future<void> setDataByCollectionandSubCollection(
-      String collection,
-      String id,
-      String subCollection,
-      String id2,
-      Map<String, dynamic> data) async {
-    await db
-        .collection(collection)
-        .doc(id)
-        .collection(subCollection)
-        .doc(id2)
-        .set(
-          data,
-        );
-  }
-
-  static Future<DocumentSnapshot<Map<String, dynamic>>> readDataById(
-      String collection, String id) async {
-    var response = await db.collection(collection).doc(id).get();
-    return response;
-  }
-
+  // Image Upload to Firebase Storage
   Future<Either<String, String>> uploadImage({required File image}) async {
     try {
-      final storage = FirebaseStorage.instance.ref();
-
       Reference ref =
-          storage.child('ProfileImages/${image.path.split('/').last}');
+          _storage.ref().child('ProfileImages/${image.path.split('/').last}');
       await ref.putFile(image);
       String url = await ref.getDownloadURL();
       return Right(url);

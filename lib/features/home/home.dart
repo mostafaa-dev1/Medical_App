@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,6 @@ import 'package:medical_system/features/home/widgets/doctor_spciality.dart';
 import 'package:medical_system/features/home/widgets/offers.dart';
 import 'package:medical_system/features/home/widgets/top_rated_doctors.dart';
 import 'package:medical_system/features/home/widgets/upcoming_visits.dart';
-import 'package:medical_system/features/search/search.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -69,7 +67,6 @@ class Home extends StatelessWidget {
   //     print('Error: $e');
   //   }
   // }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
@@ -80,10 +77,33 @@ class Home extends StatelessWidget {
         var cubit = context.read<HomeCubit>();
         User user = cubit.user;
         return Scaffold(
+          floatingActionButton: GestureDetector(
+            onTap: () => context.pushNamed(AppRoutes.aiChat),
+            child: Container(
+              height: 60,
+              width: 60,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.shadow,
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3),
+                    ),
+                  ]),
+              child: Icon(
+                IconBroken.Chat,
+                color: AppColors.mainColor,
+                size: 30,
+              ),
+            ),
+          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
-                
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -117,44 +137,73 @@ class Home extends StatelessWidget {
                                       Theme.of(context).textTheme.labelMedium,
                                 ),
                                 Text(
-                                  user.name,
+                                  '${user.firstName} ${user.lastName}',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
                             Spacer(),
-                            Icon(
-                              IconBroken.Notification,
-                              size: 20,
+                            GestureDetector(
+                              onTap: () {
+                                context.pushNamed(AppRoutes.notifications);
+                              },
+                              child: Badge(
+                                backgroundColor: AppColors.lightRed,
+                                label: Text('1'),
+                                child: Icon(
+                                  IconBroken.Notification,
+                                  size: 25,
+                                ),
+                              ),
                             )
                           ],
                         ),
                         verticalSpace(30),
-                        OpenContainer(
-                            transitionType: ContainerTransitionType.fade,
-                            closedShape: const RoundedRectangleBorder(),
-                            closedElevation: 0.0,
-                            openBuilder: (context, openContainer) => Search(),
-                            closedBuilder: (context, openContainer) =>
-                                Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.mainColor),
-                                      borderRadius: BorderRadius.circular(10),
+                        GestureDetector(
+                          onTap: () => context.pushNamed(AppRoutes.search),
+                          child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.mainColor),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              height: 40,
+                              width: MediaQuery.sizeOf(context).width / 1.2,
+                              child: Text(
+                                'home.search'.tr(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                      color: Colors.grey,
                                     ),
-                                    height: 40,
-                                    width:
-                                        MediaQuery.sizeOf(context).width / 1.2,
-                                    child: Text(
-                                      'home.search'.tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .copyWith(
-                                            color: Colors.grey,
-                                          ),
-                                    ))),
+                              )),
+                        )
+                        // OpenContainer(
+                        //     transitionType: ContainerTransitionType.fade,
+                        //     closedShape: const RoundedRectangleBorder(),
+                        //     closedElevation: 0.0,
+                        //     openBuilder: (context, openContainer) => Search(),
+                        //     closedBuilder: (context, openContainer) =>
+                        //         Container(
+                        //             padding: EdgeInsets.all(10),
+                        //             decoration: BoxDecoration(
+                        //               border: Border.all(
+                        //                   color: AppColors.mainColor),
+                        //               borderRadius: BorderRadius.circular(10),
+                        //             ),
+                        //             height: 40,
+                        //             width:
+                        //                 MediaQuery.sizeOf(context).width / 1.2,
+                        //             child: Text(
+                        //               'home.search'.tr(),
+                        //               style: Theme.of(context)
+                        //                   .textTheme
+                        //                   .labelMedium!
+                        //                   .copyWith(
+                        //                     color: Colors.grey,
+                        //                   ),
+                        //             ))),
                       ],
                     ),
                   ),

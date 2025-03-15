@@ -29,13 +29,16 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterError(l));
     }, (response) {
       user = User(
+        id: '',
         uid: response!.uid,
-        name: response.displayName ?? "",
+        firstName: "",
+        lastName: "",
         gender: "",
         dateOfBirth: DateTime.now(),
         email: response.email!,
         image: response.photoURL ?? "",
         phone: response.phoneNumber ?? "",
+        adresses: [],
       );
       log(user!.toJson().toString());
       emit(RegisterSuccess());
@@ -43,18 +46,23 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   Future<void> signUpWithGoogle() async {
+    emit(RegisterLoading());
     final result = await auth.signInWithGoogle();
     result.fold((l) {
       emit(RegisterError(l));
     }, (response) {
+      final nameParts = response.user!.displayName!.split(" ");
       user = User(
+        id: '',
         uid: response.user!.uid,
-        name: response.user!.displayName ?? "",
+        firstName: nameParts[0],
+        lastName: nameParts.length > 1 ? nameParts[1] : "",
         gender: "",
         dateOfBirth: DateTime.now(),
         email: response.user!.email!,
         image: response.user!.photoURL ?? "",
         phone: response.user!.phoneNumber ?? "",
+        adresses: [],
       );
       log(user!.toJson().toString());
 
@@ -63,18 +71,23 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   Future<void> signUpWithFacebook() async {
+    emit(RegisterLoading());
     final result = await auth.signInWithFacebook();
     result.fold((l) {
       emit(RegisterError(l));
     }, (r) {
+      final nameParts = r.user!.displayName!.split(" ");
       user = User(
+        id: '',
         uid: r.user!.uid,
-        name: r.user!.displayName ?? "",
+        firstName: nameParts[0],
+        lastName: nameParts.length > 1 ? nameParts[1] : "",
         gender: "",
         dateOfBirth: DateTime.now(),
         email: r.user!.email!,
         image: r.user!.photoURL ?? "",
         phone: r.user!.phoneNumber ?? "",
+        adresses: [],
       );
       log(
         user!.toJson().toString(),

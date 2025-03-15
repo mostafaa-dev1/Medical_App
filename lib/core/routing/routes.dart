@@ -15,4 +15,18 @@ class AppRoutes {
   static const String doctorProfile = '/doctorProfile';
   static const String search = '/search';
   static const String pickAppointmentDate = '/pickAppointmentDate';
+  static const String patientAppointmentDetails = '/patientAppointmentDetails';
+  static const String payment = '/payment';
+  static const String chatbot = '/chatbot';
+  static const String cancelAppointment = '/cancelAppointment';
+  static const String rescheduleAppointment = '/rescheduleAppointment';
+  static const String reviews = '/reviews';
+  static const String reviewSummary = '/reviewSummary';
+  static const String map = '/map';
+  static const String writePreview = '/writePreview';
+  static const String aiChat = '/aiChat';
+  static const String notifications = '/notifications';
+  static const String editProfile = '/editProfile';
+  static const String appointmentDetails = '/appointmentDetails';
+  static const String spcialities = '/spcialities';
 }

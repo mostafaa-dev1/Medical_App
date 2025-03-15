@@ -71,7 +71,7 @@ lightTheme(TextStyle Function() fontStyle, BuildContext context) => ThemeData(
         seedColor: AppColors.mainColor,
         primary: Colors.white,
         secondary: Colors.grey[100],
-        shadow: AppColors.mainColor.withAlpha(10),
+        shadow: AppColors.secondaryColor.withAlpha(10),
       ),
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,

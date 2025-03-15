@@ -69,11 +69,13 @@ class LoginCubit extends Cubit<LoginState> {
 
   void addCashedData(User user) async {
     Storage.saveValue(key: 'uid', value: user.uid);
-    Storage.saveValue(key: 'name', value: user.name);
+    Storage.saveValue(key: 'firstName', value: user.firstName);
+    Storage.saveValue(key: 'lastName', value: user.lastName);
     Storage.saveValue(key: 'email', value: user.email);
     Storage.saveValue(key: 'image', value: user.image);
     Storage.saveValue(key: 'phone', value: user.phone);
     Storage.saveValue(key: 'dateOfBirth', value: user.dateOfBirth.toString());
     Storage.saveValue(key: 'gender', value: user.gender);
+    Storage.saveValue(key: 'adresses', value: user.adresses.toString());
   }
 }
