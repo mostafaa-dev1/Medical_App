@@ -14,7 +14,10 @@ class AppCustomDropDown extends StatelessWidget {
       required this.text,
       this.validator,
       required this.hintText,
-      this.withHint});
+      this.withHint,
+      this.withSubhint,
+      this.subHintText,
+      this.initialItem});
   final List<String> list;
   final String? Function(String?)? onChanged;
   final double width;
@@ -23,6 +26,9 @@ class AppCustomDropDown extends StatelessWidget {
   final String text;
   final String hintText;
   final bool? withHint;
+  final bool? withSubhint;
+  final String? subHintText;
+  final String? initialItem;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +38,19 @@ class AppCustomDropDown extends StatelessWidget {
         withHint ?? false
             ? Text(text, style: Theme.of(context).textTheme.labelLarge)
             : SizedBox(),
-        withHint ?? false ? verticalSpace(5) : SizedBox(),
+        withSubhint ?? false
+            ? Text(subHintText!,
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      color: AppColors.lightBlue,
+                    ))
+            : SizedBox(),
+        withSubhint != null || withHint != null ? verticalSpace(5) : SizedBox(),
         SizedBox(
           width: double.infinity,
           height: height,
           child: CustomDropdown(
+              overlayHeight: height,
+              initialItem: initialItem,
               validator: (value) {
                 return validator!(value);
               },
@@ -63,9 +77,9 @@ class AppCustomDropDown extends StatelessWidget {
                   expandedBorder: Border.all(
                     color: Theme.of(context).colorScheme.surface,
                   ),
-                  closedErrorBorder: Border.all(color: Colors.red),
+                  closedErrorBorder: Border.all(color: AppColors.lightRed),
                   closedErrorBorderRadius: BorderRadius.circular(10),
-                  errorStyle: TextStyle(height: 1, color: Colors.red.shade100),
+                  errorStyle: TextStyle(height: 1, color: AppColors.lightRed),
                   closedBorderRadius: BorderRadius.circular(10),
                   closedSuffixIcon: const Icon(Icons.arrow_drop_down),
                   closedFillColor: AppColors.mainColor.withAlpha(10),

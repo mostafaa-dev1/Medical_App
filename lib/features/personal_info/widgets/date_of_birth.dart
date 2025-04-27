@@ -2,11 +2,9 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
 
-void pickBirthDate(BuildContext context) {
+void pickBirthDate(BuildContext context, Function(dynamic)? onSubmit) {
   BottomPicker.date(
     pickerTitle: Text(
       'Set your Birthday',
@@ -23,9 +21,7 @@ void pickBirthDate(BuildContext context) {
     pickerTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
           color: AppColors.secondaryColor,
         ),
-    onSubmit: (index) {
-      context.read<PersonalInfoCubit>().formatDate(index);
-    },
+    onSubmit: onSubmit,
     bottomPickerTheme: BottomPickerTheme.morningSalad,
     buttonStyle: BoxDecoration(
       color: AppColors.mainColor,

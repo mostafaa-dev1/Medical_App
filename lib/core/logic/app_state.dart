@@ -29,4 +29,11 @@ class AppPreferencesLoaded extends AppState {
 
 final class AppPageIndexChanged extends AppState {}
 
-final class AppLogout extends AppState {}
+final class AppLogoutSuccess extends AppState {}
+
+final class AppLogoutLoading extends AppState {}
+
+final class AppLogoutError extends AppState {
+  final String message;
+  AppLogoutError(this.message);
+}

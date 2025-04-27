@@ -20,6 +20,9 @@ class CustomTextFrom extends StatelessWidget {
   final VoidCallback? onTap;
   final bool? readOnly;
   final FocusNode? focusNode;
+  final bool? withSubhint;
+  final String? subHintText;
+  final void Function(String)? onFieldSubmitted;
 
   const CustomTextFrom({
     super.key,
@@ -38,6 +41,9 @@ class CustomTextFrom extends StatelessWidget {
     this.onTap,
     this.readOnly,
     this.focusNode,
+    this.withSubhint,
+    this.subHintText,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -47,8 +53,14 @@ class CustomTextFrom extends StatelessWidget {
       children: [
         if (withhint == true)
           Text(hintText!, style: Theme.of(context).textTheme.labelLarge!),
-        if (withhint != null) verticalSpace(10),
+        if (withSubhint == true)
+          Text(subHintText!,
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    color: AppColors.lightBlue,
+                  )),
+        if (withSubhint != null || withhint != null) verticalSpace(5),
         TextFormField(
+          onFieldSubmitted: onFieldSubmitted,
           focusNode: focusNode,
           controller: controller,
           cursorColor: AppColors.mainColor,

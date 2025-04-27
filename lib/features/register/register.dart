@@ -24,22 +24,42 @@ class Register extends StatelessWidget {
       listener: (context, state) {
         if (state is RegisterError) {
           context.loaderOverlay.hide();
-
           showDialog(
               context: context,
               builder: (context) => CustomDialog(
-                    isError: true,
+                    dialogType: DialogType.error,
                     message: state.message.tr(),
+                    onConfirmPressed: () => context.pop(),
+                    confirmButtonName: 'dialog.ok'.tr(),
+                    title: 'dialog.oops'.tr(),
                   ));
         }
         if (state is RegisterSuccess) {
           context.loaderOverlay.hide();
-
           context.pushReplacementNamed(AppRoutes.personalInfo,
               arguments: context.read<RegisterCubit>().user);
         }
         if (state is RegisterLoading) {
           context.loaderOverlay.show();
+        }
+        if (state is EmailExist) {
+          context.loaderOverlay.hide();
+          showDialog(
+              context: context,
+              builder: (context) => CustomDialog(
+                    dialogType: DialogType.error,
+                    message: 'Auth.emailExist'.tr(),
+                    onConfirmPressed: () => context.pop(),
+                    confirmButtonName: 'dialog.ok'.tr(),
+                    title: 'dialog.oops'.tr(),
+                  ));
+        }
+        if (state is EmailNotExist) {
+          context.loaderOverlay.hide();
+          context.pushNamed(AppRoutes.otp, arguments: {
+            'email': context.read<RegisterCubit>().emailController.text,
+            'password': context.read<RegisterCubit>().passwordController.text
+          });
         } else {
           context.loaderOverlay.hide();
         }
@@ -115,7 +135,7 @@ class Register extends StatelessWidget {
                         buttonName: 'Auth.register'.tr(),
                         onPressed: () {
                           if (cubit.formKey.currentState!.validate()) {
-                            cubit.register();
+                            cubit.isEmailExist();
                           }
                         },
                         width: MediaQuery.of(context).size.width / 1.5,

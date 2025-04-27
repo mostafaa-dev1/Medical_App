@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medical_system/core/models/user.dart';
+import 'package:medical_system/core/networking/notifications/notifications_helper.dart';
 import 'package:medical_system/core/networking/services/database/remote/firebase_services.dart';
 import 'package:medical_system/core/networking/services/database/remote/supabase_services.dart';
 import 'package:medical_system/core/networking/services/local_databases/secure_storage.dart';
@@ -52,7 +53,8 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   Future<void> uploadImage() async {
     if (profileImage != null) {
       emit(UploadImageLoading());
-      final response = await _firebase.uploadImage(image: profileImage!);
+      final response = await _firebase.uploadImage(
+          image: profileImage!, filename: 'ProfileImages');
       response.fold((error) {
         print(error);
         emit(UploadImageError(error));
@@ -88,7 +90,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(DateSelected());
   }
 
-  Future<void> uploadPersonalInfo(User user) async {
+  Future<void> uploadPersonalInfo(UserModel user) async {
     emit(UploadPersonalInfoLoading());
     user.id = generateCustomId();
     user.firstName = firstNameController.text;
@@ -97,7 +99,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     user.dateOfBirth = selectedDate!;
     user.gender = gender;
     user.image = imageUrl;
-    final response = await _supabase.setData('Users', user.toJson());
+    user.messageToken = await getMessageToken();
+    final response =
+        await _supabase.setData(table: 'Users', data: user.toJson());
     response.fold((error) {
       print(user.toJson());
       print(error);
@@ -108,22 +112,22 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     });
   }
 
-  Future<void> managePersonalInfo(User user) async {
+  Future<void> managePersonalInfo(UserModel user) async {
     await uploadImage();
     await uploadPersonalInfo(user);
   }
 
-  void addCashedData(User user) async {
-    Storage.saveValue(key: 'id', value: user.id);
-    Storage.saveValue(key: 'uid', value: user.uid);
-    Storage.saveValue(key: 'firstName', value: user.firstName);
-    Storage.saveValue(key: 'lastName', value: user.lastName);
-    Storage.saveValue(key: 'email', value: user.email);
-    Storage.saveValue(key: 'image', value: user.image);
-    Storage.saveValue(key: 'phone', value: user.phone);
+  void addCashedData(UserModel user) async {
+    Storage.saveValue(key: 'id', value: user.id!);
+    Storage.saveValue(key: 'uid', value: user.uid!);
+    Storage.saveValue(key: 'firstName', value: user.firstName!);
+    Storage.saveValue(key: 'lastName', value: user.lastName!);
+    Storage.saveValue(key: 'email', value: user.email!);
+    Storage.saveValue(key: 'image', value: user.image!);
+    Storage.saveValue(key: 'phone', value: user.phone!);
     Storage.saveValue(key: 'dateOfBirth', value: user.dateOfBirth.toString());
-    Storage.saveValue(key: 'gender', value: user.gender);
-    Storage.saveValue(key: 'address', value: user.adresses.toString());
+    Storage.saveValue(key: 'gender', value: user.gender!);
+    Storage.saveValue(key: 'address', value: user.addresses.toString());
   }
 
   String generateCustomId() {
@@ -135,5 +139,10 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     String randomPart = Random().nextInt(9000).toString().padLeft(4, '0');
 
     return "$prefix$datePart$randomPart";
+  }
+
+  Future<String> getMessageToken() async {
+    String token = await NotificationsHelper().getToken() ?? '';
+    return token;
   }
 }

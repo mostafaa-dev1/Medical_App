@@ -1,0 +1,22 @@
+<svg width="331" height="325" viewBox="0 0 331 325" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="178" cy="169.5" rx="131" ry="131.5" fill="url(#paint0_linear_1179_4251)"/>
+<circle cx="28.5" cy="38.5" r="18.5" fill="#1972EE"/>
+<circle cx="85" cy="315" r="10" fill="#1972EE"/>
+<circle cx="307.5" cy="33.5" r="13.5" fill="#1972EE"/>
+<circle cx="188" cy="10" r="10" fill="#4E8DEA"/>
+<circle cx="326" cy="190" r="5" fill="#4E8DEA"/>
+<circle cx="5" cy="216" r="5" fill="#4E8DEA"/>
+<circle cx="270" cy="295" r="10" fill="#4E8DEA"/>
+<g clip-path="url(#clip0_1179_4251)">
+<path d="M178 211C200.644 211 219 192.644 219 170C219 147.356 200.644 129 178 129C155.356 129 137 147.356 137 170C137.025 192.634 155.366 210.975 178 211ZM174.583 149.5C174.583 147.613 176.113 146.083 178 146.083C179.887 146.083 181.417 147.613 181.417 149.5V176.833C181.417 178.72 179.887 180.25 178 180.25C176.113 180.25 174.583 178.72 174.583 176.833V149.5V149.5ZM178 190.5C179.887 190.5 181.417 192.03 181.417 193.917C181.417 195.804 179.887 197.333 178 197.333C176.113 197.333 174.583 195.804 174.583 193.917C174.583 192.03 176.113 190.5 178 190.5Z" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1179_4251" x1="47" y1="169" x2="309" y2="169" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4F99FF"/>
+<stop offset="1" stop-color="#1972EE"/>
+</linearGradient>
+<clipPath id="clip0_1179_4251">
+<rect width="82" height="82" fill="white" transform="translate(137 129)"/>
+</clipPath>
+</defs>
+</svg>

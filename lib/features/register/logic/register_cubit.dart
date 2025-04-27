@@ -4,18 +4,20 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/networking/services/auth/auth_service.dart';
+import 'package:medical_system/core/networking/services/database/remote/supabase_services.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
   final auth = AuthService();
+  final _supabaseServices = SupabaseServices();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isPasswordObscure = true;
 
-  User? user;
+  UserModel? user;
   void obscurePassword() {
     isPasswordObscure = !isPasswordObscure;
     emit(ObscurePassword());
@@ -28,7 +30,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     result.fold((l) {
       emit(RegisterError(l));
     }, (response) {
-      user = User(
+      user = UserModel(
         id: '',
         uid: response!.uid,
         firstName: "",
@@ -38,10 +40,30 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: response.email!,
         image: response.photoURL ?? "",
         phone: response.phoneNumber ?? "",
-        adresses: [],
+        addresses: [],
       );
       log(user!.toJson().toString());
       emit(RegisterSuccess());
+    });
+  }
+
+  void isEmailExist() async {
+    emit(RegisterLoading());
+    final result = await _supabaseServices.getDataWitheq(
+        'Users', '*', 'email', emailController.text);
+    result.fold((l) {
+      print(l);
+      emit(RegisterError(l));
+    }, (r) {
+      print(r);
+
+      if (r.isEmpty) {
+        emit(EmailNotExist());
+      } else {
+        emit(EmailExist(
+          'Email already exist',
+        ));
+      }
     });
   }
 
@@ -52,7 +74,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterError(l));
     }, (response) {
       final nameParts = response.user!.displayName!.split(" ");
-      user = User(
+      user = UserModel(
         id: '',
         uid: response.user!.uid,
         firstName: nameParts[0],
@@ -62,7 +84,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: response.user!.email!,
         image: response.user!.photoURL ?? "",
         phone: response.user!.phoneNumber ?? "",
-        adresses: [],
+        addresses: [],
       );
       log(user!.toJson().toString());
 
@@ -77,7 +99,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterError(l));
     }, (r) {
       final nameParts = r.user!.displayName!.split(" ");
-      user = User(
+      user = UserModel(
         id: '',
         uid: r.user!.uid,
         firstName: nameParts[0],
@@ -87,7 +109,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: r.user!.email!,
         image: r.user!.photoURL ?? "",
         phone: r.user!.phoneNumber ?? "",
-        adresses: [],
+        addresses: [],
       );
       log(
         user!.toJson().toString(),

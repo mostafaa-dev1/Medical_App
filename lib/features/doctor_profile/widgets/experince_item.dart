@@ -17,11 +17,11 @@ class ExperinceItem extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          radius: 35,
+          radius: 30,
           backgroundColor: AppColors.secondaryColor.withAlpha(30),
           child: Icon(
             icon,
-            size: 30,
+            size: 27,
             color: AppColors.mainColor,
           ),
         ),
@@ -30,15 +30,14 @@ class ExperinceItem extends StatelessWidget {
           amount,
           style: Theme.of(context)
               .textTheme
-              .bodyLarge!
+              .bodyMedium!
               .copyWith(color: AppColors.mainColor),
         ),
-        verticalSpace(5),
         Text(
           title,
           style: Theme.of(context)
               .textTheme
-              .labelLarge!
+              .labelSmall!
               .copyWith(color: AppColors.lightBlue),
         ),
       ],

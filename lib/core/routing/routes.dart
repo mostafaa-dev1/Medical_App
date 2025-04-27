@@ -29,4 +29,8 @@ class AppRoutes {
   static const String editProfile = '/editProfile';
   static const String appointmentDetails = '/appointmentDetails';
   static const String spcialities = '/spcialities';
+  static const String askQuestion = '/askQuestion';
+  static const String heartRate = '/heartRate';
+  static const String findMedicine = '/findmedicine';
+  static const String paymentWebView = '/paymentWebView';
 }

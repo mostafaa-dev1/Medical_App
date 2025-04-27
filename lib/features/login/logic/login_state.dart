@@ -8,7 +8,7 @@ final class LoginInitial extends LoginState {}
 final class LoginLoading extends LoginState {}
 
 final class LoginSuccess extends LoginState {
-  final User user;
+  final UserModel user;
   LoginSuccess(this.user);
 }
 

@@ -1,197 +1,171 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medical_system/core/constants/preferances.dart';
+import 'package:medical_system/core/helpers/extentions.dart';
+import 'package:medical_system/core/helpers/format.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/dialog.dart';
+import 'package:medical_system/features/doctor_profile/logic/doctor_profile_cubit.dart';
+import 'package:medical_system/features/doctor_profile/widgets/review_item_loading.dart';
+import 'package:medical_system/features/reviews/widgets/raring_filter.dart';
 
-class Reviews extends StatefulWidget {
+class Reviews extends StatelessWidget {
   const Reviews({super.key});
 
   @override
-  State<Reviews> createState() => _ReviewsState();
-}
-
-class _ReviewsState extends State<Reviews> {
-  final List<String> _rating = [
-    'All',
-    '5',
-    '4',
-    '3',
-    '2',
-    '1',
-  ];
-  int _selectedRating = 0;
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '4.9 (4120 reviews)',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 35,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: _rating.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedRating = index;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: _selectedRating == index
-                            ? AppColors.mainColor
-                            : Theme.of(context).colorScheme.primary,
-                        border: Border.all(
-                          color: AppColors.mainColor,
-                        ),
-                      ),
-                      child: Row(
+    return BlocConsumer<DoctorProfileCubit, DoctorProfileState>(
+      listener: (context, state) {
+        if (state is GetReviewsError) {
+          showCustomDialog(
+              context: context,
+              message: state.error,
+              title: 'dialog.oops'.tr(),
+              onConfirmPressed: () {
+                context.pop();
+              },
+              confirmButtonName: 'dialog.ok'.tr(),
+              dialogType: DialogType.error);
+        }
+      },
+      builder: (context, state) {
+        var reviews = context.read<DoctorProfileCubit>().reviews;
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                '4.9 (${5} reviews)',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            body: state is GetReviewsLoading
+                ? Padding(
+                    padding: const EdgeInsets.all(AppPreferances.padding),
+                    child: const ReviewItemLoading(),
+                  )
+                : reviews.reviews == null || reviews.reviews!.isEmpty
+                    ? Center(
+                        child: Text('doctorProfile.noReviews'.tr(),
+                            style: Theme.of(context).textTheme.bodySmall),
+                      )
+                    : Column(
                         children: [
-                          _rating[index] == 'All'
-                              ? SizedBox()
-                              : Icon(
-                                  Icons.star,
-                                  color: _selectedRating == index
-                                      ? Colors.white
-                                      : AppColors.mainColor,
-                                  size: 20,
-                                ),
-                          _rating[index] == 'All'
-                              ? SizedBox()
-                              : horizontalSpace(5),
-                          Text(_rating[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: _selectedRating == index
-                                        ? Colors.white
-                                        : AppColors.mainColor,
-                                  )),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            verticalSpace(20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.mainColor.withAlpha(10),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3),
+                          RatingFilter(),
+                          verticalSpace(20),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: reviews.reviews!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              AppColors.mainColor.withAlpha(10),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ]),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 18,
+                                            backgroundImage: reviews
+                                                            .reviews![index]
+                                                            .user
+                                                            .image !=
+                                                        null &&
+                                                    reviews.reviews![index].user
+                                                            .image !=
+                                                        ''
+                                                ? CachedNetworkImageProvider(
+                                                    reviews.reviews![index].user
+                                                        .image!)
+                                                : AssetImage(
+                                                    'assets/images/user.png'),
+                                          ),
+                                          horizontalSpace(10),
+                                          Text(
+                                            '${reviews.reviews![index].user.firstName} ${reviews.reviews![index].user.lastName}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                          Spacer(),
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 5,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: AppColors.mainColor
+                                                  .withAlpha(20),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: AppColors.mainColor,
+                                                  size: 18,
+                                                ),
+                                                horizontalSpace(5),
+                                                Text(
+                                                  Format.formatNumber(
+                                                      reviews
+                                                          .reviews![index].rate,
+                                                      context),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      verticalSpace(10),
+                                      Text(
+                                        reviews.reviews![index].review,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                      verticalSpace(10),
+                                      Text(
+                                        Format.formatDate(
+                                            reviews.reviews![index].date,
+                                            context),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ]),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 18,
-                              backgroundImage: NetworkImage(
-                                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80',
-                              ),
-                            ),
-                            horizontalSpace(10),
-                            Text(
-                              'John Doe',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Spacer(),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: AppColors.mainColor,
-                                  )),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: AppColors.mainColor,
-                                    size: 20,
-                                  ),
-                                  horizontalSpace(5),
-                                  Text(
-                                    '5.0',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        verticalSpace(10),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        verticalSpace(10),
-                        Row(
-                          children: [
-                            GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  index % 2 != 0
-                                      ? CupertinoIcons.heart_fill
-                                      : CupertinoIcons.heart,
-                                  color: index % 2 == 0
-                                      ? null
-                                      : AppColors.secondaryColor,
-                                )),
-                            horizontalSpace(5),
-                            Text(
-                              '12',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            Spacer(),
-                            Text(
-                              '2 days ago',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ));
+                        ],
+                      ));
+      },
+    );
   }
 }

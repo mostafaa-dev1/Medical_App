@@ -25,12 +25,13 @@ class Login extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginError) {
           context.loaderOverlay.hide();
-          showDialog(
+          showCustomDialog(
               context: context,
-              builder: (context) => CustomDialog(
-                    isError: true,
-                    message: state.message.tr(),
-                  ));
+              message: state.message.tr(),
+              dialogType: DialogType.error,
+              title: 'dialog.oops'.tr(),
+              confirmButtonName: 'dialog.ok'.tr(),
+              onConfirmPressed: () => context.pop());
         }
         if (state is LoginSuccess) {
           context.loaderOverlay.hide();

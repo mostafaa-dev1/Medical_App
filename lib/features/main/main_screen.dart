@@ -1,25 +1,22 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:icon_broken/icon_broken.dart';
-import 'package:medical_system/core/logic/app_cubit.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/home/logic/home_cubit.dart';
+import 'package:medical_system/features/home/logic/main_cubit.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
+    return BlocBuilder<MainCubit, MainState>(
       builder: (context, state) {
-        log(context.read<AppCubit>().pageIndex.toString());
+        var appCubit = context.read<MainCubit>();
         return Scaffold(
-          body: context.read<AppCubit>().pages(context.read<HomeCubit>().user)[
-              context.read<AppCubit>().pageIndex],
+          body: appCubit.pages(
+              appCubit.user, appCubit.upcomingVisits)[appCubit.pageIndex],
           bottomNavigationBar: GNav(
               textStyle: Theme.of(context)
                   .textTheme
@@ -27,9 +24,9 @@ class MainScreen extends StatelessWidget {
                   .copyWith(color: Colors.white),
               tabMargin: EdgeInsets.all(8),
               tabBorderRadius: 15,
-              selectedIndex: context.read<AppCubit>().pageIndex,
+              selectedIndex: appCubit.pageIndex,
               onTabChange: (value) {
-                context.read<AppCubit>().changePageIndex(value);
+                appCubit.changePageIndex(value);
               },
               tabBackgroundColor: AppColors.mainColor,
               tabActiveBorder:

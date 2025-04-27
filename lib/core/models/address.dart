@@ -5,8 +5,8 @@ part 'address.g.dart';
 @JsonSerializable()
 class Address {
   String? id;
-  String? latitude;
-  String? longitude;
+  dynamic latitude;
+  dynamic longitude;
   String? city;
   String? country;
   String? street;

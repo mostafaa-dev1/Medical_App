@@ -11,11 +11,14 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
+import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
 
 class MapView extends StatefulWidget {
-  const MapView({super.key});
+  const MapView({super.key, required this.clinic});
+
+  final Clinic clinic;
 
   @override
   State<MapView> createState() => _MapViewState();
@@ -23,11 +26,6 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   final MapController mapController = MapController();
-  // LocationData? currentLocation;
-  // List<LatLng> routePoints = [];
-  // List<Marker> markers = [];
-  // final String orsApiKey =
-  //'5b3ce3597851110001cf6248b53114c3a0df46b381a69b890dc978c3';
 
   @override
   void initState() {
@@ -50,8 +48,8 @@ class _MapViewState extends State<MapView> {
   LatLng? _destinationLocation;
   List<LatLng> _routePoints = [];
   Future<void> _inizializeLocation() async {
-    bool hasPermission = await _checkPermission();
-    if (!hasPermission) return;
+    await _checkPermission();
+    // if (!hasPermission) return;
 
     getCurrentLocation();
 
@@ -64,6 +62,15 @@ class _MapViewState extends State<MapView> {
               LatLng(locationData.latitude!, locationData.longitude!);
           loading = false;
         });
+      }
+      if (widget.clinic.latLong![0]['latitude'] != null &&
+          widget.clinic.latLong![0]['longtude'] != null &&
+          widget.clinic.latLong!.isNotEmpty) {
+        _destinationLocation = LatLng(
+            double.parse(widget.clinic.latLong![0]['latitude']!),
+            double.parse(widget.clinic.latLong![0]['longtude']!));
+
+        _fetchRoute();
       }
     });
   }
@@ -157,7 +164,10 @@ class _MapViewState extends State<MapView> {
               initialZoom: 15.0,
               onTap: (tapPosition, point) => {
                 setState(() {
-                  _destinationLocation = point;
+                  // setState(() {
+
+                  // });
+                  // _destinationLocation = point;
                 }),
                 _fetchRoute(),
               },
@@ -243,7 +253,11 @@ class _MapViewState extends State<MapView> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
                               child: Image(
-                                image: AssetImage('assets/images/doctor.png'),
+                                image: widget.clinic.doctor!.image != null
+                                    ? NetworkImage(widget.clinic.doctor!.image!)
+                                    : const AssetImage(
+                                        'assets/images/doctor.png',
+                                      ),
                                 fit: BoxFit.fill,
                               )),
                         ),
@@ -252,17 +266,17 @@ class _MapViewState extends State<MapView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Dr. John Doe',
+                              '${widget.clinic.doctor!.firstName} ${widget.clinic.doctor!.lastName}',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             verticalSpace(5),
                             Text(
-                              'Brain and Nerves doctor',
+                              widget.clinic.doctor!.specialty!,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             verticalSpace(5),
                             Text(
-                              'Egypt/Cairo',
+                              '${widget.clinic.city}, ${widget.clinic.government}',
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],

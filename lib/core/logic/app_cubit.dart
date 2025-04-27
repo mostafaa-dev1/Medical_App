@@ -1,17 +1,12 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/networking/services/auth/auth_service.dart';
 import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
-import 'package:medical_system/features/appointments/appointments.dart';
-import 'package:medical_system/features/fav_doctors/favourite_doctors.dart';
-import 'package:medical_system/features/home/home.dart';
-import 'package:medical_system/features/profile/profile.dart';
 
 part 'app_state.dart';
 
@@ -83,26 +78,7 @@ class AppCubit extends Cubit<AppState> {
         ? () => GoogleFonts.almarai()
         : () => GoogleFonts.poppins();
     log('Font Style: $_fontStyle');
-
     emit(AppPreferencesLoaded(_themeMode, _locale));
-  }
-
-  List<Widget> pages(User user) {
-    return [
-      Home(),
-      Appointments(),
-      FavouriteDoctors(),
-      Profile(
-        user: user,
-      )
-    ];
-  }
-
-  int pageIndex = 0;
-
-  void changePageIndex(int index) {
-    pageIndex = index;
-    emit(AppPageIndexChanged());
   }
 
   bool isUserRegistered() {
@@ -110,8 +86,11 @@ class AppCubit extends Cubit<AppState> {
   }
 
   void logout() async {
+    emit(AppLogoutLoading());
     await AuthService().signOut().then((_) {
-      emit(AppLogout());
+      emit(AppLogoutSuccess());
+    }).catchError((e) {
+      emit(AppLogoutError('auth.somethingWentWrong'.tr()));
     });
   }
 }

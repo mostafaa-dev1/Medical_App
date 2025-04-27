@@ -15,3 +15,10 @@ final class RegisterError extends RegisterState {
 final class RegisterSuccess extends RegisterState {}
 
 final class ObscurePassword extends RegisterState {}
+
+final class EmailExist extends RegisterState {
+  final String message;
+  EmailExist(this.message);
+}
+
+final class EmailNotExist extends RegisterState {}

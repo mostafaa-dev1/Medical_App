@@ -1,352 +1,161 @@
-import 'dart:ui' as ui;
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/constants/preferances.dart';
 import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
+import 'package:medical_system/core/models/doctor_model.dart';
+import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
-import 'package:medical_system/features/book_appointment/models/book_appointment.dart';
+import 'package:medical_system/core/widgets/dialog.dart';
+import 'package:medical_system/core/widgets/stepper.dart';
+import 'package:medical_system/features/book_appointment/logic/book_appointment_cubit.dart';
+import 'package:medical_system/features/book_appointment/widgets/dayes.dart';
+import 'package:medical_system/features/book_appointment/widgets/times.dart';
 
-class BookAppointment extends StatefulWidget {
-  const BookAppointment({super.key});
-
-  @override
-  State<BookAppointment> createState() => _BookAppointmentState();
-}
-
-class _BookAppointmentState extends State<BookAppointment> {
-  int? selectedTime;
-  int? selectedDate;
-  List<String> dayes = [
-    'appointments.Monday'.tr(),
-    'appointments.Tuesday'.tr(),
-    'appointments.Wednesday'.tr(),
-    'appointments.Thursday'.tr(),
-    'appointments.Friday'.tr(),
-    'appointments.Saturday'.tr(),
-    'appointments.Sunday'.tr(),
-  ];
-  List<String> monthes = [
-    'appointments.Jan'.tr(),
-  ];
-  List<DoctorAvailabilityModel> doctorAvailability = [
-    DoctorAvailabilityModel(
-        day: 'Monday',
-        startTime: TimeOfDay(hour: 10, minute: 0),
-        endTime: TimeOfDay(hour: 16, minute: 0),
-        examinationDuration: 20),
-    DoctorAvailabilityModel(
-        day: 'Tuesday',
-        startTime: TimeOfDay(hour: 10, minute: 0),
-        endTime: TimeOfDay(hour: 16, minute: 0),
-        examinationDuration: 20),
-    DoctorAvailabilityModel(
-        day: 'Wednesday',
-        startTime: TimeOfDay(hour: 10, minute: 0),
-        endTime: TimeOfDay(hour: 16, minute: 0),
-        examinationDuration: 20),
-    DoctorAvailabilityModel(
-        day: 'Thursday',
-        startTime: TimeOfDay(hour: 10, minute: 0),
-        endTime: TimeOfDay(hour: 16, minute: 0),
-        examinationDuration: 20),
-  ];
-  List<Map<String, String>> availableDays = [];
-  List<Map<String, dynamic>> times = [];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    availableDays = getAvailableDays(doctorAvailability);
-    times = calculateTime(
-        doctorAvailability[0].startTime,
-        doctorAvailability[0].endTime,
-        doctorAvailability[0].examinationDuration);
-  }
-
-  List<Map<String, String>> getNext7Days() {
-    DateTime today = DateTime.now();
-    List<Map<String, String>> days = [];
-
-    for (int i = 0; i < 7; i++) {
-      DateTime futureDate = today.add(Duration(days: i));
-
-      days.add({
-        "dayName": i == 0
-            ? "Today"
-            : DateFormat.EEEE().format(futureDate), // "Today" if it's today
-        "monthName": DateFormat.MMMM().format(futureDate), // e.g., March
-        "dayNumber": DateFormat.d().format(futureDate), // e.g., 4
-      });
-    }
-    return days;
-  }
-
-  List<Map<String, String>> getAvailableDays(
-      List<DoctorAvailabilityModel> doctorAvailability) {
-    DateTime today = DateTime.now();
-    List<Map<String, String>> availableDays = [];
-
-    for (int i = 0; i < 7; i++) {
-      DateTime futureDate = today.add(Duration(days: i));
-      String dayName = DateFormat.EEEE().format(futureDate);
-
-      // Check if the current day is today
-      String formattedDayName = (i == 0) ? "Today" : dayName;
-
-      // Check if this day is in the doctor's availability
-      if (doctorAvailability
-          .any((availability) => availability.day == dayName)) {
-        availableDays.add({
-          "dayName":
-              formattedDayName, // "Today" if it's today, otherwise the day name
-          "monthName": DateFormat.MMMM().format(futureDate), // e.g., March
-          "dayNumber": DateFormat.d().format(futureDate), // e.g., 4
-        });
-      }
-    }
-
-    return availableDays;
-  }
-
-  List<Map<String, dynamic>> calculateTime(
-      TimeOfDay startTime, TimeOfDay endTime, int duration) {
-    DateTime startDateTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      startTime.hour,
-      startTime.minute,
-    );
-
-    DateTime endDateTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      endTime.hour,
-      endTime.minute,
-    );
-
-    List<Map<String, dynamic>> times = [];
-
-    while (startDateTime.isBefore(endDateTime)) {
-      DateTime nextDateTime = startDateTime.add(Duration(minutes: duration));
-
-      // Convert to 12-hour format
-      int hour = startDateTime.hour > 12
-          ? startDateTime.hour - 12
-          : startDateTime.hour == 0
-              ? 12
-              : startDateTime.hour;
-      int minute = startDateTime.minute;
-
-      String period = startDateTime.hour >= 12 ? 'pm' : 'am';
-
-      times.add({
-        'hour': hour.toString().padLeft(2, '0'),
-        'minute': minute.toString().padLeft(2, '0'),
-        'period': period,
-      });
-
-      startDateTime = nextDateTime;
-    }
-
-    return times;
-  }
-
+class BookAppointment extends StatelessWidget {
+  const BookAppointment(
+      {super.key,
+      required this.workTimes,
+      required this.user,
+      required this.clinic,
+      required this.appointMentId,
+      required this.reschdule,
+      required this.reason,
+      required this.doctorId});
+  final WorkTimes workTimes;
+  final UserModel user;
+  final Clinic clinic;
+  final String appointMentId;
+  final bool reschdule;
+  final String reason;
+  final String doctorId;
+  // List<Map<String, String>> getNext7Days() {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'appointments.bookAppointment'.tr(),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          height: 50,
-          padding: EdgeInsets.zero,
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
+    return BlocConsumer<BookAppointmentCubit, BookAppointmentState>(
+      listener: (context, state) {
+        if (state is RescheduleAppointmentError) {
+          showCustomDialog(
+            context: context,
+            message: 'appointments.appointmentError'.tr(),
+            title: 'dialog.oops',
+            onConfirmPressed: () => context.pop(),
+            confirmButtonName: 'dialog.ok'.tr(),
+            dialogType: DialogType.error,
+          );
+        } else if (state is RescheduleAppointmentSuccess) {
+          showCustomDialog(
+            context: context,
+            message: 'appointments.appointmentSuccess'.tr(),
+            title: 'dialog.bookSuccess'.tr(),
+            onConfirmPressed: () => context.pushNamedAndRemoveUntil(
+              AppRoutes.mainScreen,
             ),
-            child: CustomButton(
-              onPressed: () {
-                context.pushNamed(AppRoutes.patientAppointmentDetails);
-              },
-              buttonName: 'appointments.next'.tr(),
-              width: 120,
-              paddingVirtical: 5,
-              height: 50,
-              paddingHorizental: 10,
+            confirmButtonName: 'dialog.ok'.tr(),
+            dialogType: DialogType.success,
+          );
+        }
+      },
+      builder: (context, state) {
+        var bookAppointmentCubit = context.read<BookAppointmentCubit>();
+        var availableDays = bookAppointmentCubit.availableDays;
+        var times = bookAppointmentCubit.times;
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'appointments.bookAppointment'.tr(),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(AppPreferances.padding),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'appointments.selectDate'.tr(),
-                  style: Theme.of(context).textTheme.titleSmall,
+            persistentFooterButtons: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
                 ),
-                verticalSpace(10),
-                Wrap(
-                  alignment: WrapAlignment.start,
-                  direction: Axis.horizontal,
-                  textDirection: ui.TextDirection.rtl,
-                  children: [
-                    ...List.generate(
-                        availableDays.length,
-                        (index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedDate = index;
-                                  });
-                                },
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 300),
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      color: AppColors.mainColor,
-                                      width: 2,
-                                    ),
-                                    color: selectedDate == index
-                                        ? AppColors.mainColor
-                                        : Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                  ),
-                                  width: 100,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'appointments.${availableDays[index]['dayName']}'
-                                            .tr(), // Day names
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              color: selectedDate == index
-                                                  ? Colors.white
-                                                  : AppColors.mainColor,
-                                            ),
-                                      ),
-                                      Text(
-                                        availableDays[index]
-                                            ['dayNumber']!, // Day numbers
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: selectedDate == index
-                                                  ? Colors.white
-                                                  : AppColors.mainColor,
-                                            ),
-                                      ),
-                                      Text(
-                                        'appointments.${availableDays[index]['monthName']}'
-                                            .tr(), // Month names
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: selectedDate == index
-                                                  ? Colors.white
-                                                  : AppColors.mainColor,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ))
-                  ],
+                child: CustomButton(
+                  onPressed: () {
+                    if (bookAppointmentCubit.selectedTime == null) {
+                      return;
+                    }
+                    if (reschdule) {
+                      print(reason);
+                      bookAppointmentCubit.selectedDateTime(
+                          availableDays[bookAppointmentCubit.selectedDay!],
+                          times[bookAppointmentCubit.selectedTime!],
+                          doctorId);
+                      bookAppointmentCubit.rescheduleAppointment(
+                          appointMentId, reason);
+                    } else {
+                      bookAppointmentCubit.selectedDateTime(
+                          availableDays[bookAppointmentCubit.selectedDay!],
+                          times[bookAppointmentCubit.selectedTime!],
+                          doctorId);
+                      // log('${availableDays[selectedDate!]['dayNumber']}');
+                      // log('${times[selectedTime!]['hour']}');
+                      // log('${times[selectedTime!]['minute']}');
+                      // selectedDateTime(
+                      //     availableDays[selectedDate!], times[selectedTime!]);
+                      context.pushNamed(AppRoutes.patientAppointmentDetails,
+                          arguments: {
+                            'appointment': bookAppointmentCubit.appointment,
+                            'user': user,
+                            'doctor': clinic
+                          });
+                    }
+                  },
+                  isLoading: state is RescheduleAppointmentLoading,
+                  buttonName: 'appointments.next'.tr(),
+                  width: double.infinity,
+                  paddingVirtical: 5,
+                  backgroundColor: bookAppointmentCubit.selectedTime == null
+                      ? Theme.of(context).cardColor
+                      : AppColors.mainColor,
+                  height: 40,
+                  paddingHorizental: 10,
                 ),
-                verticalSpace(20),
-                Text(
-                  'appointments.selectTime'.tr(),
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                verticalSpace(10),
-                Wrap(
-                  children: [
-                    ...List.generate(
-                      times.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedTime = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: 110,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: selectedTime == index
-                                  ? AppColors.mainColor
-                                  : Theme.of(context).scaffoldBackgroundColor,
-                              border: Border.all(
-                                color: AppColors.mainColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${times[index]['hour']}:${times[index]['minute']}', // available times
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: selectedTime == index
-                                            ? Colors.white
-                                            : AppColors.mainColor,
-                                      ),
-                                  textDirection: ui.TextDirection.ltr,
-                                ),
-                                horizontalSpace(5),
-                                Text(
-                                    'appointments.${times[index]['period']}'
-                                        .tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          color: selectedTime == index
-                                              ? Colors.white
-                                              : AppColors.mainColor,
-                                        ))
-                              ],
-                            ),
-                          ),
+              ),
+            ],
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppointmentStepper(
+                      index: 0, text: 'appointments.selectDateAndTime'.tr()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppPreferances.padding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpace(10),
+                        Text(
+                          'appointments.selectDate'.tr(),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ));
+                        verticalSpace(10),
+                        Dayes(workTimes: workTimes),
+                        verticalSpace(20),
+                        Text(
+                          'appointments.selectTime'.tr(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        verticalSpace(10),
+                        Times()
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ));
+      },
+    );
   }
 }
 
- // verticalSpace(10),
+// verticalSpace(10),
                 // SizedBox(
                 //   height: 300,
                 //   width: double.infinity,

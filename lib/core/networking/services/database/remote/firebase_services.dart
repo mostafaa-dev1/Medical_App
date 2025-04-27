@@ -80,15 +80,16 @@ class FirebaseServices {
   }
 
   // Image Upload to Firebase Storage
-  Future<Either<String, String>> uploadImage({required File image}) async {
+  Future<Either<String, String>> uploadImage(
+      {required File image, required String filename}) async {
     try {
       Reference ref =
-          _storage.ref().child('ProfileImages/${image.path.split('/').last}');
+          _storage.ref().child('$filename/${image.path.split('/').last}');
       await ref.putFile(image);
       String url = await ref.getDownloadURL();
       return Right(url);
     } catch (e) {
-      return Left(e.toString());
+      return Left('Image could not be uploaded');
     }
   }
 }

@@ -58,12 +58,12 @@ class Notifications extends StatelessWidget {
                         children: [
                           Text(
                             'Appointment Canceled!',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           verticalSpace(5),
                           Text(
                             '19 Dec 2022 | 10:00 AM',
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
@@ -72,8 +72,7 @@ class Notifications extends StatelessWidget {
                   verticalSpace(10),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.labelMedium,
                   )
                 ],
               ),
@@ -117,12 +116,12 @@ class Notifications extends StatelessWidget {
                         children: [
                           Text(
                             'Appointment Scheduled!',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           verticalSpace(5),
                           Text(
                             '19 Dec 2022 | 10:00 AM',
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
@@ -131,8 +130,7 @@ class Notifications extends StatelessWidget {
                   verticalSpace(10),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.labelMedium,
                   )
                 ],
               ),
@@ -176,12 +174,12 @@ class Notifications extends StatelessWidget {
                         children: [
                           Text(
                             'Appointment Booked!',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           verticalSpace(5),
                           Text(
                             '19 Dec 2022 | 10:00 AM',
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
@@ -190,8 +188,7 @@ class Notifications extends StatelessWidget {
                   verticalSpace(10),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.labelMedium,
                   )
                 ],
               ),
@@ -235,12 +232,12 @@ class Notifications extends StatelessWidget {
                         children: [
                           Text(
                             'Appointment Confirmed',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           verticalSpace(5),
                           Text(
                             '19 Dec 2022 | 10:00 AM',
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
@@ -249,8 +246,7 @@ class Notifications extends StatelessWidget {
                   verticalSpace(10),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],
               ),
@@ -294,12 +290,12 @@ class Notifications extends StatelessWidget {
                         children: [
                           Text(
                             'Payment Success',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           verticalSpace(5),
                           Text(
                             '19 Dec 2022 | 10:00 AM',
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
@@ -308,8 +304,7 @@ class Notifications extends StatelessWidget {
                   verticalSpace(10),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.labelMedium,
                   )
                 ],
               ),

@@ -4,36 +4,52 @@ import 'package:medical_system/core/models/address.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
-class User {
-  String id;
-  final String uid;
-  String firstName;
-  String lastName;
-  final String email;
-  String image;
-  String phone;
-  DateTime dateOfBirth;
-  String gender;
-  List<Address> adresses;
+class UserModel {
+  @JsonKey(defaultValue: 'PAT-0')
+  String? id;
+  @JsonKey(defaultValue: '')
+  String? uid;
+  @JsonKey(name: 'first_name', defaultValue: '')
+  String? firstName;
+  @JsonValue('')
+  @JsonKey(name: 'last_name', defaultValue: '')
+  String? lastName;
+  @JsonKey(defaultValue: '')
+  String? email;
+  @JsonKey(defaultValue: '')
+  String? image;
+  @JsonKey(defaultValue: '')
+  String? phone;
+  String? messageToken;
+  @JsonKey(
+    name: 'date_of_birth',
+  )
+  DateTime? dateOfBirth;
+  @JsonKey(defaultValue: '')
+  String? gender;
+  @JsonKey(defaultValue: [])
+  List<Address>? addresses;
 
-  User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.image,
-    required this.phone,
-    required this.dateOfBirth,
-    required this.gender,
-    required this.uid,
-    required this.adresses,
+  UserModel({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.image,
+    this.phone,
+    this.dateOfBirth,
+    this.gender,
+    this.uid,
+    this.addresses,
+    this.messageToken,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
-  User copyWith({
+  UserModel copyWith({
     String? id,
     String? name,
     String? email,
@@ -43,7 +59,7 @@ class User {
     String? gender,
     String? uid,
   }) {
-    return User(
+    return UserModel(
       id: id ?? this.id,
       firstName: name ?? firstName,
       lastName: name ?? lastName,
@@ -53,7 +69,7 @@ class User {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
       uid: uid ?? this.uid,
-      adresses: adresses,
+      addresses: addresses,
     );
   }
 }

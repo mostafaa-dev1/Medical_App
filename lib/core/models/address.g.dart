@@ -8,8 +8,8 @@ part of 'address.dart';
 
 Address _$AddressFromJson(Map<String, dynamic> json) => Address(
       id: json['id'] as String?,
-      latitude: json['latitude'] as String?,
-      longitude: json['longitude'] as String?,
+      latitude: json['latitude'],
+      longitude: json['longitude'],
       city: json['city'] as String?,
       country: json['country'] as String?,
       street: json['street'] as String?,
