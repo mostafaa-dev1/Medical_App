@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/constants/preferances.dart';
 import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
+import 'package:medical_system/core/logic/app_cubit.dart';
+import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
@@ -12,8 +14,10 @@ import 'package:medical_system/features/appointments/data/models/appointments_mo
 import 'package:medical_system/features/appointments/logic/appointments_cubit.dart';
 
 class CancelAppointment extends StatelessWidget {
-  const CancelAppointment({super.key, required this.appointment});
+  const CancelAppointment(
+      {super.key, required this.appointment, required this.user});
   final Appointment appointment;
+  final UserModel user;
 
   // final List<String> reasons = [
   @override
@@ -31,8 +35,8 @@ class CancelAppointment extends StatelessWidget {
         } else if (state is CancelAppointmentSuccess) {
           showCustomDialog(
               context: context,
-              message: 'appointments.cancelSuccess'.tr(),
-              title: 'dialog.sentSuccess'.tr(),
+              message: 'appointments.appointmentCanceled'.tr(),
+              title: 'dialog.success'.tr(),
               onConfirmPressed: () {
                 context.pop();
                 context.pushNamedAndRemoveUntil(
@@ -41,6 +45,11 @@ class CancelAppointment extends StatelessWidget {
               },
               confirmButtonName: 'dialog.ok'.tr(),
               dialogType: DialogType.success);
+          context.read<AppCubit>().addNotification(
+              content: 'Appointment has been Cancelled successfully',
+              contentAr: 'تم الغاء الموعد بنجاح',
+              patientId: user.id!,
+              type: 'Cancelled');
         }
       },
       builder: (context, state) {

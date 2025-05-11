@@ -18,11 +18,11 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           : DateTime.parse(json['date_of_birth'] as String),
       gender: json['gender'] as String? ?? '',
       uid: json['uid'] as String? ?? '',
-      messageToken: json['message_token'] as String? ?? '',
       addresses: (json['addresses'] as List<dynamic>?)
               ?.map((e) => Address.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      messageToken: json['messageToken'] as String?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -33,8 +33,8 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'email': instance.email,
       'image': instance.image,
       'phone': instance.phone,
+      'messageToken': instance.messageToken,
       'date_of_birth': instance.dateOfBirth?.toIso8601String(),
       'gender': instance.gender,
       'addresses': instance.addresses,
-      'messages_token': instance.messageToken,
     };

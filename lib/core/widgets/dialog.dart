@@ -102,17 +102,11 @@ class CustomDialog extends StatelessWidget {
                           height: 35,
                           buttonColor: dialogType == DialogType.error
                               ? AppColors.lightRed
-                              : dialogType == DialogType.success ||
-                                      dialogType == DialogType.sent
-                                  ? AppColors.lightGreen
-                                  : AppColors.secondaryColor,
+                              : AppColors.mainColor,
                           withBorderSide: true,
                           backgroundColor: dialogType == DialogType.error
                               ? AppColors.lightRed
-                              : dialogType == DialogType.success ||
-                                      dialogType == DialogType.sent
-                                  ? AppColors.lightGreen
-                                  : AppColors.secondaryColor,
+                              : AppColors.mainColor,
                           buttonName: cancelButtonName ?? 'dialog.cancel'.tr(),
                           onPressed: () {
                             Navigator.pop(context);
@@ -126,10 +120,7 @@ class CustomDialog extends StatelessWidget {
                       height: 35,
                       backgroundColor: dialogType == DialogType.error
                           ? AppColors.lightRed
-                          : dialogType == DialogType.success ||
-                                  dialogType == DialogType.sent
-                              ? AppColors.lightGreen
-                              : AppColors.secondaryColor,
+                          : AppColors.mainColor,
                       buttonName: confirmButtonName,
                       onPressed: onConfirmPressed,
                       width: 80,

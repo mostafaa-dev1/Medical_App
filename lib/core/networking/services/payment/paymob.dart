@@ -40,6 +40,8 @@ class Paymob {
       });
       log(' order response body ${response.body}');
       final decoded = jsonDecode(response.body);
+      log(' order id response body ${decoded['id']}');
+
       // await getPaymentKey(
       //     orderId: decoded['id'],
       //     token: token,

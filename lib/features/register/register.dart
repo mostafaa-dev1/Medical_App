@@ -58,7 +58,8 @@ class Register extends StatelessWidget {
           context.loaderOverlay.hide();
           context.pushNamed(AppRoutes.otp, arguments: {
             'email': context.read<RegisterCubit>().emailController.text,
-            'password': context.read<RegisterCubit>().passwordController.text
+            'password': context.read<RegisterCubit>().passwordController.text,
+            'justVerify': false
           });
         } else {
           context.loaderOverlay.hide();

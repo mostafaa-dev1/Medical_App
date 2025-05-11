@@ -4,7 +4,8 @@ import 'package:medical_system/core/constants/theme_checker.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 
 class EmptyAppointments extends StatelessWidget {
-  const EmptyAppointments({super.key});
+  const EmptyAppointments({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,8 @@ class EmptyAppointments extends StatelessWidget {
         verticalSpace(50),
         Text(
           textAlign: TextAlign.center,
-          'You don’t have an appointment yet',
+          title,
           style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        verticalSpace(10),
-        Text(
-          textAlign: TextAlign.center,
-          'You don’t have a doctor’s appointment scheduled of the moment',
-          style: Theme.of(context).textTheme.labelSmall,
         ),
       ],
     );

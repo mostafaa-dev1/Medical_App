@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medical_system/core/networking/services/auth/auth_service.dart';
+import 'package:medical_system/core/networking/services/database/remote/supabase_services.dart';
 import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
 
 part 'app_state.dart';
@@ -15,11 +16,18 @@ class AppCubit extends Cubit<AppState> {
   Locale _locale = const Locale('en'); // Default language
   TextStyle Function() _fontStyle = () => GoogleFonts.poppins();
 
-  AppCubit() : super(AppInitial());
-
+  AppCubit() : super(AppInitial()) {
+    init();
+  }
+  final _supabase = SupabaseServices();
   ThemeMode get themeMode => _themeMode;
   Locale get locale => _locale;
   TextStyle Function() get fontStyle => _fontStyle;
+
+  void init() async {
+    loadPreferences();
+    getNotificationsCount();
+  }
 
   int languageIndex = 0;
   int themeIndex = 0;
@@ -91,6 +99,44 @@ class AppCubit extends Cubit<AppState> {
       emit(AppLogoutSuccess());
     }).catchError((e) {
       emit(AppLogoutError('auth.somethingWentWrong'.tr()));
+    });
+  }
+
+  int notificationsCount = 0;
+  void decrementNotificationsCount() {
+    notificationsCount--;
+    emit(NotificationsCountSuccess());
+  }
+
+  void getNotificationsCount() async {
+    emit(NotificationsCountLoading());
+    final response = await _supabase.count();
+    response.fold((l) {
+      emit(NotificationsCountError(l));
+    }, (r) {
+      notificationsCount = r;
+      emit(NotificationsCountSuccess());
+    });
+  }
+
+  Future<void> addNotification(
+      {required String content,
+      required String contentAr,
+      required String patientId,
+      required String type}) async {
+    emit(NotificationsCountLoading());
+    final response = await _supabase.setData(table: 'Notifications', data: {
+      'content': content,
+      'content_ar': contentAr,
+      'patient_id': patientId,
+      'type': type,
+      'read': false,
+    });
+    response.fold((l) {
+      emit(NotificationsCountError(l));
+    }, (r) {
+      notificationsCount++;
+      emit(NotificationsCountSuccess());
     });
   }
 }

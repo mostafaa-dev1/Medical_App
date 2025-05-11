@@ -114,7 +114,8 @@ class Login extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {
-                            context.pushNamed(AppRoutes.forgetPassword);
+                            context.pushNamed(AppRoutes.forgetPassword,
+                                arguments: cubit.emailController.text);
                           },
                           child: Text(
                             'Auth.forgotPassword'.tr(),

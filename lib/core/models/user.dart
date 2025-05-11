@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:medical_system/core/models/address.dart';
+import 'package:medical_system/features/laboratories/data/model/labs_model.dart';
 
 part 'user.g.dart';
 

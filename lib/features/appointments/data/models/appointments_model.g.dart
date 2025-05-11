@@ -20,7 +20,6 @@ Appointment _$AppointmentFromJson(Map<String, dynamic> json) => Appointment(
       id: (json['id'] as num?)?.toInt(),
       doctorId: json['doctor_id'] as String?,
       patientId: json['patient_id'] as String?,
-      clinicId: json['clinic_id'] as String?,
       doctor: json['Doctors'] == null
           ? null
           : Doctor.fromJson(json['Doctors'] as Map<String, dynamic>),
@@ -36,6 +35,20 @@ Appointment _$AppointmentFromJson(Map<String, dynamic> json) => Appointment(
       clinic: json['Clinics'] == null
           ? null
           : Clinic.fromJson(json['Clinics'] as Map<String, dynamic>),
+      clinicId: json['clinicId'] as String?,
+      hospital: json['HospitalsInfo'] == null
+          ? null
+          : ClinicInfo.fromJson(json['HospitalsInfo'] as Map<String, dynamic>),
+      lab: json['LaboratoriesInfo'] == null
+          ? null
+          : LabsInfo.fromJson(json['LaboratoriesInfo'] as Map<String, dynamic>),
+      labId: json['labId'] as int?,
+      hospitalId: json['hospitalId'] as int?,
+      labServices: json['lab_services'] == null
+          ? null
+          : List<LabServices>.from((json['lab_services'] as List)
+              .map((x) => LabServices.fromJson(x))),
+      fee: json['fee'] as int?,
     );
 
 Map<String, dynamic> _$AppointmentToJson(Appointment instance) =>
@@ -49,6 +62,10 @@ Map<String, dynamic> _$AppointmentToJson(Appointment instance) =>
       'payment_method': instance.paymentMethod,
       'patient': instance.patient,
       'clinic_id': instance.clinicId,
+      'lab_id': instance.labId,
+      'hos_id': instance.hospitalId,
+      'lab_services': instance.labServices?.map((e) => e.toJson()).toList(),
+      'fee': instance.fee,
     };
 
 Patient _$PatientFromJson(Map<String, dynamic> json) => Patient(

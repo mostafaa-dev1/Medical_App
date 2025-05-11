@@ -182,4 +182,26 @@ class AuthService {
       );
     }
   }
+
+  // forget password
+  Future<Either<String, String>> forgetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return Right('Auth.resetPasswordEmailSent');
+    } on FirebaseAuthException catch (e) {
+      log('Exception in FirebaseAuthService.resetPassword: ${e.toString()} and code is ${e.code}');
+      if (e.code == 'user-not-found') {
+        return Left(
+          'Auth.emailNotExists',
+        );
+      } else if (e.code == 'network-request-failed') {
+        return Left(
+          'Auth.networkError',
+        );
+      }
+      return Left(
+        'Auth.unexpectedError',
+      );
+    }
+  }
 }

@@ -68,9 +68,6 @@ class FilterValues extends StatelessWidget {
                       ? AppColors.mainColor.withAlpha(20)
                       : AppColors.mainColor,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.mainColor,
-                  ),
                 ),
                 child: Text(
                     filterValues['speciality'] == null ||
@@ -105,6 +102,31 @@ class FilterValues extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: filterValues['government'] == null ||
                                   filterValues['government'] == 'All'
+                              ? AppColors.mainColor
+                              : Colors.white,
+                        )),
+              ),
+              horizontalSpace(5),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: filterValues['city'] == null ||
+                          filterValues['city'] == 'All'
+                      ? AppColors.mainColor.withAlpha(20)
+                      : AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                    filterValues['city'] == null ||
+                            filterValues['city'] == 'All'
+                        ? 'search.city'.tr()
+                        : '${filterValues['city']}',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: filterValues['city'] == null ||
+                                  filterValues['city'] == 'All'
                               ? AppColors.mainColor
                               : Colors.white,
                         )),

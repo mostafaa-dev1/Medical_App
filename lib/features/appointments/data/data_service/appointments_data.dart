@@ -11,8 +11,13 @@ class AppointmentsData extends AppointmentsRepo {
       required String eqKey2,
       required String eqValue2}) async {
     {
-      return _supabaseServices.getDataWithTwoeq('Appointments',
-          '*,Clinics(*),Doctors(*)', 'patient_id', patientId, eqKey2, eqValue2);
+      return _supabaseServices.getDataWithTwoeq(
+          'Appointments',
+          '*,Clinics(*,Doctors(*)),HospitalsInfo(*,Hospitals(*)),Doctors(*),LaboratoriesInfo(*,Laboratories(*))',
+          'patient_id',
+          patientId,
+          eqKey2,
+          eqValue2);
     }
   }
 
@@ -24,9 +29,9 @@ class AppointmentsData extends AppointmentsRepo {
         eqKey: 'id',
         eqValue: id,
         data: {
-          'type': 'Canceled',
+          'type': 'Cancelled',
           'problem_reason': reason,
-          'status': 'Canceled'
+          'status': 'Cancelled'
         });
   }
 
@@ -45,5 +50,14 @@ class AppointmentsData extends AppointmentsRepo {
           'time': time,
           'problem_reason': reason,
         });
+  }
+
+  Future<Either<String, List<Map<String, dynamic>>>> getGetAppointment(
+      {required int id}) {
+    return _supabaseServices.getDataWitheq(
+        'Appointments',
+        '*,Clinics(*,Doctors(*)),HospitalsInfo(*,Hospitals(*)),Doctors(*),LaboratoriesInfo(*,Laboratories(*))',
+        'id',
+        id.toString());
   }
 }

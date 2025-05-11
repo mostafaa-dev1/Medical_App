@@ -92,7 +92,7 @@ class AiSearchItem extends StatelessWidget {
                         ),
                         horizontalSpace(5),
                         Text(
-                          '${clinic.government}, ${clinic.city},${clinic.street}',
+                          '${'government.${clinic.government}'.tr()}, ${'city.${clinic.city}'},${LanguageChecker.isArabic(context) ? clinic.address!.streatAr : clinic.address!.streat}',
                           style: Theme.of(context).textTheme.labelMedium!,
                         )
                       ],

@@ -9,18 +9,21 @@ import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/app_text_form.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
+import 'package:medical_system/features/appointments/data/models/appointments_model.dart';
 
 class ReschedualAppointment extends StatefulWidget {
   const ReschedualAppointment(
       {super.key,
       required this.appointmentId,
       required this.workTimes,
-      required this.clinic,
+      required this.appointment,
+      //required this.clinic,
       required this.doctorId});
   final String appointmentId;
   final WorkTimes workTimes;
-  final Clinic clinic;
+  // final Clinic clinic;
   final String doctorId;
+  final Appointment appointment;
 
   @override
   State<ReschedualAppointment> createState() => _ReschedualAppointmentState();
@@ -46,7 +49,8 @@ class _ReschedualAppointmentState extends State<ReschedualAppointment> {
                 context.pushNamed(AppRoutes.pickAppointmentDate, arguments: {
                   'workTimes': widget.workTimes,
                   'user': UserModel(),
-                  'doctor': widget.clinic,
+                  // 'doctor': widget.clinic,
+                  'appointment': widget.appointment,
                   'reason': secheduleReasons[selectedReason].tr(),
                   'reschdule': true,
                   'appointmentId': widget.appointmentId,

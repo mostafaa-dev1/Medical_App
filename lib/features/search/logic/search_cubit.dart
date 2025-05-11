@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/features/search/data/searsh_data/search_data.dart';
-import 'package:meta/meta.dart';
 
 part 'search_state.dart';
 
@@ -13,6 +13,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   final _searchData = SearchData();
   Map<String, dynamic> filterValues = {};
+  TextEditingController searchController = TextEditingController();
 
   Clinics doctors = Clinics();
   Future<void> search(
@@ -21,6 +22,7 @@ class SearchCubit extends Cubit<SearchState> {
       String? rate,
       String? price,
       String? firstName,
+      String? city,
       bool? withSearch,
       bool? ar}) async {
     if (withSearch ?? false) {
@@ -30,7 +32,8 @@ class SearchCubit extends Cubit<SearchState> {
       'speciality': spciality,
       'government': gov,
       'rate': rate,
-      'price': price
+      'price': price,
+      'city': city
     };
     emit(SearchLoading());
     log(filterValues.toString());
@@ -39,7 +42,8 @@ class SearchCubit extends Cubit<SearchState> {
         rate: rate,
         gov: gov,
         price: price,
-        firstName: firstName,
+        firstName: searchController.text,
+        city: city,
         ar: ar);
     response.fold((l) {
       log(l);
@@ -84,8 +88,7 @@ class SearchCubit extends Cubit<SearchState> {
         // serviceEnabled = await Geolocator.isLocationServiceEnabled();
         // if (!serviceEnabled) {
         // }
-        emit(LocationError(
-            "Location services are disabled, please enable them for better search results."));
+        emit(LocationError("dialog.locationDisabled"));
         return null;
       }
 
@@ -94,15 +97,13 @@ class SearchCubit extends Cubit<SearchState> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          emit(LocationError(
-              "Location permissions are denied, please allow them for better search results."));
+          emit(LocationError("dialog.locationDenied"));
           return null;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        emit(LocationError(
-            "Location permissions are permanently denied, we cannot request permissions, so we can't provide better search results."));
+        emit(LocationError("dialog.locationDeniedForever"));
         //return Future.error('Location permissions are permanently denied');
         return null;
       }
@@ -148,6 +149,7 @@ class SearchCubit extends Cubit<SearchState> {
       rate: filters['rateing'] == 'All' ? null : filters['rateing'],
       gov: filters['government'] == 'All' ? null : filters['government'],
       price: filters['price'],
+      city: filters['city'] == 'All' ? null : filters['city'],
     );
   }
 }

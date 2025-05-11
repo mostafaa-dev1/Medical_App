@@ -12,8 +12,7 @@ Review _$ReviewFromJson(Map<String, dynamic> json) => Review(
       userId: json['user_id'] as String,
       review: json['review'] as String,
       rate: (json['rate'] as num).toDouble(),
-      date: DateTime.parse(
-          json['created_at'] as String), // json['created_at'] as DateTime,
+      date: DateTime.parse(json['created_at'] as String),
       user: UserModel.fromJson(json['Users'] as Map<String, dynamic>),
     );
 
@@ -23,7 +22,7 @@ Map<String, dynamic> _$ReviewToJson(Review instance) => <String, dynamic>{
       'user_id': instance.userId,
       'review': instance.review,
       'rate': instance.rate,
-      'created_at': instance.date,
+      'created_at': instance.date.toIso8601String(),
       'Users': instance.user,
     };
 

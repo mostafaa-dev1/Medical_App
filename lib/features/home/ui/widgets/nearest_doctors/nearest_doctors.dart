@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 import 'package:medical_system/features/home/ui/widgets/home_header_item.dart';
 import 'package:medical_system/features/home/ui/widgets/nearest_doctors/widgets/nearest_doctors_item.dart';
 import 'package:medical_system/features/home/ui/widgets/nearest_doctors/widgets/nearest_doctors_loading.dart';

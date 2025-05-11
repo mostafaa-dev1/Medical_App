@@ -5,9 +5,10 @@ part 'spcilailties_model.g.dart';
 @JsonSerializable()
 class SpcilailtiesModel {
   String? specialty;
+  String? specialtyAr;
   String? image;
 
-  SpcilailtiesModel({this.specialty, this.image});
+  SpcilailtiesModel({this.specialty, this.image, this.specialtyAr});
 
   factory SpcilailtiesModel.fromJson(Map<String, dynamic> json) =>
       _$SpcilailtiesModelFromJson(json);

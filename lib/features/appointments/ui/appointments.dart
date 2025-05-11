@@ -84,7 +84,9 @@ class Appointments extends StatelessWidget {
                 ),
               ],
               views: [
-                Upcoming(),
+                Upcoming(
+                  user: user,
+                ),
                 Completed(
                   user: user,
                 ),
@@ -101,7 +103,7 @@ class Appointments extends StatelessWidget {
                 if (index == 2 && cubit.canceledVisits.appointments == null) {
                   context.read<AppointmentsCubit>().getAppointments(
                       eqKey2: 'type',
-                      eqValue2: 'Canceled',
+                      eqValue2: 'Cancelled',
                       index: index,
                       patientId: user.id!);
                 }

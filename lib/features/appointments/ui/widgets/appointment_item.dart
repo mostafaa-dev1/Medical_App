@@ -8,6 +8,7 @@ import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/address_builder.dart';
 import 'package:medical_system/core/widgets/doctor_card_button.dart';
 import 'package:medical_system/core/widgets/doctor_card_oulined_button.dart';
 import 'package:medical_system/features/appointments/data/models/appointments_model.dart';
@@ -23,7 +24,8 @@ class AppointmentItem extends StatelessWidget {
       this.color2,
       this.withTrailingIcon,
       required this.withButtons,
-      required this.appointment});
+      required this.appointment,
+      this.isUpcoming});
   final VoidCallback? onTap1;
   final VoidCallback? onTap2;
   final String? butttonName1;
@@ -33,13 +35,15 @@ class AppointmentItem extends StatelessWidget {
   final bool withButtons;
   final bool? withTrailingIcon;
   final Appointment appointment;
+  final bool? isUpcoming;
 
   @override
   Widget build(BuildContext context) {
+    // print(appointment.clinic!.doctor!.image);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      height: withButtons ? 155 : 100,
+      height: withButtons ? 185 : 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Theme.of(context).colorScheme.primary,
@@ -56,18 +60,25 @@ class AppointmentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image(
-                height: 50,
-                width: 50,
-                fit: BoxFit.fill,
-                image: appointment.doctor!.image != null
-                    ? NetworkImage(appointment.doctor!.image!)
-                    : AssetImage(
-                        'assets/images/doctor.png',
-                      ),
+          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Theme.of(context).colorScheme.primary,
+                border: Border.all(color: AppColors.mainColor),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image(
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.fill,
+                  image: appointment.clinic!.doctor!.image != null
+                      ? NetworkImage(appointment.clinic!.doctor!.image!)
+                      : AssetImage(
+                          'assets/images/user.png',
+                        ),
+                ),
               ),
             ),
             horizontalSpace(10),
@@ -76,42 +87,74 @@ class AppointmentItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                    '${LanguageChecker.isArabic(context) ? appointment.doctor!.firstNameAr : appointment.doctor!.firstName} ${LanguageChecker.isArabic(context) ? appointment.doctor!.lastNameAr : appointment.doctor!.lastName}',
+                    '${LanguageChecker.isArabic(context) ? appointment.clinic!.doctor!.firstNameAr : appointment.clinic!.doctor!.firstName} ${LanguageChecker.isArabic(context) ? appointment.clinic!.doctor!.lastNameAr : appointment.clinic!.doctor!.lastName}',
                     style: Theme.of(context).textTheme.bodyMedium),
-                Text('specialities.${appointment.doctor!.specialty}'.tr(),
-                    style: Theme.of(context).textTheme.labelMedium),
-                Row(
-                  children: [
-                    Icon(
-                      IconBroken.Location,
-                      size: 15,
-                    ),
-                    horizontalSpace(5),
-                    Text(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      ' ${appointment.clinic!.government!} | ${appointment.clinic!.city!} | ${appointment.clinic!.street!}',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ],
+                Text(
+                  'specialities.${appointment.clinic!.doctor!.specialty}'.tr(),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ],
             ),
             Spacer(),
-            GestureDetector(
-              onTap: () {
-                print(appointment.clinic!.toJson());
-                context.pushNamed(AppRoutes.map, arguments: {
-                  'clinic': appointment.clinic,
-                  'doctor': appointment.doctor,
-                });
-              },
-              child: Icon(
-                IconBroken.Location,
-                size: 25,
-              ),
-            )
+            isUpcoming ?? false
+                ? GestureDetector(
+                    onTap: () {
+                      //print(appointment.clinic!.toJson());
+                      // context.pushNamed(AppRoutes.map, arguments: {
+                      //   'appointment': appointment,
+                      // });
+                      context.pushNamed(AppRoutes.googlemap,
+                          arguments: appointment);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).colorScheme.primary,
+                        border: Border.all(color: AppColors.mainColor),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: AppColors.mainColor,
+                            size: 15,
+                          ),
+                          horizontalSpace(5),
+                          Text(
+                            'appointments.location'.tr(),
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox()
           ]),
+          verticalSpace(10),
+          Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: AppColors.mainColor,
+                size: 15,
+              ),
+              horizontalSpace(5),
+              Expanded(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  softWrap: true,
+                  addressBuilder(
+                      appointment.clinic!.address!,
+                      appointment.clinic!.city!,
+                      appointment.clinic!.government!,
+                      context),
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
+            ],
+          ),
           verticalSpace(10),
           Row(
             children: [
@@ -163,9 +206,10 @@ class AppointmentItem extends StatelessWidget {
                     ),
                     horizontalSpace(10),
                     DoctorCardButton(
-                        onTap: onTap2,
-                        buttonName: butttonName2 ?? '',
-                        color: color2),
+                      onTap: onTap2,
+                      buttonName: butttonName2 ?? '',
+                      color: color2,
+                    ),
                   ],
                 )
               : SizedBox()
@@ -179,9 +223,9 @@ class AppointmentItem extends StatelessWidget {
     DateTime appointDate = DateTime(date.year, date.month, date.day);
     DateTime nowDate = DateTime(now.year, now.month, now.day);
     if (appointDate == nowDate) {
-      return 'Today';
+      return 'appointments.Today'.tr();
     } else if (appointDate.difference(nowDate).inDays == 1) {
-      return 'Tomorrow';
+      return 'appointments.Tomorrow'.tr();
     } else {
       return DateFormat(
               'd MMM', context.locale.languageCode == 'en' ? 'en' : 'ar')

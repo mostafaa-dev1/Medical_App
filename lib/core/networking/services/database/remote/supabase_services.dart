@@ -122,6 +122,30 @@ class SupabaseServices {
     }
   }
 
+  Future<Either<String, List<Map<String, dynamic>>>> getDataWithTwoeqQuery(
+      String table,
+      String query,
+      String eqKey1,
+      String eqValue1,
+      String eqKey2,
+      String eqValue2) async {
+    try {
+      final response = _supabase.from(table).select(query);
+      final filteredResponse = response.eq(eqKey1, eqValue1);
+      final filteredResponse2 = await filteredResponse.eq(eqKey2, eqValue2);
+
+      return Right(filteredResponse2);
+    } on PostgrestException catch (e) {
+      return Left(_handleDatabaseError(e));
+    } on SocketException {
+      return Left('Auth.networkError');
+    } on TimeoutException {
+      return Left('Auth.networkError');
+    } catch (e) {
+      return Left('Auth.unexpectedError');
+    }
+  }
+
   Future<Either<String, List<Map<String, dynamic>>>> getDataWithThreeeq(
       {required String table,
       required String query,
@@ -155,6 +179,7 @@ class SupabaseServices {
       {String? specialty,
       String? government,
       bool? highestFee,
+      String? city,
       int? rate,
       String? doctorFirstName,
       String? doctorLastName,
@@ -169,6 +194,9 @@ class SupabaseServices {
       }
       if (government != null) {
         queryBuilder = queryBuilder.eq('government', government);
+      }
+      if (city != null) {
+        queryBuilder = queryBuilder.eq('city', city);
       }
       if (doctorFirstName != null) {
         queryBuilder = queryBuilder.ilike(
@@ -205,6 +233,52 @@ class SupabaseServices {
     }
   }
 
+  Future<Either<String, List<Map<String, dynamic>>>> getDataWithLabFilters(
+      {required String table,
+      required String query,
+      String? specialty,
+      String? government,
+      String? city,
+      int? rate,
+      String? name,
+      bool? ar}) async {
+    try {
+      var queryBuilder = _supabase.from(table).select(query);
+
+      if (specialty != null) {
+        queryBuilder = queryBuilder.eq('Laboratories.specialty', specialty);
+      }
+      if (government != null) {
+        queryBuilder = queryBuilder.eq('government', government);
+      }
+      if (city != null) {
+        queryBuilder = queryBuilder.eq('city', city);
+      }
+      if (name != null) {
+        queryBuilder = queryBuilder.ilike(
+          ar ?? false ? 'Laboratories.name_ar' : 'Laboratories.name',
+          '%$name%',
+        );
+      }
+
+      if (rate != null) {
+        queryBuilder.gte('rate', rate);
+      }
+
+      final response =
+          await queryBuilder.range(0, 5).order('rate', ascending: true);
+      return Right(response);
+    } on PostgrestException catch (e) {
+      return Left(_handleDatabaseError(e));
+    } on SocketException {
+      return Left('Auth.networkError');
+    } on TimeoutException {
+      return Left('Auth.networkError');
+    } catch (e) {
+      return Left('Auth.unexpectedError');
+    }
+  }
+
   Future<Either<String, Map<String, dynamic>>> setData(
       {required String table, required Map<String, dynamic> data}) async {
     try {
@@ -212,6 +286,7 @@ class SupabaseServices {
           await _supabase.from(table).insert(data).select().single();
       return Right(response);
     } on PostgrestException catch (e) {
+      log(e.toString());
       return Left(_handleDatabaseError(e));
     } on SocketException {
       return Left('Auth.networkError');
@@ -293,6 +368,25 @@ class SupabaseServices {
       return Right(response);
     } catch (e) {
       return Left("Image url not found");
+    }
+  }
+
+  Future<Either<String, int>> count() async {
+    try {
+      final response = await _supabase
+          .from('Notifications')
+          .count(CountOption.exact)
+          .eq('read', false);
+      return Right(response);
+    } on PostgrestException catch (e) {
+      return Left(_handleDatabaseError(e));
+    } on SocketException {
+      return Left('Auth.networkError');
+    } on TimeoutException {
+      return Left('Auth.networkError');
+    } catch (e) {
+      log(e.toString());
+      return Left('Auth.unexpectedError');
     }
   }
 }

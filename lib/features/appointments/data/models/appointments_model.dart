@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:medical_system/core/models/doctor_model.dart';
+import 'package:medical_system/features/clinics/data/model/clinic_model.dart';
+import 'package:medical_system/features/laboratories/data/model/labs_model.dart';
 
 part 'appointments_model.g.dart';
 
@@ -33,6 +35,13 @@ class Appointment {
   @JsonKey(name: 'Clinics')
   Clinic? clinic;
   String? clinicId;
+  ClinicInfo? hospital;
+  int? hospitalId;
+  int? labId;
+  LabsInfo? lab;
+  @JsonKey(name: 'lab_services')
+  List<LabServices>? labServices;
+  int? fee;
 
   Appointment({
     this.id,
@@ -47,6 +56,12 @@ class Appointment {
     this.patient,
     this.clinic,
     this.clinicId,
+    this.hospital,
+    this.lab,
+    this.labId,
+    this.hospitalId,
+    this.labServices,
+    this.fee,
   });
   factory Appointment.fromJson(Map<String, dynamic> json) =>
       _$AppointmentFromJson(json);

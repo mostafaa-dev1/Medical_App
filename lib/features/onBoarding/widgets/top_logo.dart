@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
+import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 
 class TopLogo extends StatelessWidget {
@@ -18,23 +20,25 @@ class TopLogo extends StatelessWidget {
       children: [
         SvgPicture.asset(
           'assets/images/logo.svg',
-          height: 30,
-          width: 30,
+          height: 20,
+          width: 20,
         ),
         horizontalSpace(7),
         Text('Delma',
             style: GoogleFonts.nunito(
-              fontSize: 25.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.secondaryColor,
+              color: AppColors.mainColor,
             )),
         Spacer(),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(AppRoutes.login);
+          },
           child: Text(
             'Skip',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: AppColors.secondaryColor,
+                  color: AppColors.mainColor,
                 ),
           ),
         )

@@ -11,11 +11,13 @@ class SearchData extends SearchRepo {
       String? rate,
       String? price,
       String? firstName,
+      String? city,
       bool? ar}) async {
     return _supabaseServices.getDataWithFilters(
         'Clinics', '*, Doctors!inner(*), WorkTimes(*),DoctorsInfo(*)',
         specialty: spciality,
         government: gov,
+        city: city,
         highestFee: price == 'Highest Price'
             ? true
             : price == 'Lowest Price'

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/models/user.dart';
-import 'package:medical_system/features/home/ui/widgets/doctor_speciality/widgets/specialties_loading.dart';
+import 'package:medical_system/features/home/ui/widgets/speciality/widgets/specialties_loading.dart';
 import 'package:medical_system/features/spcialities/logic/spcialities_cubit.dart';
 import 'package:medical_system/features/spcialities/widgets/spcialities_item.dart';
 

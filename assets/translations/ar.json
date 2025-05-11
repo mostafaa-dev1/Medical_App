@@ -11,16 +11,16 @@
     "title1" : "صحتك، أولويتنا",
     "title2" : "ابق على اطلاع على صحتك",
     "title3" : "المساعدة الذكية عند متناول يدك",
-    "description1" : "خطوة أولى نحو حياة أكثر صحة وسعادة",
-    "description2" : "احجز مواعيد بسهولة، واطلع على الفحوصات، واطلب خدمات التمريض - كل ذلك في مكان واحد",
+    "description1" : "تصفح واكتشف بسهولةالأطباء والمختبرات والعيادات بناءً على احتياجاتك الخاصة.",
+    "description2" : "اختر تاريخًا ووقتًا مناسبينمن من الخانات المتاحة واحجز موعدك في لحظات.",
     "description3" : "احصل على نصائح صحية وإرشادات على الفور مع مساعد الدردشة الذكي الخاص بنا",
     "health" : "صحتك",
-    "part11" : "",
-    "part21" : " صحتك ",
-    "part31" : ",",
-    "part41" : " أولويتنا " ,
-    "part12" : "ابق على اطلاع على ",
-    "part22" : "صحتك",
+    "part11" : "ابحث عن أخصائي الرعاية الصحية",
+    "part21" : " المناسب ",
+    "part31" : "",
+    "part41" : "" ,
+    "part12" : " حدد مواعيدك",
+    "part22" : "بسهولة",
     "part32" : "",
     "part42" : "",
     "part13" : "المساعدة",
@@ -91,7 +91,11 @@
         "userExists" : "المستخدم موجود بالفعل",
         "dataTooLong" :"تم تجاوز الحد الأقصى لطول البيانات",
         "formatError" : "البيانات المدخلة غير صحيحة، تحقق من القيم المرتبطة",
-        "oops" : "حدث خطاء ما"
+        "oops" : "حدث خطاء ما",
+        "resetPasswordEmailSent" : "تم ارسال رساله الى بريدك الالكتروني لاعادة تعيين كلمة المرور ",
+        "submit" : "تاكيد",
+        "sendAgainIn" : "يمكنك ارسال الكود مره اخرى بعد",
+        "seconds" : "ثانية"
     },
     "dialog" : {
         "cancel" : "إلغاء",
@@ -113,7 +117,8 @@
         "dontMissTodayAppointment" : "لا تفوت زيارتك اليوم, لديك زيارة مع ",
         "onHourToAppointment" : "لديك زياره بعد ساعه مع ",
         "dontMissAppointment" : "لا تفوت زيارتك, لديك زيارة بعج ساعه مع ",
-        "noInternetConnection" : "لا يوجد اتصال بالانترنت, الرجاء التحقق من اتصالك بالانترنت"
+        "noInternetConnection" : "لا يوجد اتصال بالانترنت, الرجاء التحقق من اتصالك بالانترنت",
+        "someThingWentWrong" : "حدث خطاء ما, الرجاء المحاولة مرة اخرى"
     },
     "home" : {
         "search" : "بحث",
@@ -148,7 +153,9 @@
         "aiAssistant" : "مساعدك",
         "enterMessage" : "اكتب رسالتك هنا",
         "youNeed" : "انت تحتاج دكتور",
-        "labsSpecialities" : "نخصصات المعامل"
+        "labsSpecialities" : "نخصصات المعامل",
+        "viewDetails" : "عرض التفاصيل",
+        "goodEvening" : "مساء الخير"
     },
     "appointments" : {
         "upcoming" : "المقبلة",
@@ -231,7 +238,22 @@
         "Ibookfor" : "احجز ل",
         "myself" : "نفسي",
         "anotherPerson" : "شخص اخر",
-        "pleasefilldetails" : "ادخل بيانات المريض"
+        "pleasefilldetails" : "ادخل بيانات المريض",
+        "youDontHaveUpcomingAppointments" : "ليس لديك اي حجوزات قادمة",
+        "youDontHaveCompletedAppointments" : "ليس لديك اي حجوزات مكتملة",
+        "youDontHaveCanceledAppointments" : "ليس لديك اي حجوزات ملغية",
+        "clinic" : "عياده طبيه",
+        "selectSpeciality" : "اختر تخصص الدكتور",
+        "phoneRequired" : "رقم الهاتف مطلوب",
+        "nameRequired" : "الاسم مطلوب",
+        "ageRequired" : "العمر مطلوب",
+        "genderRequired" : "النوع مطلوب",
+        "problemRequired" : "المشكله مطلوبه",
+        "anOtherPerson" : "لو هذا الحجز لشخص اخر, برجاء ادخال بياناته",
+        "appointmentCanceled" : "نم الغاء الزياره بنجاح",
+        "appointRescheduled" : "تم ارسال طلب تعديل الزياره",
+        "location" : "الموقع"
+        
         
     },
     "payment" : {
@@ -296,7 +318,8 @@
         "pm" : "مساءا",
         "payWithcard" : "الدفع باستخدام فيزا",
         "payCash" :"الدفع نقدا",
-        "card" : "البطاقة"
+        "card" : "البطاقة",
+        "selectPaymentMethod" : "من فضلك اختر طريقة الدفع"
     },
     "writeReview" : {
         "writeReview" : "تقييم الطبيب",
@@ -414,6 +437,9 @@
     },
     "search" : {
         "search" : "بحث",
+        "searchForDoctors" : "ابحث عن طبيب",
+        "searchForLabs" : "ابحث عن معمل",
+        "searchForClinics" : "ابحث عن عياده",
         "elevator" : "يوجد مصعد",
         "patient" : "زيارات",
         "appPrice" : "سعر الحجز",
@@ -425,13 +451,18 @@
         "all" : "الكل",
         "highestPrice" : "الاعلى سعرا",
         "lowestPrice" : "الاقل سعرا",
-        "filter" : "ترتيب حسب",
+        "filter" : "تصنيف حسب",
         "apply" : "تطبيق",
         "reset" : "اعادة تعيين",
         "tomorrowAt" : "غدا في",
         "todayAt" : "اليوم في",
         "at" : "في",
-        "noAvailabltimes" : "لا توجد مواعيد متاحة"
+        "noAvailabltimes" : "لا توجد مواعيد متاحة",
+        "noResult" : "لا يوجد نتائج",
+        "city" : "المنطقه",
+        "startSearch" : "ابدا البحث عن طبيب بالاسم او باستخدام التصنيف",
+        "searchbyName" : "ابحث بالاسم"
+
     },
     "editProfile" : {
         "editProfile" : "تعديل الملف الشخصي",
@@ -525,8 +556,39 @@
             "Edfu" : "ادفو",
             "Abou Simble" : "ابو سمبل",
             "Malawi" : "ملوي",
-            "Maghagha" : "مغاغة"
+            "Maghagha" : "مغاغة",
+            "Ismailia" : "الاسماعيلية"
         
+    },
+    "laboratories" : {
+        "laboratories" : "المعامل",
+        "Medical" : "معامل تحاليل",
+        "Radiology" : "معامل اشعه",
+        "Genetic Testing" : "معامل جينيه",
+        "Nutrition" : "معامل تغذيه",
+        "patients" : "مريض",
+        "sampling" : "متاح عينات منزليه",
+        "selectGovernment" : "اختر محافظه",
+        "selectCity" : "اختر مدينه",
+        "next" : "التالي",
+        "inLab" : "في المعمل",
+        "homeSample" : "عينه منزليه"
+    },
+    "notifications" : {
+        "notifications" : "الاشعارات",
+        "canceled" : "تم إلغاء الزيارة",
+        "rescheduled" : "تم تغيير موعد الزيارة",
+        "booked" : "تم حجز الزيارة",
+        "payment" : "عملية دفع ناجحه",
+        "confirmed" : "تم تاكيد الزيارة",
+        "markAsRead" : "تعليم كمقروءه"
+
+    },
+    "default" : {
+        "exitApp" : "هل تريد الخروج من التطبيق؟",
+        "yes" : "نعم, خروج",
+        "no" : "لا, العوده للصفحة الرئيسية"
     }
+    
         
 }

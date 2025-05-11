@@ -15,7 +15,7 @@ class AppointmentsItemLoading extends StatelessWidget {
       child: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           height: 140,
           decoration: BoxDecoration(

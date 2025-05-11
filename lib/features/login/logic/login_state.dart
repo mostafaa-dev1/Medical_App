@@ -18,3 +18,12 @@ final class LoginError extends LoginState {
   final String message;
   LoginError(this.message);
 }
+
+final class ForgetPasswordLoading extends LoginState {}
+
+final class ForgetPasswordSuccess extends LoginState {}
+
+final class ForgetPasswordError extends LoginState {
+  final String message;
+  ForgetPasswordError(this.message);
+}

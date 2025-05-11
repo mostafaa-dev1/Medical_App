@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:medical_system/core/models/address.dart';
+import 'package:medical_system/features/laboratories/data/model/labs_model.dart';
 
 part 'doctor_model.g.dart';
 
@@ -21,13 +21,18 @@ class Doctor {
   String? gender;
   String? uid;
   String? specialty;
-
+  @JsonKey(name: 'work_times')
+  WorkTimes? workTimes;
+  double? rate;
+  @JsonKey(name: 'rate_count')
+  int? rateCount;
   @JsonKey(defaultValue: [])
   List<Address>? address;
   @JsonKey(name: 'Clinics')
   List<Clinic>? clinic;
   @JsonKey(name: 'DoctorsInfo')
   DoctorInfo? doctorInfo;
+  int? fee;
 
   Doctor(
       {this.id,
@@ -43,7 +48,11 @@ class Doctor {
       this.clinic,
       this.doctorInfo,
       this.firstNameAr,
-      this.lastNameAr});
+      this.lastNameAr,
+      this.workTimes,
+      this.rate,
+      this.rateCount,
+      this.fee});
   factory Doctor.fromJson(Map<String, dynamic> json) => _$DoctorFromJson(json);
   Map<String, dynamic> toJson() => _$DoctorToJson(this);
 }
@@ -102,7 +111,7 @@ class Clinic {
   double? rate;
   @JsonKey(defaultValue: 0, name: 'rate_count')
   int? rateCount;
-  String? street;
+  // String? street;
   List<String>? phones;
   List<dynamic>? services;
   @JsonKey(name: 'work_times')
@@ -111,6 +120,7 @@ class Clinic {
   Doctor? doctor;
   @JsonKey(name: 'DoctorsInfo')
   DoctorInfo? doctorInfo;
+  Address? address;
 
   Clinic(
       {this.id,
@@ -120,7 +130,7 @@ class Clinic {
       this.longitude,
       this.government,
       this.city,
-      this.street,
+      // this.street,
       this.phones,
       this.services,
       this.workTimes,
@@ -128,7 +138,8 @@ class Clinic {
       this.doctorInfo,
       this.fee,
       this.rate,
-      this.rateCount});
+      this.rateCount,
+      this.address});
   factory Clinic.fromJson(Map<String, dynamic> json) => _$ClinicFromJson(json);
   Map<String, dynamic> toJson() => _$ClinicToJson(this);
 }

@@ -13,7 +13,7 @@ import 'package:medical_system/core/widgets/custom_button.dart';
 import 'package:medical_system/core/widgets/custom_dropdown.dart';
 import 'package:medical_system/core/widgets/dialog.dart';
 import 'package:medical_system/core/widgets/overlay_loading.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 import 'package:medical_system/features/personal_info/logic/personal_info_cubit.dart';
 import 'package:medical_system/features/personal_info/widgets/date_of_birth.dart';
 

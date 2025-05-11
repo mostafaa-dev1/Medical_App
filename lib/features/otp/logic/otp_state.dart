@@ -31,3 +31,12 @@ final class RegisterError extends OtpState {
   final String errorMessage;
   RegisterError({required this.errorMessage});
 }
+
+final class ForgetPasswordLoading extends OtpState {}
+
+final class ForgetPasswordSuccess extends OtpState {}
+
+final class ForgetPasswordError extends OtpState {
+  final String errorMessage;
+  ForgetPasswordError({required this.errorMessage});
+}

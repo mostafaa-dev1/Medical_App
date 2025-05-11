@@ -14,6 +14,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_inappwebview_windows
   flutter_secure_storage_windows
   geolocator_windows
+  maps_launcher
   url_launcher_windows
 )
 

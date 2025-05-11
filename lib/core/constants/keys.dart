@@ -1,4 +1,0 @@
-class AppKeys {
-  static const String supabase =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zZGV2dGhibHNxaGRhanNoYXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4Mjk2NTcsImV4cCI6MjA1MzQwNTY1N30.7gy6v36BVM55iKJ5HPdH1qcJbgACpoS2QkLaa9vtkbw';
-}

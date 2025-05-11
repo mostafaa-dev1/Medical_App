@@ -37,3 +37,14 @@ final class AppLogoutError extends AppState {
   final String message;
   AppLogoutError(this.message);
 }
+
+final class NotificationsCountLoading extends AppState {}
+
+final class NotificationsCountLoaded extends AppState {}
+
+final class NotificationsCountSuccess extends AppState {}
+
+final class NotificationsCountError extends AppState {
+  final String message;
+  NotificationsCountError(this.message);
+}

@@ -2,10 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icon_broken/icon_broken.dart';
+import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/app_text_form.dart';
+import 'package:medical_system/core/widgets/dialog.dart';
 import 'package:medical_system/features/ai_chat/logic/ai_cubit.dart';
 import 'package:medical_system/features/ai_chat/widgets/ai_message.dart';
 import 'package:medical_system/features/ai_chat/widgets/ai_search_item.dart';
@@ -33,6 +35,45 @@ class AiChat extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _scrollToBottom();
           });
+        } else if (state is LocationError) {
+          if (state.errMessage == 'dialog.locationDisabled') {
+            showCustomDialog(
+              context: context,
+              message: state.errMessage.tr(),
+              title: 'dialog.oops'.tr(),
+              onConfirmPressed: () {
+                context.read<AiCubit>().openLocationSettings();
+                context.pop();
+              },
+              confirmButtonName: 'dialog.enableLocation'.tr(),
+              dialogType: DialogType.warning,
+              withTowButtons: true,
+              cancelButtonName: 'dialog.cancel'.tr(),
+            );
+          } else {
+            showCustomDialog(
+              context: context,
+              message: state.errMessage.tr(),
+              title: 'dialog.oops'.tr(),
+              onConfirmPressed: () {
+                context.pop();
+              },
+              confirmButtonName: 'dialog.ok'.tr(),
+              dialogType: DialogType.error,
+            );
+          }
+        }
+        if (state is NoInternetConnection) {
+          showCustomDialog(
+            context: context,
+            message: 'dialog.noInternetConnection'.tr(),
+            title: 'dialog.oops'.tr(),
+            onConfirmPressed: () {
+              context.pop();
+            },
+            confirmButtonName: 'dialog.ok'.tr(),
+            dialogType: DialogType.error,
+          );
         }
       },
       builder: (context, state) {

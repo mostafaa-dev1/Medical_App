@@ -25,11 +25,15 @@ QuestionModel _$QuestionModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$QuestionModelToJson(QuestionModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'question': instance.question,
       'question_details': instance.questionDetails,
+      'answer': instance.answer,
+      'doctor_id': instance.doctorId,
       'user_id': instance.userId,
       'speciality': instance.speciality,
       'age': instance.age,
       'gender': instance.gender,
+      'created_at': instance.date?.toIso8601String(),
       'answered': instance.answered,
     };

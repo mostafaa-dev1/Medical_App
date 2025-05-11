@@ -29,9 +29,19 @@ class HomeData extends HomeRepository {
   @override
   Future<Either<String, List<Map<String, dynamic>>>> getUpcomingVisits(
       {required String patientId}) async {
-    final response = await _supabaseServices.getDataWithTwoeq('Appointments',
-        '*,Doctors(*),Clinics(*)', 'patient_id', patientId, 'type', 'Upcoming');
+    final response = await _supabaseServices.getDataWithTwoeq(
+        'Appointments',
+        '*,Clinics(*,Doctors(*)),HospitalsInfo(*,Hospitals(*)),LaboratoriesInfo(*,Laboratories(*))',
+        'patient_id',
+        patientId,
+        'type',
+        'Upcoming');
 
     return response;
+  }
+
+  @override
+  Future<Either<String, List<Map<String, dynamic>>>> getClinics() async {
+    return await _supabaseServices.getData('HospitalsInfo', '*,Hospitals(*)');
   }
 }

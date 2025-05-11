@@ -3,8 +3,10 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:medical_system/core/constants/language_checker.dart';
 import 'package:medical_system/core/models/doctor_model.dart';
+import 'package:medical_system/core/networking/connectivity/connectivity_helper.dart';
 import 'package:medical_system/features/ai_chat/data/ai_data/ai_data.dart';
 
 part 'ai_state.dart';
@@ -237,6 +239,11 @@ Your Knowledge Base (in JSON format - use this as a guide):
     messageController.clear();
   }
 
+  /// Adds a message from the AI to the chat history.
+  ///
+  /// This function takes a [message] and a [type] as parameters and adds the
+  /// message to the chat history with the given [type]. It also emits [AiMessageAdded]
+  /// to notify the UI that a new message has been added.
   void addAiMessage(String message, String type) {
     messages.add(
       {
@@ -263,14 +270,25 @@ Your Knowledge Base (in JSON format - use this as a guide):
   }
 
   String messageType = '';
+
+  /// Sends the user's message to the AI and updates the state with the AI's response.
+  ///
+  /// This function will emit [AiLoading] when the message is sent and then
+  /// either [AiError] if the server returns an error or [AiSuccess] if the
+  /// server returns a response from the AI.
+  ///
+  /// If the AI's response is a Spciality, it will be sent to the server to
+  /// fetch the list of doctors with that Spciality.
   Future<void> sendMessage() async {
+    if (!await ConnectivityHelper.checkConnection()) {
+      emit(NoInternetConnection());
+      return;
+    }
     emit(AiLoading());
     final response = await _aiData.sendMessage(messages);
     response.fold((l) {
-      print(l);
       emit(AiError(errMessage: l));
     }, (r) {
-      print(r);
       String completeMessage = '';
 
       // Iterate through the response candidates and combine all parts of the response
@@ -281,18 +299,6 @@ Your Knowledge Base (in JSON format - use this as a guide):
         }
       }
       log(' completeMessage: $completeMessage');
-      // String cleanedResponse = completeMessage
-      //     .replaceAll(RegExp(r'^\s*json|\s*```|\s*```$'), '')
-      //     .trim();
-      // String response = cleanedResponse.replaceAll(RegExp(r'```|json'), '');
-      // // log(jsonDecode(response)['message'].toString());
-      // dynamic decoeded = jsonDecode(completeMessage);
-      // log(decoeded['message'].toString());
-      // String finalResponse = decoeded['message'];
-      // String type = decoeded['type'];
-      // if (type == 'Spciality') {
-      //   fitchDoctors(finalResponse);
-      // }
       dynamic message;
 
       try {
@@ -328,19 +334,107 @@ Your Knowledge Base (in JSON format - use this as a guide):
 
   Clinics doctors = Clinics();
 
+  /// Fetches the list of doctors with the given [spciality].
+  ///
+  /// This function emits [FitchDoctorsLoading] when it is called and then
+  /// either [FitchDoctorsError] if the server returns an error or
+  /// [FitchDoctorsSuccess] if the server returns a response from the AI.
+  ///
+  /// If the device's location is available, it sorts the list of doctors by
+  /// distance.
+  ///
+  /// If the device's location is not available, it does not sort the list of
+  /// doctors.
   Future<void> fitchDoctors(String spciality) async {
     emit(FitchDoctorsLoading());
     final response = await _aiData.fitchDoctors(spciality);
     response.fold((l) {
-      print(l);
       emit(FitchDoctorsError(errMessage: l));
-    }, (r) {
+    }, (r) async {
+      Position? userPosition = await _getUserLocation();
+      log(userPosition.toString());
+      List<Map<String, dynamic>> sortedDoctors = [];
+      // Step 3: Sort Doctors by Distance
+      if (userPosition != null) {
+        log('with location');
+        sortedDoctors = _sortDoctorsByDistance(
+            userPosition.latitude, userPosition.longitude, r);
+        doctors = Clinics.fromJson(sortedDoctors);
+      } else {
+        doctors = Clinics.fromJson(r);
+      }
       doctors = Clinics.fromJson(r);
-      print(r);
-      log(doctors.toJson().toString());
-      print('doctors: ${doctors.clinics![0].doctor!.image}');
+
       // doctors = DoctorsList.fromJson(r);
       emit(FitchDoctorsSuccess());
     });
+  }
+
+  List<Map<String, dynamic>> _sortDoctorsByDistance(
+      double userLat, double userLng, List<Map<String, dynamic>> doctors) {
+    doctors.sort((a, b) {
+      double distanceA = Geolocator.distanceBetween(userLat, userLng,
+          a['lattitude'].toDouble(), a['longitude'].toDouble());
+      double distanceB = Geolocator.distanceBetween(userLat, userLng,
+          b['lattitude'].toDouble(), b['longitude'].toDouble());
+      return distanceA.compareTo(distanceB); // Sort by nearest
+    });
+
+    return doctors;
+  }
+
+  Position? userPosition;
+  DateTime? lastLocationCheckTime;
+  Future<Position?> _getUserLocation() async {
+    // Check if the location is already fetched and not too old
+    if (userPosition != null &&
+        lastLocationCheckTime != null &&
+        DateTime.now().difference(lastLocationCheckTime!).inMinutes < 5) {
+      return userPosition;
+    } else {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Check if location services are enabled
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // await Geolocator.openLocationSettings();
+        // serviceEnabled = await Geolocator.isLocationServiceEnabled();
+        // if (!serviceEnabled) {
+        // }
+        emit(LocationError(errMessage: "dialog.locationDisabled"));
+        return null;
+      }
+
+      // Request permission if not granted
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          emit(LocationError(errMessage: 'dialog.locationDenied'));
+          return null;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        emit(LocationError(errMessage: "dialog.locationDeniedForever"));
+        //return Future.error('Location permissions are permanently denied');
+        return null;
+      }
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
+      userPosition = position;
+      lastLocationCheckTime = DateTime.now();
+
+      // Get current position
+      return position;
+    }
+  }
+
+  Future<void> openLocationSettings() async {
+    await Geolocator.openLocationSettings();
   }
 }

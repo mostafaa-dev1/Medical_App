@@ -33,4 +33,13 @@ class AppRoutes {
   static const String heartRate = '/heartRate';
   static const String findMedicine = '/findmedicine';
   static const String paymentWebView = '/paymentWebView';
+  static const String laboratories = '/laboratories';
+  static const String clinics = '/clinics';
+  static const String clinicsProfile = '/clinicsProfile';
+  static const String laboratoriesProfile = '/laboratoriesProfile';
+  static const String offers = '/offers';
+  static const String selectGovernment = '/selectGovernment';
+  static const String selectCity = '/selectCity';
+  static const String offersProfile = '/offersProfile';
+  static const String googlemap = '/googlemap';
 }

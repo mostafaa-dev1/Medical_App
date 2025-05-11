@@ -26,7 +26,7 @@ class SpcialitiesItem extends StatelessWidget {
         });
       },
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Theme.of(context).colorScheme.primary,
@@ -58,6 +58,8 @@ class SpcialitiesItem extends StatelessWidget {
                   ),
             verticalSpace(10),
             Text(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               'specialities.${specialities.specialty}'.tr(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelMedium!.copyWith(

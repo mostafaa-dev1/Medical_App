@@ -7,7 +7,7 @@ class Categories extends StatelessWidget {
   final List<String> categories = [
     'home.doctors',
     'home.laboratories',
-    'home.hospitals',
+    'home.clinics',
   ];
   final List<String> images = [
     'assets/images/categories/doctor.png',

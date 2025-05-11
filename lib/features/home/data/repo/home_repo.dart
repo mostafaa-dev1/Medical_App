@@ -7,6 +7,7 @@ abstract class HomeRepository {
   Future<Either<String, List<Map<String, dynamic>>>> getUpcomingVisits(
       {required String patientId});
   Future<Either<String, List<Map<String, dynamic>>>> getNearByDoctors();
+  Future<Either<String, List<Map<String, dynamic>>>> getClinics();
 
   Future<Either<String, List<Map<String, dynamic>>>> getHomeData();
 }

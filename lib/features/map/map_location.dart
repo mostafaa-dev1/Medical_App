@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -10,20 +9,20 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:medical_system/core/helpers/spacing.dart';
-import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/core/widgets/custom_button.dart';
+import 'package:medical_system/features/appointments/data/models/appointments_model.dart';
+import 'package:medical_system/features/map/widgets/map_clinic_card.dart';
+import 'package:medical_system/features/map/widgets/map_doctor_card.dart';
+import 'package:medical_system/features/map/widgets/map_lab_card.dart';
 
 class MapLocation extends StatefulWidget {
   const MapLocation({
     super.key,
-    required this.clinic,
-    required this.doctor,
+    required this.appointment,
   });
-  final Clinic clinic;
+  // final Clinic clinic;
 
-  final Doctor doctor;
+  final Appointment appointment;
 
   @override
   State<MapLocation> createState() => _MapLocationState();
@@ -45,23 +44,46 @@ class _MapLocationState extends State<MapLocation> {
   @override
   void initState() {
     super.initState();
-    log(widget.clinic.toJson().toString());
-
-    initialize(widget.clinic);
+    initialize(widget.appointment);
   }
 
-  Future<void> initialize(Clinic clinic) async {
+  Future<void> initialize(Appointment appointment) async {
     bool hasPermission = await _checkPermission();
     if (!hasPermission) {
       log('Location permission not granted');
     } else {
       await startFollowingUser();
       await moveToCurrentLocation();
-      if (clinic.lattitude != null && clinic.longitude != null) {
+      if (appointment.clinic != null &&
+          appointment.clinic!.lattitude != null &&
+          appointment.clinic!.longitude != null) {
+        final clinic = appointment.clinic!;
         setState(() {
           destinationLocation = LatLng(clinic.lattitude!, clinic.longitude!);
         });
-        log(destinationLocation.toString());
+        await fitchRoute();
+      } else if (appointment.hospital != null &&
+          appointment.hospital!.location['longtude'] != null &&
+          appointment.hospital!.location['latitude'] != null) {
+        print('location ${appointment.hospital!.location}');
+        final clinic = appointment.hospital!;
+        setState(() {
+          destinationLocation = LatLng(
+              double.parse(clinic.location['latitude']!),
+              double.parse(clinic.location['longtude']!));
+        });
+        await fitchRoute();
+      } else if (appointment.lab!.location != null &&
+          appointment.lab!.location!['longtude'] != null &&
+          appointment.lab!.location!['latitude'] != null) {
+        final clinic = appointment.lab!;
+        log(clinic.location.toString());
+        setState(() {
+          destinationLocation = LatLng(
+              double.parse(clinic.location!['latitude']!),
+              double.parse(clinic.location!['longtude']!));
+          log('destinationLocation888 ${destinationLocation.toString()}');
+        });
         await fitchRoute();
       }
     }
@@ -95,6 +117,8 @@ class _MapLocationState extends State<MapLocation> {
   }
 
   Future<void> fitchRoute() async {
+    log('currentLocation $currentLocation');
+    log('destinationLocation $destinationLocation');
     if (currentLocation != null && destinationLocation != null) {
       final url = Uri.parse("http://router.project-osrm.org/route/v1/driving/"
           "${currentLocation!.longitude},${currentLocation!.latitude};"
@@ -282,131 +306,13 @@ class _MapLocationState extends State<MapLocation> {
                 ),
             ],
           ),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 220,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withAlpha(20),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
+          widget.appointment.clinic != null
+              ? MapDoctorCard(appointment: widget.appointment)
+              : widget.appointment.hospital != null
+                  ? MapClinicCard(appointment: widget.appointment)
+                  : MapLabCard(
+                      appointment: widget.appointment,
                     ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Theme.of(context).colorScheme.primary,
-                              border: Border.all(
-                                color: AppColors.mainColor,
-                              )),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image(
-                                image: widget.doctor.image != null &&
-                                        widget.doctor.image!.isNotEmpty
-                                    ? NetworkImage(widget.doctor.image!)
-                                    : const AssetImage(
-                                        'assets/images/doctor.png',
-                                      ),
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                        horizontalSpace(10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${widget.doctor.firstName} ${widget.doctor.lastName}',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            verticalSpace(5),
-                            Text(
-                              widget.doctor.specialty!,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            verticalSpace(5),
-                            Text(
-                              '${widget.clinic.city}, ${widget.clinic.government}',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Theme.of(context).colorScheme.primary,
-                              border: Border.all(
-                                color: AppColors.mainColor,
-                              )),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: AppColors.mainColor,
-                              ),
-                              horizontalSpace(5),
-                              Text(
-                                '4.5',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    verticalSpace(30),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomButton(
-                              buttonName: 'Back'.tr(),
-                              onPressed: () {},
-                              backgroundColor:
-                                  AppColors.mainColor.withAlpha(10),
-                              buttonColor: AppColors.mainColor,
-                              width: MediaQuery.of(context).size.width > 500
-                                  ? 200
-                                  : 150,
-                              paddingVirtical: 10,
-                              paddingHorizental: 10),
-                        ),
-                        horizontalSpace(10),
-                        Expanded(
-                          child: CustomButton(
-                              buttonName: 'Open in Maps'.tr(),
-                              onPressed: () {},
-                              width: MediaQuery.of(context).size.width > 500
-                                  ? 200
-                                  : 150,
-                              paddingVirtical: 10,
-                              paddingHorizental: 10),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              )),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,27 +7,58 @@ import 'package:medical_system/core/constants/language_checker.dart';
 import 'package:medical_system/core/constants/preferances.dart';
 import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
-import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/app_text_form.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
 import 'package:medical_system/core/widgets/dialog.dart';
+import 'package:medical_system/features/appointments/data/models/appointments_model.dart';
 import 'package:medical_system/features/write_review/logic/write_review_cubit.dart';
 
 class WriteReview extends StatelessWidget {
-  const WriteReview(
-      {super.key,
-      required this.doctor,
-      required this.clinic,
-      required this.user});
-  final Doctor doctor;
-  final Clinic clinic;
+  const WriteReview({super.key, required this.user, required this.appointment});
+
+  final Appointment appointment;
   final UserModel user;
+
+  String getName(BuildContext context) {
+    if (appointment.clinic != null) {
+      if (LanguageChecker.isArabic(context)) {
+        return '${'appointments.dr'.tr()} ${appointment.clinic!.doctor!.firstNameAr} ${appointment.clinic!.doctor!.lastNameAr}';
+      } else {
+        return '${'appointments.dr'.tr()} ${appointment.clinic!.doctor!.firstName} ${appointment.clinic!.doctor!.lastName}';
+      }
+    } else if (appointment.hospital != null) {
+      if (LanguageChecker.isArabic(context)) {
+        return appointment.hospital!.clinic!.nameAr;
+      } else {
+        return appointment.hospital!.clinic!.name;
+      }
+    } else if (appointment.lab != null) {
+      if (LanguageChecker.isArabic(context)) {
+        return appointment.lab!.lab!.nameAr!;
+      } else {
+        return appointment.lab!.lab!.name!;
+      }
+    } else {
+      return 'Unknown';
+    }
+  }
+
+  ImageProvider getImage() {
+    if (appointment.clinic!.doctor!.image != null) {
+      return CachedNetworkImageProvider(appointment
+          .clinic!.doctor!.image!); // appointment.clinic!.doctor!.image!;
+    } else if (appointment.hospital!.clinic!.image != '') {
+      return CachedNetworkImageProvider(appointment.hospital!.clinic!.image);
+    } else if (appointment.lab!.lab!.image != null) {
+      return CachedNetworkImageProvider(appointment.lab!.lab!.image!);
+    }
+    return const AssetImage('assets/images/user.png');
+  }
 
   @override
   Widget build(BuildContext context) {
-    log(clinic.id.toString());
     return BlocConsumer<WriteReviewCubit, WriteReviewState>(
       listener: (context, state) {
         if (state is WriteReviewError) {
@@ -79,8 +108,8 @@ class WriteReview extends StatelessWidget {
                       if (writeReviewCubit.formKey.currentState!.validate() &&
                           writeReviewCubit.userRate != 0.0) {
                         writeReviewCubit.getClinicRate(
-                          clinicId: clinic.id!,
-                          doctorId: doctor.id!,
+                          clinicId: appointment.clinic!.id!,
+                          doctorId: appointment.clinic!.doctor!.id!,
                           userId: user.id!,
                         );
                       }
@@ -107,29 +136,27 @@ class WriteReview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        height: 150,
-                        width: 140,
-                        decoration: BoxDecoration(
+                          height: 150,
+                          width: 140,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Theme.of(context).colorScheme.primary,
+                              border: Border.all(
+                                color: AppColors.mainColor,
+                              )),
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context).colorScheme.primary,
-                            border: Border.all(
-                              color: AppColors.mainColor,
-                            )),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: doctor.image == null || doctor.image!.isEmpty
-                                ? Image.asset('assets/images/doctor.png')
-                                : CachedNetworkImage(
-                                    imageUrl: doctor.image!,
-                                    fit: BoxFit.fill,
-                                  )),
-                      ),
+                            child: Image(
+                              image: getImage(),
+                              fit: BoxFit.cover,
+                            ),
+                          )),
                       verticalSpace(20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: Text(
                           textAlign: TextAlign.center,
-                          '${'writeReview.askForReview'.tr()} ${'appointments.dr'.tr()} ${LanguageChecker.isArabic(context) ? doctor.firstNameAr : doctor.firstName} ${LanguageChecker.isArabic(context) ? doctor.lastNameAr : doctor.lastName}',
+                          '${'writeReview.askForReview'.tr()} ${getName(context)}',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),

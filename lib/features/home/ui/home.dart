@@ -9,66 +9,18 @@ import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/dialog.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
 import 'package:medical_system/features/home/ui/widgets/categories/categories.dart';
-import 'package:medical_system/features/home/ui/widgets/doctor_speciality/doctor_spciality.dart';
 import 'package:medical_system/features/home/ui/widgets/home_banner.dart';
+import 'package:medical_system/features/home/ui/widgets/name_notifications.dart';
 import 'package:medical_system/features/home/ui/widgets/offers/ui/offers.dart';
 import 'package:medical_system/features/home/ui/widgets/services/ui/services.dart';
+import 'package:medical_system/features/home/ui/widgets/speciality/doctor_spciality.dart';
 import 'package:medical_system/features/home/ui/widgets/upcoming_visits/upcoming_visits.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
-  // Future<void> getUserLocation() async {
-  //   try {
-  //     // Check and request location permissions
-  //     LocationPermission permission = await Geolocator.checkPermission();
-  //     if (permission == LocationPermission.denied ||
-  //         permission == LocationPermission.deniedForever) {
-  //       permission = await Geolocator.requestPermission();
-  //       if (permission != LocationPermission.whileInUse &&
-  //           permission != LocationPermission.always) {
-  //         print('Location permissions are denied.');
-  //         return;
-  //       }
-  //     }
-
-  //     // Check if location services are enabled
-  //     if (!await Geolocator.isLocationServiceEnabled()) {
-  //       print('Location services are disabled.');
-  //       return;
-  //     }
-
-  //     // Get current position using platform-specific settings
-  //     Position position = await Geolocator.getCurrentPosition(
-  //       locationSettings: LocationSettings(
-  //         accuracy: LocationAccuracy.high,
-  //         // Adjust accuracy as needed
-  //       ),
-  //     );
-
-  //     // Print coordinates
-  //     print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
-
-  //     // Get address from coordinates
-  //     List<Placemark> placemarks = await placemarkFromCoordinates(
-  //       position.latitude,
-  //       position.longitude,
-  //     );
-
-  //     if (placemarks.isNotEmpty) {
-  //       Placemark place = placemarks[0];
-  //       print('City: ${place.locality}');
-  //       print('Current Place: ${place.name}');
-  //       print('Country: ${place.country}');
-  //       print(
-  //           'Full Address: ${place.street}, ${place.locality}, ${place.country}');
-  //     }
-  //   } catch (e) {
-  //     print('Error: $e');
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainCubit, MainState>(
@@ -123,19 +75,11 @@ class Home extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).colorScheme.primary,
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Theme.of(context).colorScheme.shadow,
-                //     spreadRadius: 5,
-                //     blurRadius: 7,
-                //     offset: const Offset(0, 3),
-                //   ),
-                // ]
+                color: AppColors.mainColor,
               ),
               child: Icon(
                 IconBroken.Chat,
-                color: AppColors.mainColor,
+                color: Colors.white,
                 size: 30,
               ),
             ),
@@ -160,63 +104,18 @@ class Home extends StatelessWidget {
                       padding: const EdgeInsets.all(AppPreferances.padding),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  context.pushNamed(AppRoutes.profile,
-                                      arguments: user);
-                                },
-                                child: CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage:
-                                      user.image != null && user.image != ''
-                                          ? NetworkImage(user.image!)
-                                          : const AssetImage(
-                                              'assets/images/user.png',
-                                            ),
-                                ),
-                              ),
-                              horizontalSpace(10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${'home.goodMorning'.tr()} 👋',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  Text(
-                                    '${user.firstName} ${user.lastName}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  context.pushNamed(AppRoutes.notifications);
-                                },
-                                child: Badge(
-                                  backgroundColor: AppColors.lightRed,
-                                  label: Text('1'),
-                                  child: Icon(
-                                    IconBroken.Notification,
-                                    size: 25,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                          NameNotifications(user: user),
                           verticalSpace(30),
                           GestureDetector(
-                            onTap: () =>
-                                context.pushNamed(AppRoutes.search, arguments: {
-                              'user': user,
-                              'speciality': null,
-                              'withSearch': true,
-                            }),
+                            onTap: () {
+                              context.pushNamed(AppRoutes.search, arguments: {
+                                'user': user,
+                                'speciality': '',
+                                'withSearch': true,
+                                'govrnment': '',
+                                'city': ''
+                              });
+                            },
                             child: Container(
                                 alignment: Alignment.centerLeft,
                                 padding: EdgeInsets.all(10),
@@ -227,7 +126,7 @@ class Home extends StatelessWidget {
                                 height: 40,
                                 width: MediaQuery.sizeOf(context).width / 1.2,
                                 child: Text(
-                                  'home.search'.tr(),
+                                  'search.searchForDoctors'.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelMedium!
@@ -269,14 +168,22 @@ class Home extends StatelessWidget {
                     verticalSpace(15),
                     HomeBanner(
                       user: user,
-                      type: cubit.categoryIndex == 0 ? 'Doctor' : 'Lab',
+                      type: cubit.categoryIndex == 0
+                          ? 'Doctor'
+                          : cubit.categoryIndex == 1
+                              ? 'Lab'
+                              : 'Clinic',
                     ),
                     verticalSpace(25),
                     UpcomingVisits(),
                     verticalSpace(15),
                     DoctorSpciality(
                       user: user,
-                      type: cubit.categoryIndex == 0 ? 'Doctor' : 'Lab',
+                      type: cubit.categoryIndex == 0
+                          ? 'Doctor'
+                          : cubit.categoryIndex == 1
+                              ? 'Lab'
+                              : 'Clinic',
                     ),
                     verticalSpace(20),
                     Services(
@@ -284,7 +191,13 @@ class Home extends StatelessWidget {
                     ),
 
                     verticalSpace(20),
-                    Offers(),
+                    Offers(
+                      type: cubit.categoryIndex == 0
+                          ? 'Doctor'
+                          : cubit.categoryIndex == 1
+                              ? 'Lab'
+                              : 'Clinic',
+                    ),
                     // verticalSpace(15),
                     // NearestDoctors(),
                   ],

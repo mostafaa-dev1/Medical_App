@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:icon_broken/icon_broken.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

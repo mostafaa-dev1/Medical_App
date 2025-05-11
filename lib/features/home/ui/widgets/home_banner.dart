@@ -82,9 +82,19 @@ class HomeBanner extends StatelessWidget {
                 fontSize: 12,
                 height: 30,
                 onPressed: () async {
+                  if (type == 'Clinic') {
+                    context.pushNamed(AppRoutes.selectGovernment, arguments: {
+                      'type': type,
+                      'specialty': '',
+                      'user': user
+                    });
+                  } else {
+                    context.pushNamed(AppRoutes.spcialities,
+                        arguments: {'user': user, 'type': type});
+                  }
                   //LocalNotifications.showNotification();
-                  context.pushNamed(AppRoutes.spcialities,
-                      arguments: {'user': user, 'type': type});
+                  // context.pushNamed(AppRoutes.spcialities,
+                  //     arguments: {'user': user, 'type': type});
                   //context.read<MainCubit>().getCityAndStreetName();
                   //Paymob().getToken();
                   //print(await context.read<MainCubit>().hasInternetAccess());
@@ -100,11 +110,11 @@ class HomeBanner extends StatelessWidget {
             child: Image(
               alignment: Alignment.bottomRight,
               image: AssetImage(
-                'assets/images/doc.png',
+                'assets/images/${type == 'Doctor' ? 'doc' : type == 'Clinic' ? 'clinics' : 'labs'}.png',
               ),
               fit: BoxFit.fill,
-              width: 120,
-              height: 170,
+              width: type == 'Clinic' ? 140 : 120,
+              height: 140,
             ),
           )
         ],

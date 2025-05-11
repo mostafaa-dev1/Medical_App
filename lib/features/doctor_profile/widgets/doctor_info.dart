@@ -5,6 +5,7 @@ import 'package:medical_system/core/constants/language_checker.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/address_builder.dart';
 
 class DoctorInfoProfile extends StatelessWidget {
   const DoctorInfoProfile({super.key, required this.doctor});
@@ -18,13 +19,13 @@ class DoctorInfoProfile extends StatelessWidget {
           height: 100,
           width: 90,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(35),
+              borderRadius: BorderRadius.circular(20),
               color: Theme.of(context).colorScheme.primary,
               border: Border.all(
                 color: AppColors.mainColor,
               )),
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(35),
+              borderRadius: BorderRadius.circular(20),
               child: doctor.doctor!.image != null &&
                       doctor.doctor!.image!.isNotEmpty
                   ? CachedNetworkImage(
@@ -48,9 +49,24 @@ class DoctorInfoProfile extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             verticalSpace(5),
-            Text(
-              '${doctor.government}, ${doctor.city}, ${doctor.street}',
-              style: Theme.of(context).textTheme.labelMedium,
+            SizedBox(
+              width: MediaQuery.of(context).size.width - (140),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: AppColors.mainColor,
+                  ),
+                  horizontalSpace(5),
+                  Expanded(
+                    child: Text(
+                      addressBuilder(doctor.address!, doctor.city!,
+                          doctor.government!, context),
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

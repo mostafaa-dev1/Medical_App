@@ -28,6 +28,12 @@ Doctor _$DoctorFromJson(Map<String, dynamic> json) => Doctor(
           : DoctorInfo.fromJson(json['DoctorsInfo'] as Map<String, dynamic>),
       firstNameAr: json['first_name_ar'] as String?,
       lastNameAr: json['last_name_ar'] as String?,
+      workTimes: json['work_times'] == null
+          ? null
+          : WorkTimes.fromJson(json['work_times'] as List<dynamic>),
+      rate: json['rate'] as double?,
+      rateCount: json['rate_count'] as int?,
+      fee: json['fee'] as int?,
     );
 
 Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
@@ -58,7 +64,7 @@ DoctorInfo _$DoctorInfoFromJson(Map<String, dynamic> json) => DoctorInfo(
       specialities: json['specialities'] as List<dynamic>?,
       specialitiesAr: json['specialities_ar'] as List<dynamic>?,
       dateOfBirth: json['date_of_birth'] as String?,
-      patients: json['patients'] as int? ?? 0,
+      patients: (json['patients'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DoctorInfoToJson(DoctorInfo instance) =>
@@ -73,6 +79,7 @@ Map<String, dynamic> _$DoctorInfoToJson(DoctorInfo instance) =>
       'specialities': instance.specialities,
       'specialities_ar': instance.specialitiesAr,
       'date_of_birth': instance.dateOfBirth,
+      'patients': instance.patients,
     };
 
 Clinic _$ClinicFromJson(Map<String, dynamic> json) => Clinic(
@@ -83,7 +90,7 @@ Clinic _$ClinicFromJson(Map<String, dynamic> json) => Clinic(
       longitude: (json['longitude'] as num?)?.toDouble(),
       government: json['government'] as String?,
       city: json['city'] as String?,
-      street: json['street'] as String?,
+      // street: json['street'] as String?,
       phones:
           (json['phones'] as List<dynamic>?)?.map((e) => e as String).toList(),
       services: json['services'] as List<dynamic>?,
@@ -99,6 +106,9 @@ Clinic _$ClinicFromJson(Map<String, dynamic> json) => Clinic(
       fee: (json['fee'] as num?)?.toInt() ?? 0,
       rate: (json['rate'] as num?)?.toDouble() ?? 0.0,
       rateCount: (json['rate_count'] as num?)?.toInt() ?? 0,
+      address: json['address'] == null
+          ? null
+          : Address.fromJson(json['address'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ClinicToJson(Clinic instance) => <String, dynamic>{
@@ -112,7 +122,7 @@ Map<String, dynamic> _$ClinicToJson(Clinic instance) => <String, dynamic>{
       'fee': instance.fee,
       'rate': instance.rate,
       'rate_count': instance.rateCount,
-      'street': instance.street,
+      // 'street': instance.street,
       'phones': instance.phones,
       'services': instance.services,
       'work_times': instance.workTimes,
@@ -121,7 +131,8 @@ Map<String, dynamic> _$ClinicToJson(Clinic instance) => <String, dynamic>{
     };
 
 Clinics _$ClinicsFromJson(List<dynamic> json) => Clinics(
-      clinics: json.map((e) => Clinic.fromJson(e)).toList(),
+      clinics:
+          (json as List<dynamic>?)?.map((e) => Clinic.fromJson(e)).toList(),
     );
 
 Map<String, dynamic> _$ClinicsToJson(Clinics instance) => <String, dynamic>{
@@ -130,10 +141,25 @@ Map<String, dynamic> _$ClinicsToJson(Clinics instance) => <String, dynamic>{
 
 WorkTime _$WorkTimeFromJson(Map<String, dynamic> json) => WorkTime(
       day: json['day'] as String?,
-      start: json['start'] == null ? null : parseTime(json['start'] as String),
-      end: json['end'] == null ? null : parseTime(json['end'] as String),
+      start: parseTime(json['start'] as String),
+      end: parseTime(json['end'] as String),
       duration: json['duration'] as String?,
     );
+
+DateTime parseTime(String time) {
+  final parts = time.split(':');
+  final hours = int.parse(parts[0]);
+  final minutes = int.parse(parts[1]);
+
+  final dateTime = DateTime(
+    0,
+    0,
+    0,
+    hours,
+    minutes,
+  );
+  return dateTime;
+}
 
 Map<String, dynamic> _$WorkTimeToJson(WorkTime instance) => <String, dynamic>{
       'day': instance.day,
@@ -141,15 +167,10 @@ Map<String, dynamic> _$WorkTimeToJson(WorkTime instance) => <String, dynamic>{
       'end': instance.end?.toIso8601String(),
       'duration': instance.duration,
     };
-DateTime parseTime(String time) {
-  String hour = time.split(':')[0];
-  String minute = time.split(':')[1];
-  DateTime dateTime = DateTime(0, 0, 0, int.parse(hour), int.parse(minute));
-  return dateTime;
-}
 
 WorkTimes _$WorkTimesFromJson(List<dynamic> json) => WorkTimes(
-      workTimes: json.map((e) => WorkTime.fromJson(e)).toList(),
+      workTimes:
+          (json as List<dynamic>?)?.map((e) => WorkTime.fromJson(e)).toList(),
     );
 
 Map<String, dynamic> _$WorkTimesToJson(WorkTimes instance) => <String, dynamic>{
@@ -157,7 +178,8 @@ Map<String, dynamic> _$WorkTimesToJson(WorkTimes instance) => <String, dynamic>{
     };
 
 DoctorsList _$DoctorsListFromJson(List<dynamic> json) => DoctorsList(
-      doctors: json.map((e) => Doctor.fromJson(e)).toList(),
+      doctors:
+          (json as List<dynamic>?)?.map((e) => Doctor.fromJson(e)).toList(),
     );
 
 Map<String, dynamic> _$DoctorsListToJson(DoctorsList instance) =>

@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/constants/language_checker.dart';
@@ -11,6 +12,7 @@ import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
+import 'package:medical_system/features/appointments/data/models/appointments_model.dart';
 import 'package:medical_system/features/doctor_profile/logic/doctor_profile_cubit.dart';
 import 'package:medical_system/features/doctor_profile/widgets/doctor_info.dart';
 import 'package:medical_system/features/doctor_profile/widgets/experinces.dart';
@@ -18,16 +20,13 @@ import 'package:medical_system/features/doctor_profile/widgets/review_list.dart'
 import 'package:medical_system/features/doctor_profile/widgets/work_times.dart';
 
 class DoctorProfile extends StatelessWidget {
-  const DoctorProfile({super.key, required this.doctor, required this.user});
-  final Clinic doctor;
+  const DoctorProfile({super.key, required this.clinic, required this.user});
+  final Clinic clinic;
   final UserModel user;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DoctorProfileCubit, DoctorProfileState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<DoctorProfileCubit, DoctorProfileState>(
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(
@@ -35,14 +34,6 @@ class DoctorProfile extends StatelessWidget {
                 'doctorProfile.doctorProfile'.tr(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              actions: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      CupertinoIcons.heart,
-                      color: AppColors.mainColor,
-                    ))
-              ],
             ),
             persistentFooterButtons: [
               Padding(
@@ -51,11 +42,24 @@ class DoctorProfile extends StatelessWidget {
                 ),
                 child: CustomButton(
                   onPressed: () {
+                    Appointment appointment = Appointment(
+                      clinic: clinic,
+                      clinicId: clinic.id,
+                      patientId: user.id,
+                      type: 'Upcoming',
+                      doctor: clinic.doctor,
+                      fee: clinic.fee,
+                    );
+                    log(appointment.clinic!.workTimes!.workTimes![0]
+                        .toJson()
+                        .toString());
+
                     context
                         .pushNamed(AppRoutes.pickAppointmentDate, arguments: {
-                      'workTimes': doctor.workTimes,
+                      'workTimes': clinic.workTimes,
                       'user': user,
-                      'doctor': doctor,
+                      //'doctor': clinic,
+                      'appointment': appointment,
                       'reason': '',
                       'reschdule': false,
                       'appointmentId': '',
@@ -83,7 +87,7 @@ class DoctorProfile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DoctorInfoProfile(doctor: doctor),
+                        DoctorInfoProfile(doctor: clinic),
                         verticalSpace(20),
                         Divider(
                           color: Theme.of(context).dividerColor,
@@ -91,7 +95,7 @@ class DoctorProfile extends StatelessWidget {
                           endIndent: AppPreferances.screenWidth(context) / 5.5,
                         ),
                         verticalSpace(20),
-                        Experinces(doctor: doctor),
+                        Experinces(doctor: clinic),
                         verticalSpace(20),
                         Divider(
                           color: Theme.of(context).dividerColor,
@@ -106,8 +110,8 @@ class DoctorProfile extends StatelessWidget {
                         verticalSpace(10),
                         Text(
                           LanguageChecker.isArabic(context)
-                              ? doctor.doctorInfo!.aboutAr!
-                              : doctor.doctorInfo!.about!,
+                              ? clinic.doctorInfo!.aboutAr!
+                              : clinic.doctorInfo!.about!,
                           // 'Dr. John Doe is a doctor who specializes in brain and nervous system disorders. He has been in practice for over 20 years and has been recognized for his expertise in treating patients with neurological disorders. He is a highly respected and respected doctor in the community.',
                           style:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -116,7 +120,7 @@ class DoctorProfile extends StatelessWidget {
                                   ),
                         ),
                         verticalSpace(20),
-                        WorkTimesList(workTimes: doctor.workTimes!),
+                        WorkTimesList(workTimes: clinic.workTimes!),
                       ],
                     ),
                   ),
@@ -128,7 +132,7 @@ class DoctorProfile extends StatelessWidget {
                   ),
                   verticalSpace(10),
                   ReviewList(
-                    doctorId: doctor.doctor!.id!,
+                    doctorId: clinic.doctor!.id!,
                   )
                 ],
               ),

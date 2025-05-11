@@ -34,17 +34,16 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
         return;
         //emit(GetAppointmentsSuccess());
       }
-      print(data);
+      log(data.toString());
       if (eqValue2 == 'Upcoming') {
         upcomingVisits = AppointmentList.fromJson(data);
-        log(upcomingVisits.appointments![0].id.toString());
+        // log(upcomingVisits.appointments![0].clinic!.doctor!.id.toString());
       } else if (eqValue2 == 'Completed') {
         completedVisits = AppointmentList.fromJson(data);
-        print(completedVisits.appointments![0].doctor!.image);
+        // print(completedVisits.appointments![0].doctor!.image);
       } else {
         canceledVisits = AppointmentList.fromJson(data);
       }
-
       emit(GetAppointmentsSuccess());
     });
   }
@@ -68,18 +67,17 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
 
   Future<void> cancelAppointment(String reason, Appointment appointment) async {
     emit(CancelAppointmentLoading());
-    log(appointment.toJson().toString());
     final response = await _appointmentsData.cancelAppointment(
         id: appointment.id!.toString(), reason: reason);
     response.fold((error) {
       emit(CancelAppointmentError(error));
     }, (data) {
-      upcomingVisits.appointments!.removeWhere((element) {
-        log(element.id.toString());
-        log(appointment.id.toString());
-        return element.id == appointment.id;
-      });
-      log(upcomingVisits.appointments.toString());
+      // upcomingVisits.appointments!.removeWhere((element) {
+      //   log(element.id.toString());
+      //   log(appointment.id.toString());
+      //   return element.id == appointment.id;
+      // });
+      //log(upcomingVisits.appointments.toString());
       canceledVisits.appointments ??= [];
       canceledVisits.appointments!.add(appointment);
       emit(CancelAppointmentSuccess());
@@ -97,4 +95,18 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
   //     emit(RescheduleAppointmentSuccess());
   //   });
   // }
+
+  Appointment? appointment;
+
+  Future<void> getAppointment(int id) async {
+    emit(GetAppointmentsLoading());
+    final response = await _appointmentsData.getGetAppointment(id: id);
+    response.fold((error) {
+      emit(GetAppointmentsError(error));
+    }, (data) {
+      log(data.toString());
+      appointment = Appointment.fromJson(data[0]);
+      emit(GetAppointmentsSuccess());
+    });
+  }
 }

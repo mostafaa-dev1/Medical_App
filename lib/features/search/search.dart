@@ -17,8 +17,16 @@ import 'package:medical_system/features/search/widgets/filter_values.dart';
 import 'package:medical_system/features/search/widgets/search_list.dart';
 
 class Search extends StatefulWidget {
-  const Search({super.key, required this.user});
+  const Search(
+      {super.key,
+      required this.user,
+      required this.government,
+      required this.city,
+      required this.spciality});
   final UserModel user;
+  final String government;
+  final String city;
+  final String spciality;
 
   @override
   State<Search> createState() => _SearchState();
@@ -38,6 +46,7 @@ class _SearchState extends State<Search> {
   int _selectedSpeciality = 0;
   int? selectedPrice;
   int _selectedGovernment = 0;
+  int _selectedCity = 0;
   final FocusNode _focusNode = FocusNode();
   @override
   void initState() {
@@ -47,6 +56,10 @@ class _SearchState extends State<Search> {
       _focusNode.requestFocus();
     });
     getSpecialityIndex();
+    checkGovernmentIndex(
+      widget.government,
+    );
+    checkCityIndex(widget.city);
   }
 
   @override
@@ -57,11 +70,30 @@ class _SearchState extends State<Search> {
   }
 
   void getSpecialityIndex() {
-    for (int i = 0; i < Specialities.list.length; i++) {
-      if (Specialities.list[i] ==
-          context.read<SearchCubit>().filterValues['speciality']) {
+    for (int i = 0; i < Specialities.specialities.length; i++) {
+      if (Specialities.specialities[i] == widget.spciality) {
         setState(() {
           _selectedSpeciality = i;
+        });
+      }
+    }
+  }
+
+  void checkGovernmentIndex(String gov) {
+    for (int i = 0; i < Governments.allGovernments.length; i++) {
+      if (Governments.allGovernments[i] == gov) {
+        setState(() {
+          _selectedGovernment = i;
+        });
+      }
+    }
+  }
+
+  void checkCityIndex(String city) {
+    for (int i = 0; i < Governments.citiesList.length; i++) {
+      if (Governments.citiesList[i] == city) {
+        setState(() {
+          _selectedCity = i;
         });
       }
     }
@@ -104,8 +136,9 @@ class _SearchState extends State<Search> {
                                 showBottomSheet();
                               }),
                           // focusNode: _focusNode,
-                          hintText: 'search.search'.tr(),
-                          controller: TextEditingController(),
+                          hintText: 'search.searchbyName'.tr(),
+                          controller:
+                              context.read<SearchCubit>().searchController,
                           keyboardType: TextInputType.text,
                         ),
                       ),
@@ -161,6 +194,8 @@ class _SearchState extends State<Search> {
                     priceFilter(setModalState),
                     verticalSpace(10),
                     governmentFilter(setModalState),
+                    verticalSpace(10),
+                    cityFilter(setModalState),
                     verticalSpace(50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -189,6 +224,7 @@ class _SearchState extends State<Search> {
                             buttonName: 'search.apply'.tr(),
                             onPressed: () {
                               context.read<SearchCubit>().applyFilters({
+                                'city': Governments.citiesList[_selectedCity],
                                 'speciality': Specialities
                                     .specialities[_selectedSpeciality],
                                 'rate': _rating[_selectedRating],
@@ -286,6 +322,64 @@ class _SearchState extends State<Search> {
         ),
       ],
     );
+  }
+
+  Widget cityFilter(void Function(void Function()) setModalState) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      filterHeaderText(
+        'search.city'.tr(),
+      ),
+      verticalSpace(5),
+      SizedBox(
+          height: 30,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: Governments.cities.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  setModalState(() {
+                    _selectedCity = index;
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                      left: LanguageChecker.isArabic(context)
+                          ? 0
+                          : index == 0
+                              ? 15
+                              : 5,
+                      right: LanguageChecker.isArabic(context)
+                          ? index == 0
+                              ? 15
+                              : 5
+                          : 0),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: _selectedCity == index
+                        ? AppColors.mainColor
+                        : AppColors.mainColor.withAlpha(20),
+                  ),
+                  child: Text(
+                      Governments.cities[index] == 'city.All'
+                          ? 'search.all'.tr()
+                          : Governments.cities[index].tr(),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: _selectedCity == index
+                                ? Colors.white
+                                : AppColors.mainColor,
+                          )),
+                ),
+              );
+            },
+          ))
+    ]);
   }
 
   Widget ratingFilter(void Function(void Function()) setModalState) {
@@ -451,6 +545,7 @@ class _SearchState extends State<Search> {
                   });
                 },
                 child: Container(
+                  alignment: Alignment.center,
                   margin: EdgeInsets.only(
                       left: LanguageChecker.isArabic(context)
                           ? 0

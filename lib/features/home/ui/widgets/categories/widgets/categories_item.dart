@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/constants/language_checker.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 
 class CategoriesItem extends StatelessWidget {
   const CategoriesItem(
@@ -29,7 +29,7 @@ class CategoriesItem extends StatelessWidget {
           left: LanguageChecker.isArabic(context) ? 0 : 10,
           right: LanguageChecker.isArabic(context) ? 10 : 0,
         ),
-        width: 120,
+        width: 125,
         padding: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           color: index == cubit.categoryIndex

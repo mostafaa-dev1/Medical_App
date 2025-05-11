@@ -4,39 +4,39 @@ class Specialities {
     "specialities.Dentist",
     "specialities.Cardiologist",
     "specialities.Neurologist",
-    "specialities.GeneralPhysician",
+    "specialities.General Physician",
     "specialities.Surgeon",
     "specialities.Dermatologist",
     "specialities.Ophthalmologist",
     "specialities.Gynecologist",
-    "specialities.GynaecologistAndInfertility",
-    "specialities.EarNoseAndThroat",
+    "specialities.Gynaecologist And Infertility",
+    "specialities.Ear, Nose And Throat",
     "specialities.Hepatologist",
     "specialities.Respiratorist",
     "specialities.Orthopedic",
-    "specialities.InternalMedicine",
+    "specialities.Internal Medicine",
     "specialities.Orthopedics",
     "specialities.Urologist",
-    "specialities.PediatricsNewPorn",
+    "specialities.Pediatrics And New Porn",
     "specialities.Psychiatry",
-    "specialities.GynecologistInfertility",
-    "specialities.GastroenterologistEndoscopy",
+    "specialities.Gynecologist And Infertility",
+    "specialities.Gastroenterologist And Endoscopy",
     "specialities.Audiologist",
-    "specialities.AllergyImmunologist",
-    "specialities.AndrologistMaleInfertility",
-    "specialities.DiabetesEndocrinologist",
+    "specialities.Allergy And Immunologist",
+    "specialities.Andrologist And Male Infertility",
+    "specialities.Diabetes And Endocrinologist",
     "specialities.Nephrologist",
     "specialities.Geriatrics",
     "specialities.Plastic",
     "specialities.Rheumatologist",
     "specialities.Spinal",
-    "specialities.DietitianNutrition",
+    "specialities.Dietitian And Nutrition",
     "specialities.Physiotherapy",
     "specialities.Phoniatrics",
     "specialities.Pediatric",
-    "specialities.ObsityLaparoscopic",
+    "specialities.Obsity And Laparoscopic",
     "specialities.Oncologist",
-    "specialities.GeneralSurgery",
+    "specialities.General Surgery",
   ];
   static List<String> specialities = [
     "All",
@@ -75,5 +75,20 @@ class Specialities {
     "Pediatrician",
     "Obsity And Laparoscopic",
     "General Surgery"
+  ];
+
+  static const List<String> labSpecialities = [
+    "All",
+    "Medical",
+    "Radiology",
+    "Nutrition",
+    "Genetic Testing"
+  ];
+  static const List<String> labList = [
+    "specialities.All",
+    "specialities.Medical",
+    "specialities.Radiology",
+    "specialities.Nutrition",
+    "specialities.Genetic Testing"
   ];
 }

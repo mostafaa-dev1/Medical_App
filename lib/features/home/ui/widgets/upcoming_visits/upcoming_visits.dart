@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/responsive/responsive.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 import 'package:medical_system/features/home/ui/widgets/home_header_item.dart';
 import 'package:medical_system/features/home/ui/widgets/upcoming_visits/widgets/upcoming_item.dart';
 import 'package:medical_system/features/home/ui/widgets/upcoming_visits/widgets/upcoming_item_loading.dart';

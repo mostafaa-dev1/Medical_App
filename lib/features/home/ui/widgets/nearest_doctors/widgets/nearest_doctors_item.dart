@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/models/doctor_model.dart';
 import 'package:medical_system/core/themes/colors.dart';
-import 'package:medical_system/features/home/logic/main_cubit.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 
 class NearestDoctorsItem extends StatelessWidget {
   const NearestDoctorsItem({super.key, required this.doctor});

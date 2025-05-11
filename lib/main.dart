@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medical_system/core/constants/keys.dart';
+import 'package:medical_system/core/constants/keys.env';
 import 'package:medical_system/core/networking/bloc_observer.dart';
 import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
 import 'package:medical_system/core/routing/router.dart';

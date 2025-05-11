@@ -26,3 +26,11 @@ final class FitchDoctorsError extends AiState {
 
   FitchDoctorsError({required this.errMessage});
 }
+
+final class LocationError extends AiState {
+  final String errMessage;
+
+  LocationError({required this.errMessage});
+}
+
+final class NoInternetConnection extends AiState {}

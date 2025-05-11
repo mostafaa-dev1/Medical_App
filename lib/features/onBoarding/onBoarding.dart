@@ -1,10 +1,12 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:icon_broken/icon_broken.dart';
 import 'package:medical_system/core/helpers/extentions.dart';
+import 'package:medical_system/core/helpers/spacing.dart';
+import 'package:medical_system/core/networking/services/local_databases/shared_preferances.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/themes/colors.dart';
+import 'package:medical_system/core/widgets/custom_button.dart';
 import 'package:medical_system/features/onBoarding/widgets/onBoarding_item.dart';
 import 'package:medical_system/features/onBoarding/widgets/top_logo.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -35,6 +37,8 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
+  int current = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +48,19 @@ class _OnBoardingState extends State<OnBoarding> {
           child: Column(
             children: [
               TopLogo(),
+              SmoothPageIndicator(
+                textDirection: ui.TextDirection.ltr,
+                controller: _pageController,
+                count: 3,
+                effect: ExpandingDotsEffect(
+                  dotColor: Colors.grey[200]!,
+                  activeDotColor: AppColors.mainColor,
+                  dotHeight: 6,
+                  dotWidth: 10,
+                  expansionFactor: 4,
+                ),
+              ),
+              verticalSpace(20),
               Expanded(
                 child: Directionality(
                   textDirection: ui.TextDirection.ltr,
@@ -57,40 +74,29 @@ class _OnBoardingState extends State<OnBoarding> {
                         part3: 'onBoard.part3$realIndex',
                         part4: 'onBoard.part4$realIndex',
                         description: 'onBoard.description$realIndex',
-                        image: 'assets/images/onboard/onboard$realIndex.svg',
+                        image: 'assets/images/onboard/onb$realIndex.svg',
                       );
+                    },
+                    onPageChanged: (index) {
+                      setState(() {
+                        current = index;
+                      });
                     },
                     itemCount: 3,
                     physics: const BouncingScrollPhysics(),
                   ),
                 ),
               ),
-              Row(
-                textDirection: ui.TextDirection.ltr,
+              verticalSpace(20),
+              Column(
                 children: [
-                  SmoothPageIndicator(
-                    textDirection: ui.TextDirection.ltr,
-                    controller: _pageController,
-                    count: 3,
-                    effect: ExpandingDotsEffect(
-                      dotColor: Colors.grey[200]!,
-                      activeDotColor: AppColors.secondaryColor,
-                      dotHeight: 6,
-                      dotWidth: 10,
-                      expansionFactor: 4,
-                    ),
-                  ),
-                  Spacer(),
-                  SizedBox(
-                    width: 60,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryColor,
-                          shape: CircleBorder()),
+                  CustomButton(
+                      backgroundColor: AppColors.mainColor,
+                      buttonName: current == 2 ? 'Login' : 'Next',
                       onPressed: () {
                         if (_pageController.page == 2) {
                           context.pushNamed(AppRoutes.login);
+                          CashHelper.putBool(key: 'onBoard', value: true);
                         } else {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 500),
@@ -98,14 +104,34 @@ class _OnBoardingState extends State<OnBoarding> {
                           );
                         }
                       },
-                      child: Center(
-                        child: Icon(
-                          IconBroken.Arrow___Right,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
+                      width: 150,
+                      paddingVirtical: 0,
+                      paddingHorizental: 10)
+                  // SizedBox(
+                  //   width: 60,
+                  //   height: 50,
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: AppColors.secondaryColor,
+                  //         shape: CircleBorder()),
+                  //     onPressed: () {
+                  //       if (_pageController.page == 2) {
+                  //         context.pushNamed(AppRoutes.login);
+                  //       } else {
+                  //         _pageController.nextPage(
+                  //           duration: const Duration(milliseconds: 500),
+                  //           curve: Curves.ease,
+                  //         );
+                  //       }
+                  //     },
+                  //     child: Center(
+                  //       child: Icon(
+                  //         IconBroken.Arrow___Right,
+                  //         size: 25,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],
