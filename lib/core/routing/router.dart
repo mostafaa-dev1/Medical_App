@@ -42,6 +42,9 @@ import 'package:medical_system/features/main/logic/main_cubit.dart';
 import 'package:medical_system/features/main/main_screen.dart';
 import 'package:medical_system/features/map/google_map.dart';
 import 'package:medical_system/features/map/map_location.dart';
+import 'package:medical_system/features/medical_histroy/logic/ai_medical_histroy_cubit.dart';
+import 'package:medical_system/features/medical_histroy/widgets/ai_medical_histroy/ai_medical_histroy.dart';
+import 'package:medical_system/features/medical_histroy/widgets/questions/questions.dart';
 import 'package:medical_system/features/notifications/logic/notifications_cubit.dart';
 import 'package:medical_system/features/notifications/ui/notifications.dart';
 import 'package:medical_system/features/offers/data/model/offers_model.dart';
@@ -58,7 +61,9 @@ import 'package:medical_system/features/personal_info/personal_info.dart';
 import 'package:medical_system/features/profile/logic/profile_cubit.dart';
 import 'package:medical_system/features/profile/profile.dart';
 import 'package:medical_system/features/profile/widgets/edit_profile/edit_profile.dart';
+import 'package:medical_system/features/profile/widgets/labResult/labResult.dart';
 import 'package:medical_system/features/profile/widgets/language.dart';
+import 'package:medical_system/features/profile/widgets/questionAnswers/questionAnwsers.dart';
 import 'package:medical_system/features/register/logic/register_cubit.dart';
 import 'package:medical_system/features/register/register.dart';
 import 'package:medical_system/features/reviews/reviews.dart';
@@ -281,12 +286,29 @@ class AppRouter {
       case AppRoutes.editProfile:
         UserModel user = args as UserModel;
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => ProfileCubit()..init(user),
-                  child: EditProfile(
-                    user: user,
-                  ),
-                ));
+          builder: (_) => BlocProvider(
+            create: (context) => ProfileCubit()..init(user),
+            child: EditProfile(
+              user: user,
+            ),
+          ),
+        );
+      case AppRoutes.myQuestionAnswers:
+        Map<String, dynamic> arg = args as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: BlocProvider.of<ProfileCubit>(arg['context']),
+            child: Questionanwsers(),
+          ),
+        );
+      case AppRoutes.labResults:
+        Map<String, dynamic> arg = args as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: BlocProvider.of<ProfileCubit>(arg['context']),
+            child: LabResult(),
+          ),
+        );
       case AppRoutes.appointmentDetails:
         Map<String, dynamic> arg = args as Map<String, dynamic>;
         UserModel user = arg['user'];
@@ -468,6 +490,22 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => GoogleMapPage(
                   appointment: appointment,
+                ));
+      case AppRoutes.aiMedicalHistroy:
+        BuildContext context = args as BuildContext;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => AiMedicalHistroyCubit(),
+                  child: AiMedicalHistroy(),
+                ));
+      case AppRoutes.histroyQuestions:
+        Map<String, dynamic> arg = args as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+                  value: BlocProvider.of<AiMedicalHistroyCubit>(arg['context']),
+                  child: MedicalHistroyQuestions(
+                    user: arg['user'],
+                  ),
                 ));
 
       default:

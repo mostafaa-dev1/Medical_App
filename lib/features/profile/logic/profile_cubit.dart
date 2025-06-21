@@ -8,7 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/networking/services/database/remote/firebase_services.dart';
 import 'package:medical_system/core/networking/services/local_databases/secure_storage.dart';
+import 'package:medical_system/features/home/ui/widgets/services/data/models/question_model.dart';
 import 'package:medical_system/features/profile/data/profile_services/profile_services.dart';
+import 'package:medical_system/features/profile/widgets/labResult/data/model/lab_result_model.dart';
 
 part 'profile_state.dart';
 
@@ -48,7 +50,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         DateFormat('dd-MM-yyyy').parse(birthdayController.text);
     selectedDate = parsedDate;
 
-    print(parsedDate); // This will now work correctly
     emit(DateSelected());
   }
 
@@ -71,7 +72,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       dateOfBirth: selectedDate ?? user.dateOfBirth,
       gender: gender,
     );
-    print(user.toJson());
     final response = await _profileData.updatePersonalInfo(
       user: user,
     );
@@ -125,6 +125,44 @@ class ProfileCubit extends Cubit<ProfileState> {
     }, (r) {
       log(r);
       imageUrl = r;
+    });
+  }
+
+  List<QuestionModel>? questionModel;
+  Future<void> getQuestionAnswers(UserModel user) async {
+    emit(GetQuestionAnswersLoading());
+    final response = await _profileData.getQuestionAnswers(user: user);
+    response.fold((l) {
+      log(l);
+
+      emit(GetQuestionAnswersError());
+    }, (r) {
+      if (r.isEmpty) {
+        emit(GetQuestionAnswersError());
+        return;
+      }
+      log(r.toString());
+      questionModel = r.map((e) => QuestionModel.fromJson(e)).toList();
+
+      emit(GetQuestionAnswersSuccess());
+    });
+  }
+
+  List<LabResultModel>? results;
+  Future<void> getLapResults(UserModel user) async {
+    emit(GetLapResultsLoading());
+    final response = await _profileData.getLapReults(user: user);
+    response.fold((l) {
+      emit(GetLapResultsError());
+    }, (r) {
+      log(r.toString());
+      if (r.isEmpty) {
+        emit(GetLapResultsError());
+        return;
+      }
+      results = r.map((e) => LabResultModel.fromJson(e)).toList();
+      log(results![0].labId.toString());
+      emit(GetLapResultsSuccess());
     });
   }
 }

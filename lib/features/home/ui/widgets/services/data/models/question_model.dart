@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:medical_system/core/models/doctor_model.dart';
 
 part 'question_model.g.dart';
 
@@ -19,6 +20,7 @@ class QuestionModel {
   @JsonKey(name: 'created_at')
   final DateTime? date;
   final bool answered;
+  Doctor? doctor;
 
   QuestionModel({
     this.id,
@@ -32,6 +34,7 @@ class QuestionModel {
     required this.gender,
     this.date,
     required this.answered,
+    this.doctor,
   });
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) =>

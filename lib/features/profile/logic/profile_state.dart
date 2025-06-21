@@ -33,3 +33,15 @@ final class UpdateProfileImageError extends ProfileState {
 final class ImagePicked extends ProfileState {}
 
 final class ImageRemoved extends ProfileState {}
+
+final class GetQuestionAnswersLoading extends ProfileState {}
+
+final class GetQuestionAnswersError extends ProfileState {}
+
+final class GetQuestionAnswersSuccess extends ProfileState {}
+
+final class GetLapResultsLoading extends ProfileState {}
+
+final class GetLapResultsError extends ProfileState {}
+
+final class GetLapResultsSuccess extends ProfileState {}

@@ -13,12 +13,14 @@ import 'package:medical_system/features/appointments/data/models/appointments_mo
 import 'package:medical_system/features/appointments/logic/appointments_cubit.dart';
 import 'package:medical_system/features/appointments/ui/appointments.dart';
 import 'package:medical_system/features/clinics/data/model/clinic_model.dart';
-import 'package:medical_system/features/fav_doctors/favourite_doctors.dart';
 import 'package:medical_system/features/home/data/data/home_data.dart';
 import 'package:medical_system/features/home/data/models/spcilailties_model.dart';
 import 'package:medical_system/features/home/ui/home.dart';
+import 'package:medical_system/features/medical_histroy/logic/ai_medical_histroy_cubit.dart';
+import 'package:medical_system/features/medical_histroy/medical_histroy.dart';
 import 'package:medical_system/features/offers/data/data_services/offers_data.dart';
 import 'package:medical_system/features/offers/data/model/offers_model.dart';
+import 'package:medical_system/features/profile/logic/profile_cubit.dart';
 import 'package:medical_system/features/profile/profile.dart';
 
 part 'main_state.dart';
@@ -141,7 +143,7 @@ class MainCubit extends Cubit<MainState> {
     }
   }
 
-  List<Widget> pages(UserModel user, AppointmentList appointments) {
+  List<Widget> pages(UserModel user) {
     return [
       Home(),
       BlocProvider(
@@ -155,9 +157,16 @@ class MainCubit extends Cubit<MainState> {
           user: user,
         ),
       ),
-      FavouriteDoctors(),
-      Profile(
-        user: user,
+      BlocProvider(
+        create: (context) =>
+            AiMedicalHistroyCubit()..getMedicalHistory(user.id!),
+        child: MedicalHistroy(),
+      ),
+      BlocProvider(
+        create: (context) => ProfileCubit(),
+        child: Profile(
+          user: user,
+        ),
       ),
     ];
   }
@@ -193,13 +202,10 @@ class MainCubit extends Cubit<MainState> {
   bool isSpcilailtiesLoading = false;
   bool isOffersLoading = false;
 
-  AppointmentList upcomingVisits = AppointmentList(
-    appointments: [],
-  );
+  AppointmentList? upcomingVisits;
   Future<void> getUpcomingAppointments() async {
     emit(GetUpcomingAppointmentsLoading());
     // Fetch upcoming appointments
-    // log(user.id!);
     isUpcomingLoading = true;
     final response = await _homeData.getUpcomingVisits(patientId: user.id!);
     response.fold((l) {

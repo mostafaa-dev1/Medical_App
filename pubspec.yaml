@@ -51,11 +51,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
+  flutter_dotenv: ^5.2.1
   flutter_facebook_auth: ^7.1.1
   flutter_inappwebview: ^6.1.5
   flutter_local_notifications: ^19.1.0
   flutter_map: any
   flutter_map_location_marker: ^9.1.1
+  flutter_markdown_plus: ^1.0.3
   flutter_native_splash: ^2.4.4
   flutter_polyline_points: ^2.1.0
   flutter_screenutil: ^5.9.3

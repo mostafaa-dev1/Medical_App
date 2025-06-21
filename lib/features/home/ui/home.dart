@@ -125,14 +125,18 @@ class Home extends StatelessWidget {
                                         AppColors.secondaryColor.withAlpha(20)),
                                 height: 40,
                                 width: MediaQuery.sizeOf(context).width / 1.2,
-                                child: Text(
-                                  'search.searchForDoctors'.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                        color: AppColors.mainColor,
-                                      ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'search.searchForDoctors'.tr(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(
+                                            color: AppColors.mainColor,
+                                          ),
+                                    ),
+                                  ],
                                 )),
                           )
                           // OpenContainer(

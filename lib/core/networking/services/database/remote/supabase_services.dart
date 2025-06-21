@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:medical_system/core/networking/services/local_databases/secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseServices {
@@ -373,10 +374,13 @@ class SupabaseServices {
 
   Future<Either<String, int>> count() async {
     try {
+      final String userId = await Storage.readValue(key: 'id') ?? '';
       final response = await _supabase
           .from('Notifications')
           .count(CountOption.exact)
-          .eq('read', false);
+          .eq('read', false)
+          .eq('patient_id', userId);
+
       return Right(response);
     } on PostgrestException catch (e) {
       return Left(_handleDatabaseError(e));

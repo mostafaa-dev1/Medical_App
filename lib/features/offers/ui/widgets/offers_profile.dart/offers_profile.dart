@@ -178,7 +178,9 @@ class OffersProfile extends StatelessWidget {
             ),
             verticalSpace(10),
             Text(
-              offer.description,
+              LanguageChecker.isArabic(context)
+                  ? offer.descriptionAr
+                  : offer.description,
               style: Theme.of(context).textTheme.labelMedium,
             )
           ],

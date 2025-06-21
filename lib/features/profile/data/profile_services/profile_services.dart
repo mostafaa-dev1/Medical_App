@@ -10,4 +10,18 @@ class ProfileServices extends ProfileRepo {
     return _supabaseServices.updateDataWitheq(
         table: 'Users', data: user!.toJson(), eqKey: 'id', eqValue: user.id!);
   }
+
+  @override
+  Future<Either<String, List<Map<String, dynamic>>>> getLapReults(
+      {required UserModel user}) {
+    return _supabaseServices.getDataWitheq('LapResults',
+        '*,LaboratoriesInfo(*,Laboratories(*))', 'user_id', user.id!);
+  }
+
+  @override
+  Future<Either<String, List<Map<String, dynamic>>>> getQuestionAnswers(
+      {required UserModel user}) {
+    return _supabaseServices.getDataWitheq(
+        'Questions', '*,Doctors(*)', 'user_id', user.id!);
+  }
 }

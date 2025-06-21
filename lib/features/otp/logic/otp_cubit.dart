@@ -22,7 +22,7 @@ class OtpCubit extends Cubit<OtpState> {
     required String email,
   }) async {
     DateTime? lastSend =
-        DateTime.tryParse(CashHelper.getString(key: 'lastSend')!);
+        DateTime.tryParse(CashHelper.getString(key: 'lastSend') ?? '');
     if (lastSend != null) {
       if (DateTime.now().difference(lastSend).inMinutes < 1) {
         emit(OtpSendError(
@@ -30,6 +30,27 @@ class OtpCubit extends Cubit<OtpState> {
               '${'Auth.sendAgainIn'.tr()}${60 - lastSend.difference(DateTime.now()).inSeconds}${'Auth.seconds'.tr()}',
         ));
         return;
+      } else {
+        emit(OtpSendLoading());
+        EmailOTP.config(
+          appName: 'Delma',
+          otpType: OTPType.numeric,
+          expiry: 60000,
+          emailTheme: EmailTheme.v6,
+          appEmail: 'm0stafa.ma7moud03@gmail.com',
+          otpLength: 4,
+        );
+        var res = await EmailOTP.sendOTP(email: email);
+        print(res);
+        if (res) {
+          emit(OtpSendSuccess());
+          CashHelper.putString(
+              key: 'lastSend', value: DateTime.now().toString());
+        } else {
+          emit(OtpSendError(
+            errorMessage: 'Failed to send OTP',
+          ));
+        }
       }
     } else {
       emit(OtpSendLoading());

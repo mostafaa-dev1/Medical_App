@@ -26,8 +26,6 @@ class Otp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int counter = 0;
-
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,

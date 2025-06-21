@@ -173,9 +173,9 @@ WorkTimes _$WorkTimesFromJson(List<dynamic> json) => WorkTimes(
           (json as List<dynamic>?)?.map((e) => WorkTime.fromJson(e)).toList(),
     );
 
-Map<String, dynamic> _$WorkTimesToJson(WorkTimes instance) => <String, dynamic>{
-      'workTimes': instance.workTimes,
-    };
+// Map<String, dynamic> _$WorkTimesToJson(WorkTimes instance) => <String, dynamic>{
+//       'workTimes': instance.workTimes,
+//     };
 
 DoctorsList _$DoctorsListFromJson(List<dynamic> json) => DoctorsList(
       doctors:

@@ -15,8 +15,7 @@ class MainScreen extends StatelessWidget {
       builder: (context, state) {
         var appCubit = context.read<MainCubit>();
         return Scaffold(
-          body: appCubit.pages(
-              appCubit.user, appCubit.upcomingVisits)[appCubit.pageIndex],
+          body: appCubit.pages(appCubit.user)[appCubit.pageIndex],
           bottomNavigationBar: GNav(
               textStyle: Theme.of(context)
                   .textTheme
@@ -48,8 +47,8 @@ class MainScreen extends StatelessWidget {
                   text: 'main.appointments'.tr(),
                 ),
                 GButton(
-                  icon: IconBroken.Heart,
-                  text: 'main.chatbot'.tr(),
+                  icon: IconBroken.Paper,
+                  text: 'main.medicalHistory'.tr(),
                 ),
                 GButton(
                   icon: IconBroken.Profile,

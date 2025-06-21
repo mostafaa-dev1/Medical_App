@@ -98,13 +98,13 @@ DateTime parseTime(String time) {
   return dateTime;
 }
 
-Map<String, dynamic> _$LabWorkTimeToJson(LabWorkTime instance) =>
-    <String, dynamic>{
-      'from': instance.day,
-      'to': instance.duartion,
-      'start': instance.start?.toIso8601String(),
-      'end': instance.end?.toIso8601String(),
-    };
+// Map<String, dynamic> _$LabWorkTimeToJson(LabWorkTime instance) =>
+//     <String, dynamic>{
+//       'from': instance.day,
+//       'to': instance.duartion,
+//       'start': instance.start?.toIso8601String(),
+//       'end': instance.end?.toIso8601String(),
+//     };
 
 Address _$AddressFromJson(Map<String, dynamic> json) => Address(
       streat: json['streat'] as String? ?? '',
@@ -117,16 +117,16 @@ Address _$AddressFromJson(Map<String, dynamic> json) => Address(
       floorAr: json['floor_ar'] as String? ?? '',
     );
 
-Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
-      'streat': instance.streat,
-      'streat_ar': instance.streatAr,
-      'sign': instance.sign,
-      'sign_ar': instance.signAr,
-      'building': instance.building,
-      'building_ar': instance.buildingAr,
-      'floor': instance.floor,
-      'floor_ar': instance.floorAr,
-    };
+// Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
+//       'streat': instance.streat,
+//       'streat_ar': instance.streatAr,
+//       'sign': instance.sign,
+//       'sign_ar': instance.signAr,
+//       'building': instance.building,
+//       'building_ar': instance.buildingAr,
+//       'floor': instance.floor,
+//       'floor_ar': instance.floorAr,
+//     };
 
 LabServices _$LabServicesFromJson(Map<String, dynamic> json) => LabServices(
       service: json['service'] as String,

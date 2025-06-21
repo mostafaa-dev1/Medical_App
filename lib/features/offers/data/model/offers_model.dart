@@ -10,6 +10,7 @@ class OffersModel {
   int id;
   String title;
   String description;
+  String descriptionAr;
   List<String>? images;
   @JsonKey(name: 'start_date')
   DateTime? startDate;
@@ -32,6 +33,7 @@ class OffersModel {
   ClinicInfo? hospital;
 
   OffersModel({
+    required this.descriptionAr,
     required this.id,
     required this.title,
     required this.description,

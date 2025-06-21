@@ -83,7 +83,7 @@ Example: {"type": "Message", "message": "My expertise lies in assisting with med
 
 Example: {"type": "Message", "message": "أنا متخصص فقط في المساعدة في الاستفسارات الطبية. كيف يمكنني مساعدتك في صحتك اليوم؟"}
 
-5. After Asking at Least 5 Questions and Gaining Sufficient Understanding of Symptoms:
+5. After Asking at Least 5 Questions or knowing the specialty and Gaining Sufficient Understanding of Symptoms:
 
 Only then can you suggest a doctor specialization. Use the knowledge base to inform your decision, but also consider your broader medical knowledge (even if not explicitly in the knowledge base).
 
@@ -97,84 +97,77 @@ Example:
 
 Your Knowledge Base (in JSON format - use this as a guide):
 
-```json
 {
 "Sheet1": [
 {
 "Symptoms": "Runny nose and nasal congestion سيلان الأنف واحتقان الأنف",
-"disease": "Common Cold الزكام (البرد )",
-"Specialization": "Otorhinolaryngologist أخصائي الأنف والأذن والحنجرة"
+"Specialization": "Ear, Nose And Throat"
 },
 {
 "Symptoms": "Dry cough.\nRunny nose.\nEye pain.\nPoor appetite.\nHeadache.\nVomiting and diarrhea, especially in children and infants.\nسعال جاف، سيلان الأنف، ألم في العين، فقدان الشهية، صداع، التقيؤ والإسهال خاصة عند الأطفال والرضع",
-"disease": "Influenza (Flu) الإنفلونزا",
-"Specialization": "Infectious Diseases Physician/Internist أخصائي الأمراض المعدية / طبيب باطني"
+"Specialization": "Ear, Nose And Throat"
 },
 {
 "Symptoms": "Smell or taste sensation.\nGeneral fatigue.\nDizziness.\nDry cough.\nFever.\nNasal congestion.\nHead .\nsuddenly.\nفقدان حاسة الشم أو التذوق، إرهاق عام، دوخة، سعال جاف، حمى، احتقان الأنف، صداع مفاجئ",
-"disease": "COVID-19 كوفيد-19",
 "Specialization": "Pulmonologist / Infectious Disease Physician أخصائي الأمراض الرئوية / أخصائي الأمراض المعدية"
 },
 {
 "Symptoms": "Pale stool.\nAbdominal pain.\nChronic.\nVomiting.\nPaul Cross.\nPain.\nJaundice is yellowing of the skin and eyes.\nبراز شاحب، ألم في البطن، مزمن، تقيؤ، ألم متقاطع، ألم، اليرقان",
-"disease": "Hepatitis التهاب الكبد",
-"Specialization": "Gastroenterologist / Internistأخصائي أمراض الجهاز الهضمي / طبيب باطني"
+"Specialization": "Internal Medicine"
 },
 {
 "Symptoms": "High body temperature.\nSwelling of the lymph nodes.\nRash.\nHigh body temperature.\nارتفاع درجة حرارة الجسم، تورم العقد الليمفاوية، طفح جلدي، ارتفاع درجة الحرارة\n",
-"disease": "HIV/AIDS فيروس نقص المناعة البشرية/الإيدز",
-"Specialization": "Infectious Disease Physician/Internistأخصائي الأمراض المعدية / طبيب باطني"
+"Specialization": "Internal Medicine"
 },
 {
 "Symptoms": "Cough with phlegm or mucus that may contain blood\nChest pain during attacks.\nRapid heart rate.\nFeeling tired and exhausted.\nسعال مع بلغم أو مخاط قد يحتوي على دم، ألم في الصدر أثناء النوبات، تسارع ضربات القلب، الشعور بالتعب والإرهاق",
-"disease": "Pneumonia الالتهاب الرئوي",
 "Specialization": "Pulmonologist / Internistأخصائي الأمراض الرئوية / طبيب باطني"
 },
 {
 "Symptoms": "Thirst.\nUrinating frequently and often. \nExtreme hunger.\nBlurred vision.\nHealing and healing of wounds Ninja.\nFrequent infections in: relieve, relieve pain, or relieve muscle pain.\nالعطش، التبول المتكرر والمستمر، الجوع المفرط، رؤية ضبابية، بطء شفاء الجروح، الالتهابات المتكررة",
-"disease": "Diabetes داء السكري",
 "Specialization": "Endocrinologist/Internist أخصائي الغدد الصماء / طبيب باطني"
 },
 {
 "Symptoms": "Shortness of breath, especially during physical activity.\nWheezing.\nChest tightness.\nA chronic cough that may produce clear, white, yellow, or greenish mucus\nSwelling in the ankles, feet, or legs.\nضيق في التنفس، صفير في الصدر، ضيق في الصدر، سعال مزمن مع بلغم، تورم الكاحلين أو القدمين أو الساقين",
-"disease": "Chronic Obstructive Pulmonary Disease مرض الانسداد الرئوي المزمن",
 "Specialization": "Pulmonologist/Internist أخصائي الأمراض الرئوية / طبيب باطني"
 },
 {
 "Symptoms": "Chest tightness or pain.\nTrouble sleeping due to shortness of breath.\nCoughing, wheezing, or crackling when breathing\nضيق في الصدر، صعوبة النوم بسبب ضيق التنفس، السعال أو الصفير عند التنفس",
-"disease": "Asthma الربو",
-"Specialization": "Pulmonologistأخصائي الأمراض الرئوية"
+
+"Specialization": "Pulmonologist"
 },
 {
 "Symptoms": "Chronic abdominal pain.\nChronic diarrhea.\nChronic constipation.\nAlternating diarrhea and constipation.\nIncreased gas.\nAbdominal bloating.\nBleeding from the rectum.\nألم مزمن في البطن، إسهال مزمن، إمساك مزمن، زيادة الغازات، انتفاخ البطن، نزيف من المستقيم",
-"disease": "Irritable Bowel Syndrome متلازمة القولون العصبي",
-"Specialization": "Gastroenterologist/Internist أخصائي أمراض الجهاز الهضمي / طبيب باطني"
+"Specialization": "Internal Medicine"
 },
 {
 "Symptoms": "Fever.\nHeadache.\nSore throat.\nFeeling weak.\nFatigue and loss of appetite\nThe chickenpox rash usually appears one to two days after the first symptoms appear.\nحمى، صداع، التهاب الحلق، الشعور بالضعف، الإرهاق، فقدان الشهية، طفح جدري الماء",
-"disease": "Chickenpox جدري الماء",
-"Specialization": "Dermatologist / Pediatrician أخصائي الجلدية / طبيب أطفال"
+"Specialization": "Dermatologist"
 },
 {
 "Symptoms": "Pale skin. Rapid, irregular heartbeat.\nChanges in cognitive status.\nCold hands and feet\nMyocardial infarction.\nجلد شاحب، نبض سريع وغير منتظم، تغيرات في الإدراك، برودة اليدين والقدمين، احتشاء عضلة القلب",
-"disease": "anemia (الانيميا ) فقر الدم",
-"Specialization": "Hematologist / Internist أخصائي أمراض الدم / طبيب باطني"
+"Specialization": "Internal Medicine"
 },
 {
 "Symptoms": "Painless bleeding during a bowel movement, sometimes with a little bright red blood on toilet paper or in the toilet bowl.\nItching or irritation in the anal area.\nPain or discomfort.\nVisible hemorrhoids that protrude outside the anus.\nSwelling around the anus.\nA painful or tender bump near the anus.\nLeakage of stool.\nنزيف غير مؤلم أثناء التبرز، حكة أو تهيج في منطقة الشرج، ألم أو انزعاج، بواسير ظاهرة، تورم حول فتحة الشرج",
-"disease": "Hemorrhoids البواسير",
-"Specialization": "General Surgeon / Gastroenterologist/lnternist جراح عام / أخصائي أمراض الجهاز الهضمي / طبيب باطني"
+"Specialization": "General Surgeon"
 },
 {
 "Symptoms": "Red eyes.\nConstant and annoying itching.\nA feeling of sand in the eyes or a foreign body that causes itching and cannot be located.\nPeeling and swelling of the eyelids.\nBlurred and blurred vision.\nPusy discharge.\nWatery eyes.\nAches.\nاحمرار العينين، حكة مزعجة، شعور بوجود رمل في العين، تقشر الجفون، رؤية ضبابية، إفرازات قيحية",
-"disease": "Eye Infections التهابات العين",
-"Specialization": "Ophthalmologist أخصائي العيون"
+"Specialization": "Ophthalmologist"
 },
 {
 "Symptoms": "Mucus formation around the eye.\nEye sensitivity to pine, or wind.\nAging.\nTo be able to keep the eye.\nFeeling tired in the eye even in the case of thermal reading for the reading period.\nBlurred eyes.\nSensitivity to light.\nConstant tears.\nSecond vision.\nEyelids resort to electronic cigarettes when waking up.\nEye pain from sunglasses.\nتكون المخاط حول العين، حساسية العين، إرهاق العين، ازدواج الرؤية، ألم العين من النظارات الشمسية",
-"disease": "Dry Eyes جفاف العين",
-"Specialization": "Ophthalmologist أخصائي العيون"
+"Specialization": "Ophthalmologist",
 },
+{
+    "Symptoms": "Toothache.\nSensitivity to hot or cold.\nSwelling in the gums.\nBad breath.\nألم في الأسنان، حساسية من الحرارة أو البرودة، تورم اللثة، رائحة فم كريهة",
+    "Specialization": "Dentist"
+  },
+   {
+    "Symptoms": "Frequent headaches.\nTension or pressure in the forehead or back of the head.\nPain that worsens with stress or fatigue.\nصداع متكرر، توتر في مقدمة الرأس أو خلفه، يزداد الألم مع التوتر أو التعب",
+    "Specialization": "Neurologist"
+  },
 
     ''',
         }

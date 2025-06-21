@@ -5,25 +5,22 @@ import 'package:medical_system/features/search/data/repo/search_repo.dart';
 class SearchData extends SearchRepo {
   final _supabaseServices = SupabaseServices();
   @override
-  Future<Either<String, List<Map<String, dynamic>>>> search(
-      {String? spciality,
-      String? gov,
-      String? rate,
-      String? price,
-      String? firstName,
-      String? city,
-      bool? ar}) async {
+  Future<Either<String, List<Map<String, dynamic>>>> search({
+    String? spciality,
+    String? gov,
+    String? rate,
+    String? price,
+    String? firstName,
+    String? city,
+    bool? ar,
+  }) async {
     return _supabaseServices.getDataWithFilters(
-        'Clinics', '*, Doctors!inner(*), WorkTimes(*),DoctorsInfo(*)',
-        specialty: spciality,
-        government: gov,
-        city: city,
-        highestFee: price == 'Highest Price'
-            ? true
-            : price == 'Lowest Price'
-                ? false
-                : null,
-        doctorFirstName: firstName,
-        ar: ar);
+      'Clinics',
+      '*, Doctors!inner(*),DoctorsInfo(*)',
+      specialty: spciality,
+      government: gov,
+      city: city,
+      doctorFirstName: firstName,
+    );
   }
 }

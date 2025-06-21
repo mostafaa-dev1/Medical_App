@@ -10,6 +10,7 @@ OffersModel _$OffersModelFromJson(Map<String, dynamic> json) => OffersModel(
       id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       description: json['description'] as String,
+      descriptionAr: json['description_ar'] as String,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       startDate: json['start_date'] == null

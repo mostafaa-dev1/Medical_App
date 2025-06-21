@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/responsive/responsive.dart';
-import 'package:medical_system/features/main/logic/main_cubit.dart';
 import 'package:medical_system/features/home/ui/widgets/home_header_item.dart';
 import 'package:medical_system/features/home/ui/widgets/upcoming_visits/widgets/upcoming_item.dart';
 import 'package:medical_system/features/home/ui/widgets/upcoming_visits/widgets/upcoming_item_loading.dart';
+import 'package:medical_system/features/main/logic/main_cubit.dart';
 
 class UpcomingVisits extends StatelessWidget {
   const UpcomingVisits({super.key});
@@ -19,12 +19,11 @@ class UpcomingVisits extends StatelessWidget {
         final upcomingVisits = context.read<MainCubit>().upcomingVisits;
         if (mainCubit.isUpcomingLoading ||
             state is GetUpcomingAppointmentsLoading) {
-          print('state is HomeLoading || state is PersonalInfoSuccess');
           return UpcomingItemLoading();
         } else {
-          if (upcomingVisits.appointments!.isEmpty ||
-              upcomingVisits.appointments == null) {
-            print('upcomingVisits.appointments!.isEmpty');
+          if (upcomingVisits == null ||
+              upcomingVisits.appointments == null ||
+              upcomingVisits.appointments!.isEmpty) {
             return const SizedBox();
           } else {
             return Column(

@@ -7,7 +7,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:medical_system/core/constants/keys.env';
+import 'package:medical_system/core/constants/app_keys.dart';
+import 'package:medical_system/core/helpers/extentions.dart';
 import 'package:medical_system/core/helpers/spacing.dart';
 import 'package:medical_system/core/themes/colors.dart';
 import 'package:medical_system/core/widgets/custom_button.dart';
@@ -295,30 +296,30 @@ class _GoogleMapState extends State<GoogleMapPage> {
                         //   style:
                         //       TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                         // ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: AppColors.mainColor.withAlpha(20),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text('${distanceInKm!.toStringAsFixed(2)} km',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                    color: AppColors.mainColor,
-                                  )),
-                        ),
-                      verticalSpace(10),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 10, vertical: 5),
+                        //   decoration: BoxDecoration(
+                        //     color: AppColors.mainColor.withAlpha(20),
+                        //     borderRadius: BorderRadius.circular(10),
+                        //   ),
+                        //   child: Text('${distanceInKm!.toStringAsFixed(2)} km',
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .bodySmall!
+                        //           .copyWith(
+                        //             color: AppColors.mainColor,
+                        //           )),
+                        // ),
+                        verticalSpace(10),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
                             child: CustomButton(
-                                buttonName: 'Back'.tr(),
+                                buttonName: 'appointments.back'.tr(),
                                 onPressed: () {
-                                  //context.pop();
+                                  context.pop();
                                 },
                                 backgroundColor:
                                     AppColors.mainColor.withAlpha(10),
@@ -334,7 +335,7 @@ class _GoogleMapState extends State<GoogleMapPage> {
                             child: CustomButton(
                                 reightIcon: false,
                                 icon: Icons.my_location,
-                                buttonName: 'showOnMap'.tr(),
+                                buttonName: 'appointments.showOnMap'.tr(),
                                 onPressed: () async {
                                   await MapsLauncher.launchCoordinates(
                                       getDestinationLocation().latitude,

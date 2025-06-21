@@ -46,3 +46,7 @@ app.*.map.json
 /lib/core/constants/keys.dart
 
 .qodo
+
+.env
+
+lib/core/networking/notifications/notifications_helper.dart

@@ -252,7 +252,9 @@
         "anOtherPerson" : "لو هذا الحجز لشخص اخر, برجاء ادخال بياناته",
         "appointmentCanceled" : "نم الغاء الزياره بنجاح",
         "appointRescheduled" : "تم ارسال طلب تعديل الزياره",
-        "location" : "الموقع"
+        "location" : "الموقع",
+        "showOnMap" : "عرض على خريطة الجهاز",
+        "back" : "رجوع"
         
         
     },
@@ -268,7 +270,8 @@
         "appointments" : "الحجوزات",
         "chatbot" : "الدردشة",
         "notifications" : "الاشعارات",
-        "profile" : "الملف الشخصي"
+        "profile" : "الملف الشخصي",
+        "medicalHistory" : "التاريخ الطبي"
         
     },
 
@@ -283,8 +286,50 @@
         "payment" : "طرق الدفع",
         "notifications" : "الاشعارات",
         "selectLanguage" : "اختر اللغة",
-        "contactUs" : "اتصل بنا"
+        "contactUs" : "اتصل بنا",
+        "lapResult" : "نتائج التحاليل",
+        "myQuestionAnswer" : "اجابة اسئلتي",
+         "showResult" : "عرض النتائج",
+        "notAnswerd" : "لم يتم الاجابه على السؤال حتى الان!",
+        "myQuestions" : "اسئلتي"
 
+    },
+    "medicalReport" : {
+        "medicalReport" : "التقرير الطبي",
+        "height" : "الطول",
+        "weight" : "الوزن",
+        "noReport" : "لا يوجد تقرير طبي حتى الان!",
+        "create" : "انشاء",
+        "What is your height?" : "ما هو طولك؟",
+        "What is your weight?" : "ما هو وزنك",
+        "Do you have any chronic conditions?" : "هل تعاني من أي أمراض مزمنة؟",
+        "Please list your chronic conditions." : "من فضلك اذكرهم",
+        "Have you ever had any surgery?" : "هل خضعت لعمليه جرحيه من قبل؟",
+        "Please describe the surgery and when it happened." : "متى قومت باخر عمليه جراحيه؟",
+        "Have you been hospitalized in the past?" : "هل ذهبت الى المستشفى في الماضي؟",
+        "What was the reason and when?" : "ما السبب ومتى؟",
+        "Have you had any serious infections?" : "هل أصبت بأي عدوى خطيرة؟",
+        "Please list them with approximate dates." : "من فضلك اذكرهم واذكر تاريخ الاصابه",
+        "Have you had any major injuries?" : "هل تعرضت لأية إصابات خطيرة؟",
+        "Please Describe":"اشرح من فضلك",
+        "Are you currently taking any medications?" : "هل تتناول أي أدوية حاليًا؟",
+        "Please list them with dosage and frequency." :"يرجى ذكرها مع الجرعة والتكرار.",
+        "Have you taken any long-term medications in the past?" : "هل تناولت أي أدوية طويلة الأمد في الماضي؟",
+        "Please list them.":"من فضلك اذكرهم",
+        "Do you have any allergies?":"هل لديك أي حساسية؟",
+        "Does anyone in your family have a history of chronic or genetic diseases?":"هل يوجد أحد في عائلتك لديه تاريخ من الأمراض المزمنة أو الوراثية؟",
+        "Please mention who and what conditions." :"يرجى ذكر من وما هي الامراض.",
+        "Do you smoke?":"هل تدخن؟",
+        "How many hours do you sleep per night on average?":"ما هو متوسط عدد ساعات نومك؟",
+        "What is your current occupation?":"ما هي وظيفتك الحالية؟",
+        "Are you experiencing any current symptoms?":"هل تعرف ما هي اعراضك الحالية؟",
+        "yes" : "نعم",
+        "No" : "لا",
+       
+        "next" : "التالي",
+        "finish" : "انهاء",
+        "pleaseFill" : "من فضلك املاء هذا",
+        "question" : "السؤال"
     },
     "summary" : {
         "reviewSummary" : "مراجعة الحجز",
@@ -493,28 +538,28 @@
         "Aswan" : "اسوان",
         "Asyut" : "اسيوط",
         "Beheira" : "البحيرة",
-        "Beni Suef" : "بني سويف",
+        "BeniSuef" : "بني سويف",
         "Dakahlia" : "الدقهلية",
         "Damietta" : "دمياط",
         "Fayoum" : "الفيوم",
         "Gharbia" : "الغربية",
         "Giza" : "الجيزة",
         "Ismailia" : "الاسماعيلية",
-        "Kafr El Sheikh" : "كفر الشيخ",
+        "KafrElSheikh" : "كفر الشيخ",
         "Luxor" : "الاقصر",
         "Matrouh" : "مطروح",
         "Minya" : "المنيا",
         "Monufia" : "المنوفية",
-        "New Valley" : "الوادي الجديد",
-        "Port Said" : "بورسعيد",
+        "NewValley" : "الوادي الجديد",
+        "PortSaid" : "بورسعيد",
         "Qalyubia" : "القليوبية",
         "Qena" : "قنا",
-        "Red Sea" : "البحر الاحمر",
+        "RedSea" : "البحر الاحمر",
         "Sharqia" : "الشرقية",
         "Sohag" : "سوهاج",
         "Suez" : "السويس",
-        "South Sinai" : "جنوب سيناء",
-        "North Sinai" : "شمال سيناء"
+        "SouthSinai" : "جنوب سيناء",
+        "NorthSinai" : "شمال سيناء"
     },
     "city" : {
         
@@ -530,7 +575,7 @@
             "New Cairo" : "القاهرة الجديدة",
             "October" : "اكتوبر",
             "Ain Shams" : "عين شمس",
-            "ElMarg" : "المطرية",
+            "El Marg" : "المطرية",
             "El Matarya" : "المطرية",
             "El Tahrir" : "التحرير",
             "El Nozha" : "النزهة",

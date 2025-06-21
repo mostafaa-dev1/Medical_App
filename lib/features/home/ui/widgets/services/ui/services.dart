@@ -26,16 +26,16 @@ class Services extends StatelessWidget {
           image: 'assets/images/chat.svg',
         ),
         verticalSpace(10),
-        ServicesItem(
-          onTap: () {
-            context.pushNamed(AppRoutes.heartRate);
-          },
-          title: 'home.heartRate'.tr(),
-          description: 'home.heartRateDetails'.tr(),
-          image: 'assets/images/heart_rate.svg',
-          buttonName: 'home.measure'.tr(),
-        ),
-        verticalSpace(10),
+        // ServicesItem(
+        //   onTap: () {
+        //     context.pushNamed(AppRoutes.heartRate);
+        //   },
+        //   title: 'home.heartRate'.tr(),
+        //   description: 'home.heartRateDetails'.tr(),
+        //   image: 'assets/images/heart_rate.svg',
+        //   buttonName: 'home.measure'.tr(),
+        // ),
+        // verticalSpace(10),
         ServicesItem(
           image: 'assets/images/medicine.svg',
           onTap: () {

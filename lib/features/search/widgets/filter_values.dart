@@ -98,7 +98,7 @@ class FilterValues extends StatelessWidget {
                     filterValues['government'] == null ||
                             filterValues['government'] == 'All'
                         ? 'search.government'.tr()
-                        : '${filterValues['government']}',
+                        : 'government.${filterValues['government']}'.tr(),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: filterValues['government'] == null ||
                                   filterValues['government'] == 'All'
@@ -123,7 +123,7 @@ class FilterValues extends StatelessWidget {
                     filterValues['city'] == null ||
                             filterValues['city'] == 'All'
                         ? 'search.city'.tr()
-                        : '${filterValues['city']}',
+                        : 'city.${filterValues['city']}'.tr(),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: filterValues['city'] == null ||
                                   filterValues['city'] == 'All'
@@ -131,28 +131,28 @@ class FilterValues extends StatelessWidget {
                               : Colors.white,
                         )),
               ),
-              horizontalSpace(5),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: filterValues['price'] == null
-                      ? AppColors.mainColor.withAlpha(20)
-                      : AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                    filterValues['price'] == null
-                        ? 'search.price'.tr()
-                        : '${filterValues['price']}',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: filterValues['price'] == null
-                              ? AppColors.mainColor
-                              : Colors.white,
-                        )),
-              ),
+              // horizontalSpace(5),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: 10,
+              //     vertical: 5,
+              //   ),
+              //   decoration: BoxDecoration(
+              //     color: filterValues['price'] == null
+              //         ? AppColors.mainColor.withAlpha(20)
+              //         : AppColors.mainColor,
+              //     borderRadius: BorderRadius.circular(20),
+              //   ),
+              //   child: Text(
+              //       filterValues['price'] == null
+              //           ? 'search.price'.tr()
+              //           : '${filterValues['price']}',
+              //       style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              //             color: filterValues['price'] == null
+              //                 ? AppColors.mainColor
+              //                 : Colors.white,
+              //           )),
+              // ),
             ],
           ),
         ),

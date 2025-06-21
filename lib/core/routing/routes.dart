@@ -42,4 +42,9 @@ class AppRoutes {
   static const String selectCity = '/selectCity';
   static const String offersProfile = '/offersProfile';
   static const String googlemap = '/googlemap';
+  static const String medicalHistroy = '/medicalHistroy';
+  static const String aiMedicalHistroy = '/aiMedicalHistroy';
+  static const String histroyQuestions = '/histroyQuestions';
+  static const String myQuestionAnswers = '/myQuestionAnswers';
+  static const String labResults = '/labResults';
 }

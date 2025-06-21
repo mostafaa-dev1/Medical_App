@@ -12,6 +12,7 @@ import 'package:medical_system/core/logic/app_cubit.dart';
 import 'package:medical_system/core/models/user.dart';
 import 'package:medical_system/core/routing/routes.dart';
 import 'package:medical_system/core/widgets/dialog.dart';
+import 'package:medical_system/features/profile/logic/profile_cubit.dart';
 import 'package:medical_system/features/profile/widgets/profile_buttons.dart';
 import 'package:medical_system/features/profile/widgets/profile_photo.dart';
 
@@ -117,6 +118,28 @@ class Profile extends StatelessWidget {
                         ),
                         verticalSpace(10),
                         ProfileButton(
+                          title: 'profile.myQuestionAnswer',
+                          icon: IconBroken.Chat,
+                          onTap: () {
+                            context.pushNamed(AppRoutes.myQuestionAnswers,
+                                arguments: {'context': context});
+                            context
+                                .read<ProfileCubit>()
+                                .getQuestionAnswers(user);
+                          },
+                        ),
+                        verticalSpace(10),
+                        ProfileButton(
+                          title: 'profile.lapResult',
+                          icon: IconBroken.Document,
+                          onTap: () {
+                            context.pushNamed(AppRoutes.labResults,
+                                arguments: {'context': context});
+                            context.read<ProfileCubit>().getLapResults(user);
+                          },
+                        ),
+                        verticalSpace(10),
+                        ProfileButton(
                             title: 'profile.logout',
                             icon: IconBroken.Logout,
                             onTap: () {
@@ -135,18 +158,6 @@ class Profile extends StatelessWidget {
                                 },
                               );
                             }),
-                        verticalSpace(10),
-                        ProfileButton(
-                          title: 'profile.helpCenter',
-                          icon: Icons.help,
-                          onTap: () {},
-                        ),
-                        verticalSpace(10),
-                        ProfileButton(
-                          title: 'profile.contactUs',
-                          icon: IconBroken.User1,
-                          onTap: () {},
-                        ),
                       ]),
                 ),
               ),

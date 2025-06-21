@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:medical_system/core/networking/services/database/remote/supabase_services.dart';
 import 'package:medical_system/features/ai_chat/data/repo/ai_repo.dart';
 
 class AiData extends AiRepo {
-  String apiKey = "AIzaSyA43KTy8q3wzA_qlhi4xg2e41Aii0AtiOg";
+  String apiKey = dotenv.env['AI_KEY']!;
   final _supabaseServices = SupabaseServices();
 
   AiData();

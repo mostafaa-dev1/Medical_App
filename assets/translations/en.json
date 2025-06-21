@@ -262,7 +262,9 @@
         "anOtherPerson" :"If you book for another person, please fill his details below",
         "appointmentCanceled" : "Your appointment has been canceled successfully",
         "appointRescheduled" : "Reschedule request has been sent successfully",
-        "location" : "Location"
+        "location" : "Location",
+        "showOnMap" : "Show on Map",
+        "back" : "Back"
 
         
     },
@@ -278,7 +280,8 @@
         "appointments" : "Appointments",
         "notifications" : "Notifications",
         "chatbot" : "Chatbot",
-        "profile" : "Profile"
+        "profile" : "Profile",
+        "medicalHistory" : "Medical History"
     },
    "profile" :{
         "profile" : "Profile",
@@ -291,8 +294,49 @@
         "contactUs" : "Contact Us",
         "inviteFriends" : "Invite Friends",
         "payment" : "Payment",
-        "selectLanguage" : "Select Your Language"
+        "selectLanguage" : "Select Your Language",
+        "lapResult" : "Lap Result",
+        "myQuestionAnswer" : "My Questions Answer",
+        "showResult" : "Show Result",
+        "notAnswerd" : "Question not answered yet!",
+        "myQuestions" : "My Questions"
         
+    },
+    "medicalReport" : {
+        "medicalReport" : "Medical Report",
+        "height" : "Height",
+        "weight" : "Weight",
+        "noReport" : "You don't have medical report yet!",
+        "create" : "Create",
+        "What is your height?" : "What is your height?",
+        "What is your weight?" : "What is your weight?",
+        "Do you have any chronic conditions?" : "Do you have any chronic conditions?",
+        "Please list your chronic conditions." : "Please list your chronic conditions.",
+        "Have you ever had any surgery?" : "Have you ever had any surgery?",
+        "Please describe the surgery and when it happened." : "Please describe the surgery and when it happened.",
+        "Have you been hospitalized in the past?" : "Have you been hospitalized in the past?",
+        "What was the reason and when?" : "What was the reason and when?",
+        "Have you had any serious infections?" : "Have you had any serious infections like Tuberculosis, Hepatitis, or COVID-19?",
+        "Please list them with approximate dates." : "Please list them with approximate dates.",
+        "Have you had any major injuries?" : "Have you had any major injuries?",
+        "Please Describe":"Please Describe",
+        "Are you currently taking any medications?" : "Are you currently taking any medications?",
+        "Please list them with dosage and frequency." :"Please list them with dosage and frequency.",
+        "Have you taken any long-term medications in the past?" : "Have you taken any long-term medications in the past?",
+        "Please list them.":"Please list them.",
+        "Do you have any allergies?":"Do you have any allergies?",
+        "Does anyone in your family have a history of chronic or genetic diseases?":"Does anyone in your family have a history of chronic or genetic diseases?",
+        "Please mention who and what conditions." :"Please mention who and what conditions.",
+        "Do you smoke?":"Do you smoke?",
+        "How many hours do you sleep per night on average?":"How many hours do you sleep per night on average?",
+        "What is your current occupation?":"What is your current occupation?",
+        "Are you experiencing any current symptoms?":"Are you experiencing any current symptoms?",
+        "yes" : "Yes",
+        "No" : "No",
+        "next" : "Next",
+        "finish" : "Finish",
+        "pleaseFill" : "Please fill this.",
+        "question" : "Question"
     },
     "summary" : {
         "reviewSummary" : "Review Summary",
